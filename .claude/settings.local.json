@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(if \\(!\\(Test-Path \"C:\\\\Users\\\\user\\\\WestHim\\\\public\"\\)\\) { New-Item -ItemType Directory -Path \"C:\\\\Users\\\\user\\\\WestHim\\\\public\" }; Copy-Item \"C:\\\\Users\\\\user\\\\WestHim\\\\logo.png\" \"C:\\\\Users\\\\user\\\\WestHim\\\\public\\\\logo.png\")",
+      "Bash(git init *)",
+      "Bash(git add *)"
+    ]
+  }
+}

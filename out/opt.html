@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Опт / Розница — West Him</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { min-height: 100%; background: #000; color: #fff; font-family: 'Inter', system-ui, sans-serif; }
+
+    .header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 40px;
+      background: rgba(0,0,0,0.75); backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255,255,255,0.08); position: sticky; top: 0; z-index: 50;
+    }
+    .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: #fff; }
+    .logo img { width: 42px; height: 42px; border-radius: 50%; object-fit: cover; }
+    .logo-name { font-size: 20px; font-weight: 800; letter-spacing: -0.5px; }
+    .back-btn {
+      display: flex; align-items: center; gap: 8px; padding: 9px 18px;
+      border-radius: 10px; border: 1px solid rgba(255,255,255,0.1);
+      background: transparent; color: rgba(255,255,255,0.7); font-size: 14px; font-weight: 500;
+      text-decoration: none; transition: all .2s;
+    }
+    .back-btn:hover { background: rgba(255,255,255,0.07); color: #fff; }
+    nav { display: flex; gap: 28px; }
+    nav a { color: rgba(255,255,255,0.5); text-decoration: none; font-size: 14px; font-weight: 500; transition: color .2s; }
+    nav a:hover { color: #fff; }
+
+    .hero-cat {
+      position: relative; overflow: hidden;
+      padding: 64px 40px 56px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .blob { position: absolute; border-radius: 50%; pointer-events: none; }
+    .b1 { width:500px; height:500px; background:rgba(245,158,11,.08); filter:blur(100px); top:-100px; right:-80px; }
+    .b2 { width:300px; height:300px; background:rgba(200,16,46,.07); filter:blur(80px); bottom:-60px; left:40px; }
+    .grid-bg {
+      position:absolute; inset:0; pointer-events:none;
+      background-image: linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+    .hero-inner { position: relative; max-width: 800px; }
+    .cat-badge {
+      display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px;
+      border-radius: 100px; background: rgba(245,158,11,.12); border: 1px solid rgba(245,158,11,.3);
+      font-size: 12px; font-weight: 600; color: #fcd34d; margin-bottom: 20px;
+      text-transform: uppercase; letter-spacing: .05em;
+    }
+    .cat-icon { width: 10px; height: 10px; border-radius: 50%; background: #f59e0b; box-shadow: 0 0 6px #f59e0b; }
+    h1 { font-size: clamp(32px,4vw,52px); font-weight: 900; line-height: 1.08; letter-spacing: -1.5px; margin-bottom: 16px; }
+    .grad { background: linear-gradient(135deg,#fbbf24,#f97316); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+    .hero-desc { font-size: 16px; color: rgba(255,255,255,.55); line-height: 1.7; max-width: 560px; margin-bottom: 32px; }
+    .cta-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+    .btn-amber {
+      display: flex; align-items: center; gap: 8px; padding: 13px 24px; border-radius: 12px;
+      background: #d97706; color: #fff; font-size: 15px; font-weight: 700; text-decoration: none;
+      box-shadow: 0 4px 24px rgba(217,119,6,.4); transition: all .2s;
+    }
+    .btn-amber:hover { background: #b45309; transform: translateY(-1px); }
+    .btn-ghost {
+      display: flex; align-items: center; gap: 8px; padding: 13px 24px; border-radius: 12px;
+      background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1);
+      color: #fff; font-size: 15px; font-weight: 600; text-decoration: none; transition: background .2s;
+    }
+    .btn-ghost:hover { background: rgba(255,255,255,.1); }
+
+    .main { max-width: 1100px; margin: 0 auto; padding: 56px 40px 80px; }
+    .section-title { font-size: 24px; font-weight: 800; letter-spacing: -.5px; margin-bottom: 6px; }
+    .section-sub { font-size: 14px; color: rgba(255,255,255,.45); margin-bottom: 32px; }
+
+    .tiers { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; margin-bottom: 56px; }
+    .tier-card {
+      background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.08);
+      border-radius: 20px; padding: 28px; transition: all .25s; position: relative; overflow: hidden;
+    }
+    .tier-card.highlight { background: rgba(245,158,11,.07); border-color: rgba(245,158,11,.25); }
+    .tier-card:hover { transform: translateY(-2px); border-color: rgba(255,255,255,.16); }
+    .tier-card.highlight:hover { border-color: rgba(245,158,11,.4); }
+    .tier-label {
+      font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em;
+      padding: 4px 10px; border-radius: 6px; display: inline-block; margin-bottom: 14px;
+    }
+    .lbl-retail { background: rgba(255,255,255,.08); color: rgba(255,255,255,.6); }
+    .lbl-partner { background: rgba(245,158,11,.15); color: #fcd34d; }
+    .lbl-key { background: rgba(200,16,46,.15); color: #ff6b7a; }
+    .tier-name { font-size: 20px; font-weight: 800; margin-bottom: 6px; }
+    .tier-vol { font-size: 13px; color: rgba(255,255,255,.45); margin-bottom: 20px; }
+    .tier-perks { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+    .tier-perks li { display: flex; align-items: flex-start; gap: 8px; font-size: 13px; color: rgba(255,255,255,.65); line-height: 1.5; }
+    .check { color: #fbbf24; flex-shrink: 0; margin-top: 2px; }
+    .tier-card.highlight .check { color: #fbbf24; }
+
+    .price-block {
+      background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.1);
+      border-radius: 20px; padding: 40px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 24px;
+      margin-bottom: 32px;
+    }
+    .price-block h3 { font-size: 22px; font-weight: 800; margin-bottom: 6px; }
+    .price-block p { font-size: 14px; color: rgba(255,255,255,.5); max-width: 420px; line-height: 1.6; }
+    .price-actions { display: flex; flex-direction: column; gap: 10px; align-items: flex-end; }
+    .btn-dl {
+      display: flex; align-items: center; gap: 9px; padding: 13px 24px; border-radius: 12px;
+      background: linear-gradient(135deg,#C8102E,#9b0e24); color: #fff;
+      font-size: 15px; font-weight: 700; text-decoration: none; white-space: nowrap;
+      box-shadow: 0 4px 24px rgba(200,16,46,.35); transition: all .2s;
+    }
+    .btn-dl:hover { box-shadow: 0 6px 32px rgba(200,16,46,.5); transform: translateY(-1px); }
+    .btn-wa {
+      display: flex; align-items: center; gap: 8px; padding: 10px 20px; border-radius: 10px;
+      background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1);
+      color: rgba(255,255,255,.8); font-size: 13px; font-weight: 600; text-decoration: none; transition: all .2s;
+    }
+    .btn-wa:hover { background: rgba(255,255,255,.1); }
+
+    .faq { display: flex; flex-direction: column; gap: 2px; }
+    .faq-item { border: 1px solid rgba(255,255,255,.08); border-radius: 12px; overflow: hidden; }
+    .faq-q {
+      width: 100%; text-align: left; background: rgba(255,255,255,.03); color: #fff;
+      padding: 18px 22px; font-size: 14px; font-weight: 600; cursor: pointer;
+      display: flex; justify-content: space-between; align-items: center; border: none;
+      font-family: inherit; transition: background .2s;
+    }
+    .faq-q:hover { background: rgba(255,255,255,.06); }
+    .faq-a { padding: 0 22px 18px; font-size: 13px; color: rgba(255,255,255,.55); line-height: 1.7; }
+
+    @media(max-width:700px){
+      .header { padding: 12px 20px; }
+      .main { padding: 40px 20px 60px; }
+      .hero-cat { padding: 48px 20px 44px; }
+      nav { display: none; }
+      .price-block { padding: 24px; }
+      .price-actions { align-items: stretch; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <a href="index.html" class="logo">
+      <img src="logo.png" alt="West Him"/>
+      <span class="logo-name">West Him</span>
+    </a>
+    <nav>
+      <a href="bytovaya-himiya.html">Бытовая химия</a>
+      <a href="avtohimiya.html">Автохимия</a>
+      <a href="opt.html" style="color:#fff;">Опт</a>
+      <a href="index.html">Главная</a>
+    </nav>
+    <a href="index.html" class="back-btn">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+      На главную
+    </a>
+  </header>
+
+  <section class="hero-cat">
+    <div class="blob b1"></div>
+    <div class="blob b2"></div>
+    <div class="grid-bg"></div>
+    <div class="hero-inner">
+      <div class="cat-badge"><div class="cat-icon"></div>Продажи</div>
+      <h1>Опт &amp;<br/><span class="grad">Розница</span></h1>
+      <p class="hero-desc">
+        Выгодные условия для оптовых партнёров — магазинов, торговых сетей, автомоек и дистрибьюторов.
+        Прямой договор с производителем без посредников.
+      </p>
+      <div class="cta-row">
+        <a class="btn-amber" href="#price">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 15V3m0 12l-4-4m4 4l4-4M2 17l.621 2.485A2 2 0 004.561 21h14.878a2 2 0 001.94-1.515L22 17"/></svg>
+          Скачать прайс
+        </a>
+        <a class="btn-ghost" href="https://wa.me/77010706960?text=Здравствуйте%2C%20хочу%20обсудить%20оптовые%20условия" target="_blank">
+          Обсудить условия
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <main class="main">
+
+    <div class="section-title">Условия сотрудничества</div>
+    <div class="section-sub">Три уровня партнёрства в зависимости от объёма закупок</div>
+
+    <div class="tiers">
+
+      <div class="tier-card">
+        <span class="tier-label lbl-retail">Розница</span>
+        <div class="tier-name">Розничные закупки</div>
+        <div class="tier-vol">от 1 упаковки</div>
+        <ul class="tier-perks">
+          <li><svg class="check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg>Розничная цена по прайсу</li>
+          <li><svg class="check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg>Наличие на складе в Актау</li>
+          <li><svg class="check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg>Самовывоз или доставка по городу</li>
+        </ul>
+      </div>
+
+      <div class="tier-card highlight">
+        <span class="tier-label lbl-partner">Партнёр</span>
+        <div class="tier-name">Малый опт</div>
+        <div class="tier-vol">от 50 000 ₸ / месяц</div>
+        <ul class="tier-perks">
+          <li><svg class="check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg>Оптовая скидка 10–15%</li>
+          <li><svg class="check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg>Отсрочка платежа по договору</li>
+          <li><svg class="check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg>Доставка по Казахстану</li>
+          <li><svg class="check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg>Персональный менеджер</li>
+        </ul>
+      </div>
+
+      <div class="tier-card">
+        <span class="tier-label lbl-key">Ключевой</span>
+        <div class="tier-name">Крупный опт / Дистрибьютор</div>
+        <div class="tier-vol">от 500 000 ₸ / месяц</div>
+        <ul class="tier-perks">
+          <li><svg class="check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg>Максимальная оптовая скидка</li>
+          <li><svg class="check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg>Производство под вашей маркой (СТМ)</li>
+          <li><svg class="check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg>Эксклюзивные условия по региону</li>
+          <li><svg class="check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg>Приоритетная сборка заказов</li>
+          <li><svg class="check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg>Совместные маркетинговые активности</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div id="price" class="price-block">
+      <div>
+        <h3>Оптовый прайс-лист</h3>
+        <p>Полный прайс на бытовую химию и автохимию с оптовыми ценами по уровням партнёрства. Актуален на текущую дату.</p>
+      </div>
+      <div class="price-actions">
+        <a class="btn-dl" href="#">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 15V3m0 12l-4-4m4 4l4-4M2 17l.621 2.485A2 2 0 004.561 21h14.878a2 2 0 001.94-1.515L22 17"/></svg>
+          Скачать прайс (PDF)
+        </a>
+        <a class="btn-wa" href="https://wa.me/77010706960?text=Здравствуйте%2C%20хочу%20получить%20оптовый%20прайс%20West%20Him" target="_blank">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Получить в WhatsApp
+        </a>
+      </div>
+    </div>
+
+    <div class="section-title" style="margin-bottom:6px;">Частые вопросы</div>
+    <div class="section-sub">Ответы на вопросы по оптовому сотрудничеству</div>
+
+    <div class="faq">
+      <div class="faq-item">
+        <button class="faq-q">Какова минимальная сумма первого заказа? <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+        <div class="faq-a">Минимальный заказ на оптовых условиях — от 50 000 ₸. Для первого знакомства возможна тестовая партия меньшего объёма — уточняйте у менеджера.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Есть ли доставка в другие города Казахстана? <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+        <div class="faq-a">Да, доставляем по всему Казахстану через транспортные компании. Стоимость доставки рассчитывается отдельно в зависимости от объёма и города назначения.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Возможно ли производство под нашей торговой маркой? <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+        <div class="faq-a">Да, предлагаем услугу СТМ (собственная торговая марка) для крупных партнёров. Минимальный тираж, сроки и стоимость разработки этикеток обсуждаются индивидуально.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Как оформить договор? <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+        <div class="faq-a">Напишите нам в WhatsApp или позвоните. Менеджер подготовит коммерческое предложение, договор поставки и отправит на согласование в течение 1 рабочего дня.</div>
+      </div>
+    </div>
+
+  </main>
+</body>
+</html>
