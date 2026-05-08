@@ -8,9 +8,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body { height: 100%; overflow: hidden; background: #000; color: #fff; font-family: 'Inter', system-ui, sans-serif; }
+    html, body { min-height: 100%; background: #000; color: #fff; font-family: 'Inter', system-ui, sans-serif; }
 
-    .page { display: flex; flex-direction: column; height: 100vh; }
+    .page { display: flex; flex-direction: column; min-height: 100vh; }
 
     /* HEADER */
     .header {
@@ -34,7 +34,7 @@
     .wa-btn:hover { background: rgba(255,255,255,0.07); }
 
     /* HERO */
-    .hero { flex: 1; min-height: 0; display: grid; grid-template-columns: 1fr 1fr; position: relative; overflow: hidden; }
+    .hero { position: relative; overflow: hidden; padding: 56px 60px 52px; }
     .blob { position: absolute; border-radius: 50%; pointer-events: none; }
     .b1 { width:600px; height:600px; background:rgba(200,16,46,.15); filter:blur(100px); top:-150px; left:-100px; }
     .b2 { width:400px; height:400px; background:rgba(91,33,182,.1); filter:blur(100px); bottom:-80px; right:60px; }
@@ -44,8 +44,8 @@
       background-size: 60px 60px;
     }
 
-    /* LEFT */
-    .left { position:relative; z-index:1; display:flex; flex-direction:column; justify-content:center; padding:40px 60px; }
+    /* LEFT (now full-width hero content) */
+    .left { position:relative; z-index:1; max-width:640px; }
     .badge {
       display:inline-flex; align-items:center; gap:8px; padding:7px 14px; border-radius:100px;
       background:rgba(200,16,46,.12); border:1px solid rgba(200,16,46,.3);
@@ -77,9 +77,21 @@
     .stat-l { font-size:12px; color:rgba(255,255,255,.45); font-weight:500; }
     .sdiv { width:1px; height:36px; background:rgba(255,255,255,.1); }
 
-    /* RIGHT */
-    .right { position:relative; overflow:hidden; }
-    #orb { position:absolute; inset:0; background:#000; }
+    /* ORBITAL SECTION */
+    .orb-section {
+      position: relative; overflow: hidden;
+      height: 500px;
+      background:
+        linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
+      background-size: 60px 60px;
+      border-top: 1px solid rgba(255,255,255,.07);
+    }
+    .orb-section::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background: radial-gradient(ellipse 70% 80% at 50% 50%, rgba(200,16,46,.07) 0%, transparent 70%);
+    }
+    #orb { position:absolute; inset:0; }
 
     /* ORBITAL */
     .stage { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); }
@@ -147,11 +159,11 @@
     .r-btn:hover { background:rgba(255,255,255,.12); color:#fff; }
 
     @media(max-width:900px){
-      .right { display:none; }
       html,body { overflow:auto; }
       .page { height:auto; }
-      .left { padding:32px 24px; }
+      .hero { padding:40px 24px 36px; }
       nav { display:none; }
+      .orb-section { height: 440px; }
     }
   </style>
 </head>
@@ -208,9 +220,9 @@
         <div class="stat"><span class="stat-n">КЗ</span><span class="stat-l">Производство</span></div>
       </div>
     </div>
-
-    <div class="right"><div id="orb"></div></div>
   </section>
+
+  <section class="orb-section"><div id="orb"></div></section>
 </div>
 
 <script>
