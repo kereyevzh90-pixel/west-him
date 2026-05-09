@@ -278,7 +278,10 @@
         width: 65%;
         z-index: 1;
       }
-      .hero-img { object-fit: cover; object-position: left center; width: 100%; height: 100%; }
+      .hero-img {
+        object-fit: cover; object-position: left center; width: 100%; height: 100%;
+        filter: brightness(1.2) drop-shadow(0 0 18px rgba(255,210,60,0.35)) drop-shadow(0 0 6px rgba(255,220,80,0.2));
+      }
 
       /* Градиент поверх картинки — текст не залезает на бутылки */
       .hero-right::before {
