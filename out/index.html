@@ -116,36 +116,6 @@
         );
     }
 
-    /* Контейнер бутылок */
-    .bottles {
-      position: absolute;
-      bottom: 0; left: 0; right: 0; top: 0;
-      display: flex;
-      align-items: flex-end;
-      justify-content: center;
-      z-index: 2;
-    }
-
-    .bottle { flex: 1; display: flex; align-items: flex-end; }
-
-    /*
-      mix-blend-mode: multiply убирает белый фон:
-      белый × цвет_фона = цвет_фона (прозрачно).
-      Цветные пиксели бутылки сохраняются.
-    */
-    .bottle img {
-      width: 100%;
-      height: auto;
-      display: block;
-      mix-blend-mode: multiply;
-    }
-
-    /* Наклоны от основания — как на референсе */
-    .bottle:nth-child(1) { transform: rotate(-7deg);   transform-origin: 50% 100%; }
-    .bottle:nth-child(2) { transform: rotate(-3.5deg); transform-origin: 50% 100%; }
-    .bottle:nth-child(3) { z-index: 3;                 transform-origin: 50% 100%; }
-    .bottle:nth-child(4) { transform: rotate(3.5deg);  transform-origin: 50% 100%; }
-    .bottle:nth-child(5) { transform: rotate(7deg);    transform-origin: 50% 100%; }
 
     /* ─── ORBITAL ─── */
     .orb-section {
@@ -318,15 +288,7 @@
     </div>
   </div>
 
-  <div class="hero-right">
-    <div class="bottles">
-      <div class="bottle"><img src="images/product1.jpg" alt=""/></div>
-      <div class="bottle"><img src="images/product2.jpg" alt=""/></div>
-      <div class="bottle"><img src="images/product3.jpg" alt=""/></div>
-      <div class="bottle"><img src="images/product4.jpg" alt=""/></div>
-      <div class="bottle"><img src="images/product5.jpg" alt=""/></div>
-    </div>
-  </div>
+  <div class="hero-right"></div>
 </section>
 
 <!-- ORBITAL -->
