@@ -164,22 +164,37 @@
     }
     @keyframes pulse2 { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.6;transform:scale(1.3)} }
 
-    /* ─── FEATURES ─── */
-    .features {
-      display: flex;
-      background: #0d0d0d;
-      border-top: 1px solid rgba(255,255,255,0.07);
-      border-bottom: 1px solid rgba(255,255,255,0.07);
+    /* ─── CATEGORIES ─── */
+    .cat-section { background: #000; padding: 48px 52px; }
+    .cat-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
     }
-    .feat {
-      flex: 1; display: flex; flex-direction: column; align-items: center;
-      gap: 10px; padding: 32px 16px; text-align: center;
-      border-right: 1px solid rgba(255,255,255,0.07);
+    .cat-card {
+      position: relative; border-radius: 16px; overflow: hidden;
+      aspect-ratio: 3 / 4;
+      text-decoration: none; color: #fff;
+      display: flex; flex-direction: column; justify-content: flex-end;
+      border: 1px solid rgba(255,255,255,0.07);
+      transition: transform .25s, border-color .25s;
     }
-    .feat:last-child { border-right: none; }
-    .feat-icon { color: #C8102E; }
-    .feat-icon svg { width: 34px; height: 34px; display: block; }
-    .feat-label { font-size: 12.5px; font-weight: 500; color: rgba(255,255,255,0.65); line-height: 1.4; }
+    .cat-card:hover { transform: translateY(-5px); border-color: rgba(200,16,46,0.5); }
+    .cat-bg {
+      position: absolute; inset: 0;
+      background-size: cover; background-position: center;
+      transition: transform .4s;
+    }
+    .cat-card:hover .cat-bg { transform: scale(1.05); }
+    .cat-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.4) 55%, rgba(0,0,0,0.1) 100%);
+    }
+    .cat-content { position: relative; z-index: 1; padding: 14px; }
+    .cat-icon { color: #C8102E; margin-bottom: 7px; }
+    .cat-icon svg { width: 26px; height: 26px; display: block; }
+    .cat-name { font-size: 14px; font-weight: 700; margin-bottom: 3px; }
+    .cat-desc { font-size: 11px; color: rgba(255,255,255,0.55); line-height: 1.4; }
 
     /* ─── PRODUCTS ─── */
     .products-section { padding: 60px 52px; background: #000; }
@@ -296,10 +311,11 @@
         );
       }
 
-      /* features — 2 в ряд */
-      .features { flex-wrap: wrap; }
-      .feat { flex: 1 1 50%; border-bottom: 1px solid rgba(255,255,255,0.07); border-right: none; }
-      .feat:nth-child(odd) { border-right: 1px solid rgba(255,255,255,0.07); }
+      /* categories — 2 в ряд */
+      .cat-section { padding: 24px 16px; }
+      .cat-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+      .cat-name { font-size: 13px; }
+      .cat-desc { font-size: 10px; }
 
       /* products — 2 в ряд */
       .products-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
@@ -373,58 +389,84 @@
   </div>
 </section>
 
-<!-- ORBITAL -->
-<section class="orb-section"><div id="orb"></div></section>
+<!-- CATEGORIES -->
+<section class="cat-section">
+  <div class="cat-grid">
 
-<!-- FEATURES -->
-<div class="features">
-  <div class="feat">
-    <div class="feat-icon">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-        <rect x="2" y="7" width="20" height="14" rx="2"/>
-        <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/>
-      </svg>
-    </div>
-    <span class="feat-label">Собственное<br/>производство</span>
+    <a href="proizvodstvo.html" class="cat-card">
+      <div class="cat-bg" style="background-image:url('images/IMG_0663.PNG')"></div>
+      <div class="cat-overlay"></div>
+      <div class="cat-content">
+        <div class="cat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg>
+        </div>
+        <div class="cat-name">Производство</div>
+        <div class="cat-desc">Собственное производство в Актау</div>
+      </div>
+    </a>
+
+    <a href="opt.html" class="cat-card">
+      <div class="cat-bg" style="background-image:url('images/product4.jpg')"></div>
+      <div class="cat-overlay"></div>
+      <div class="cat-content">
+        <div class="cat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        </div>
+        <div class="cat-name">Опт / Розница</div>
+        <div class="cat-desc">Выгодные условия для опта и розницы</div>
+      </div>
+    </a>
+
+    <a href="bytovaya-himiya.html" class="cat-card">
+      <div class="cat-bg" style="background-image:url('images/product1.jpg')"></div>
+      <div class="cat-overlay"></div>
+      <div class="cat-content">
+        <div class="cat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 3h6l1 7H8L9 3z"/><path d="M8 10v11h8V10"/><line x1="12" y1="3" x2="12" y2="10"/></svg>
+        </div>
+        <div class="cat-name">Бытовая химия</div>
+        <div class="cat-desc">Средства для дома и ежедневной чистоты</div>
+      </div>
+    </a>
+
+    <a href="avtohimiya.html" class="cat-card">
+      <div class="cat-bg" style="background-image:url('images/product2.jpg')"></div>
+      <div class="cat-overlay"></div>
+      <div class="cat-content">
+        <div class="cat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        </div>
+        <div class="cat-name">Автохимия</div>
+        <div class="cat-desc">Профессиональная химия для вашего автомобиля</div>
+      </div>
+    </a>
+
+    <a href="novinki.html" class="cat-card">
+      <div class="cat-bg" style="background-image:url('images/product5.jpg')"></div>
+      <div class="cat-overlay"></div>
+      <div class="cat-content">
+        <div class="cat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <div class="cat-name">Новинки</div>
+        <div class="cat-desc">Новые поступления и специальные предложения</div>
+      </div>
+    </a>
+
+    <a href="bytovaya-himiya.html" class="cat-card">
+      <div class="cat-bg" style="background-image:url('images/photo_2026-05-09_10-08-25.jpg')"></div>
+      <div class="cat-overlay"></div>
+      <div class="cat-content">
+        <div class="cat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        </div>
+        <div class="cat-name">Каталог</div>
+        <div class="cat-desc">Полный каталог всей нашей продукции</div>
+      </div>
+    </a>
+
   </div>
-  <div class="feat">
-    <div class="feat-icon">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-        <path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2V9M9 21H5a2 2 0 0 1-2-2V9m0 0h18"/>
-      </svg>
-    </div>
-    <span class="feat-label">Эффективные<br/>формулы</span>
-  </div>
-  <div class="feat">
-    <div class="feat-icon">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-        <polyline points="9 12 11 14 15 10"/>
-      </svg>
-    </div>
-    <span class="feat-label">Контроль<br/>качества</span>
-  </div>
-  <div class="feat">
-    <div class="feat-icon">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-        <rect x="1" y="3" width="15" height="13" rx="1"/>
-        <path d="M16 8h4l3 5v3h-7V8z"/>
-        <circle cx="5.5" cy="18.5" r="2.5"/>
-        <circle cx="18.5" cy="18.5" r="2.5"/>
-      </svg>
-    </div>
-    <span class="feat-label">Доставка<br/>по Казахстану</span>
-  </div>
-  <div class="feat">
-    <div class="feat-icon">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-        <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/>
-        <line x1="7" y1="7" x2="7.01" y2="7"/>
-      </svg>
-    </div>
-    <span class="feat-label">Выгодный опт<br/>и розница</span>
-  </div>
-</div>
+</section>
 
 <!-- PRODUCTS -->
 <section class="products-section">
@@ -495,83 +537,5 @@
   </div>
 </div>
 
-<script>
-const ITEMS = [
-  { id:1, title:"Бытовая химия", url:"bytovaya-himiya.html",
-    icon:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 3h6l1 7H8L9 3z"/><path d="M8 10v11h8V10"/><line x1="12" y1="3" x2="12" y2="10"/></svg>` },
-  { id:2, title:"Автохимия", url:"avtohimiya.html",
-    icon:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>` },
-  { id:3, title:"Производство", url:"proizvodstvo.html",
-    icon:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg>` },
-  { id:4, title:"Опт / Розница", url:"opt.html",
-    icon:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>` },
-  { id:5, title:"Новинки", url:"novinki.html",
-    icon:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>` },
-];
-
-let angle = 0;
-const R = 180;
-
-function pos(i) {
-  const a = ((i / ITEMS.length) * 360 + angle) % 360;
-  const r = (a * Math.PI) / 180;
-  return {
-    x: R * Math.cos(r), y: R * Math.sin(r),
-    op: Math.max(0.4, Math.min(1, 0.4 + 0.6 * ((1 + Math.sin(r)) / 2))),
-    z: Math.round(100 + 50 * Math.cos(r))
-  };
-}
-
-function build() {
-  const orb = document.getElementById("orb");
-  orb.innerHTML = "";
-  const cx = orb.offsetWidth / 2;
-  const cy = orb.offsetHeight / 2;
-  const stage = document.createElement("div");
-  stage.className = "stage";
-  stage.style.cssText = `left:${cx}px;top:${cy}px;`;
-
-  stage.innerHTML = `<div class="o-ring"></div>
-    <div class="o-center">
-      <div style="position:relative;width:64px;height:64px;">
-        <div class="ping1"></div><div class="ping2"></div>
-        <img src="logo.jpg" alt="West Him" style="width:64px;height:64px;border-radius:50%;object-fit:cover;display:block;position:relative;z-index:2;"/>
-      </div>
-    </div>`;
-
-  ITEMS.forEach((item, i) => {
-    const p = pos(i);
-    const node = document.createElement("div");
-    node.className = "o-node";
-    node.id = "n" + item.id;
-    node.style.cssText = `transform:translate(calc(-50% + ${p.x}px),calc(-50% + ${p.y}px));opacity:${p.op};z-index:${p.z}`;
-    node.innerHTML = `<div class="n-icon">${item.icon}</div><div class="n-lbl">${item.title}</div>`;
-    node.addEventListener("click", () => { window.location.href = item.url; });
-    stage.appendChild(node);
-  });
-
-  orb.appendChild(stage);
-  window.addEventListener("resize", () => {
-    stage.style.left = (orb.offsetWidth / 2) + "px";
-    stage.style.top  = (orb.offsetHeight / 2) + "px";
-  });
-}
-
-function tick() {
-  angle = (angle + 0.3) % 360;
-  ITEMS.forEach((item, i) => {
-    const el = document.getElementById("n" + item.id);
-    if (!el) return;
-    const p = pos(i);
-    el.style.transform = `translate(calc(-50% + ${p.x}px),calc(-50% + ${p.y}px))`;
-    el.style.opacity = p.op;
-    el.style.zIndex = p.z;
-  });
-  requestAnimationFrame(tick);
-}
-
-build();
-tick();
-</script>
 </body>
 </html>
