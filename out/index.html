@@ -147,6 +147,48 @@
     .bottle:nth-child(4) { transform: rotate(3.5deg);  transform-origin: 50% 100%; }
     .bottle:nth-child(5) { transform: rotate(7deg);    transform-origin: 50% 100%; }
 
+    /* ─── ORBITAL ─── */
+    .orb-section {
+      position: relative; overflow: hidden;
+      height: 500px;
+      background:
+        linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
+      background-size: 60px 60px;
+      border-top: 1px solid rgba(255,255,255,.07);
+    }
+    .orb-section::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background: radial-gradient(ellipse 70% 80% at 50% 50%, rgba(200,16,46,.07) 0%, transparent 70%);
+    }
+    #orb { position:relative; width:100%; height:100%; }
+    .stage { position:absolute; }
+    .o-ring {
+      position:absolute; top:50%; left:50%;
+      width:360px; height:360px; border-radius:50%;
+      border:1px solid rgba(255,255,255,.1);
+      transform:translate(-50%,-50%); pointer-events:none;
+    }
+    .o-center { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); z-index:10; }
+    .o-center img { width:64px; height:64px; border-radius:50%; object-fit:cover; display:block; position:relative; z-index:2; }
+    .ping1 { position:absolute; inset:-8px; border-radius:50%; border:1px solid rgba(255,255,255,.25); animation:ping 1.8s ease-out infinite; }
+    .ping2 { position:absolute; inset:-18px; border-radius:50%; border:1px solid rgba(255,255,255,.12); animation:ping 1.8s .6s ease-out infinite; }
+    @keyframes ping { 0%{transform:scale(1);opacity:.7} 100%{transform:scale(1.5);opacity:0} }
+    .o-node { position:absolute; top:50%; left:50%; cursor:pointer; }
+    .n-icon {
+      width:40px; height:40px; border-radius:50%;
+      display:flex; align-items:center; justify-content:center;
+      background:#000; color:#fff; border:2px solid rgba(255,255,255,.4);
+      transition:all .3s; position:relative; z-index:2;
+    }
+    .n-icon svg { width:16px; height:16px; }
+    .n-lbl {
+      position:absolute; top:48px; left:50%; transform:translateX(-50%);
+      white-space:nowrap; font-size:11px; font-weight:600; letter-spacing:.05em;
+      color:rgba(255,255,255,.7); pointer-events:none;
+    }
+    @keyframes pulse2 { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.6;transform:scale(1.3)} }
+
     /* ─── FEATURES ─── */
     .features {
       display: flex;
@@ -287,6 +329,9 @@
   </div>
 </section>
 
+<!-- ORBITAL -->
+<section class="orb-section"><div id="orb"></div></section>
+
 <!-- FEATURES -->
 <div class="features">
   <div class="feat">
@@ -406,5 +451,83 @@
   </div>
 </div>
 
+<script>
+const ITEMS = [
+  { id:1, title:"Бытовая химия", url:"bytovaya-himiya.html",
+    icon:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 3h6l1 7H8L9 3z"/><path d="M8 10v11h8V10"/><line x1="12" y1="3" x2="12" y2="10"/></svg>` },
+  { id:2, title:"Автохимия", url:"avtohimiya.html",
+    icon:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>` },
+  { id:3, title:"Производство", url:"proizvodstvo.html",
+    icon:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg>` },
+  { id:4, title:"Опт / Розница", url:"opt.html",
+    icon:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>` },
+  { id:5, title:"Новинки", url:"novinki.html",
+    icon:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>` },
+];
+
+let angle = 0;
+const R = 180;
+
+function pos(i) {
+  const a = ((i / ITEMS.length) * 360 + angle) % 360;
+  const r = (a * Math.PI) / 180;
+  return {
+    x: R * Math.cos(r), y: R * Math.sin(r),
+    op: Math.max(0.4, Math.min(1, 0.4 + 0.6 * ((1 + Math.sin(r)) / 2))),
+    z: Math.round(100 + 50 * Math.cos(r))
+  };
+}
+
+function build() {
+  const orb = document.getElementById("orb");
+  orb.innerHTML = "";
+  const cx = orb.offsetWidth / 2;
+  const cy = orb.offsetHeight / 2;
+  const stage = document.createElement("div");
+  stage.className = "stage";
+  stage.style.cssText = `left:${cx}px;top:${cy}px;`;
+
+  stage.innerHTML = `<div class="o-ring"></div>
+    <div class="o-center">
+      <div style="position:relative;width:64px;height:64px;">
+        <div class="ping1"></div><div class="ping2"></div>
+        <img src="logo.jpg" alt="West Him" style="width:64px;height:64px;border-radius:50%;object-fit:cover;display:block;position:relative;z-index:2;"/>
+      </div>
+    </div>`;
+
+  ITEMS.forEach((item, i) => {
+    const p = pos(i);
+    const node = document.createElement("div");
+    node.className = "o-node";
+    node.id = "n" + item.id;
+    node.style.cssText = `transform:translate(calc(-50% + ${p.x}px),calc(-50% + ${p.y}px));opacity:${p.op};z-index:${p.z}`;
+    node.innerHTML = `<div class="n-icon">${item.icon}</div><div class="n-lbl">${item.title}</div>`;
+    node.addEventListener("click", () => { window.location.href = item.url; });
+    stage.appendChild(node);
+  });
+
+  orb.appendChild(stage);
+  window.addEventListener("resize", () => {
+    stage.style.left = (orb.offsetWidth / 2) + "px";
+    stage.style.top  = (orb.offsetHeight / 2) + "px";
+  });
+}
+
+function tick() {
+  angle = (angle + 0.3) % 360;
+  ITEMS.forEach((item, i) => {
+    const el = document.getElementById("n" + item.id);
+    if (!el) return;
+    const p = pos(i);
+    el.style.transform = `translate(calc(-50% + ${p.x}px),calc(-50% + ${p.y}px))`;
+    el.style.opacity = p.op;
+    el.style.zIndex = p.z;
+  });
+  requestAnimationFrame(tick);
+}
+
+build();
+tick();
+</script>
 </body>
 </html>
