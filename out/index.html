@@ -208,24 +208,45 @@
     .stat-num svg { width: 36px; height: 36px; display: inline-block; vertical-align: middle; }
     .stat-lbl { font-size: 12px; color: rgba(255,255,255,0.85); font-weight: 500; line-height: 1.3; }
 
-    /* ─── RESPONSIVE ─── */
-    @media (max-width: 960px) {
-      .header { padding: 14px 20px; }
-      .hero { grid-template-columns: 1fr; min-height: auto; }
-      .hero-left { padding: 36px 20px; }
-      .hero-right { height: 260px; }
-      .hero-img { object-fit: contain; object-position: center; }
-      .products-grid { grid-template-columns: repeat(2, 1fr); }
-      .products-section { padding: 40px 20px; }
-      .features { flex-wrap: wrap; }
-      .feat { flex: 1 1 33%; border-bottom: 1px solid rgba(255,255,255,0.07); }
-      .stats { flex-wrap: wrap; }
-      .stat { flex: 1 1 50%; }
+    /* ─── ПЛАНШЕТ (iPad: 768–1024px) ─── */
+    @media (max-width: 1024px) and (min-width: 768px) {
+      .header { padding: 14px 28px; }
+      .hero { grid-template-columns: 55% 45%; min-height: 460px; }
+      .hero-left { padding: 48px 36px; }
+      .hero-h1 { font-size: 48px; letter-spacing: -2px; }
+      .products-grid { grid-template-columns: repeat(3, 1fr); }
+      .products-section { padding: 48px 28px; }
+      .feat { flex: 1 1 33%; }
     }
-    @media (max-width: 500px) {
-      .hero-h1 { font-size: 38px; letter-spacing: -1.5px; }
+
+    /* ─── МОБИЛ (до 767px) ─── */
+    @media (max-width: 767px) {
+      .header { padding: 12px 16px; }
+      .header-loc { display: none; }
+
+      /* hero — текст сверху, картинка снизу */
+      .hero { grid-template-columns: 1fr; min-height: auto; }
+      .hero-left { padding: 36px 20px 24px; text-align: center; align-items: center; }
+      .hero-h1 { font-size: clamp(32px, 8vw, 44px); letter-spacing: -1.5px; }
+      .hero-desc { font-size: 14px; max-width: 100%; }
+      .hero-actions { justify-content: center; }
+      .hero-right { height: 280px; }
+      .hero-img { object-fit: contain; object-position: center; }
+
+      /* features — 2 в ряд */
+      .features { flex-wrap: wrap; }
+      .feat { flex: 1 1 50%; border-bottom: 1px solid rgba(255,255,255,0.07); border-right: none; }
+      .feat:nth-child(odd) { border-right: 1px solid rgba(255,255,255,0.07); }
+
+      /* products — 2 в ряд */
       .products-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-      .feat { flex: 1 1 50%; }
+      .products-section { padding: 32px 16px; }
+      .section-title { font-size: 18px; }
+
+      /* stats — 2 в ряд */
+      .stats { flex-wrap: wrap; }
+      .stat { flex: 1 1 50%; border-bottom: 1px solid rgba(255,255,255,0.18); padding: 24px 12px; }
+      .stat-num { font-size: 30px; }
     }
   </style>
 </head>
