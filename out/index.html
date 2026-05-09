@@ -31,6 +31,26 @@
     }
     .header-loc svg { color: #C8102E; flex-shrink: 0; }
 
+    /* Гамбургер — только мобил */
+    .hamburger {
+      display: none; flex-direction: column; justify-content: center; gap: 5px;
+      background: none; border: none; cursor: pointer; padding: 4px;
+    }
+    .hamburger span {
+      display: block; width: 24px; height: 2px;
+      background: #fff; border-radius: 2px;
+    }
+
+    /* Бейдж локации под шапкой — только мобил */
+    .mobile-loc {
+      display: none; align-items: center; gap: 8px;
+      margin: 10px 16px;
+      padding: 10px 16px; border-radius: 100px;
+      border: 1px solid rgba(200,16,46,0.35);
+      background: rgba(200,16,46,0.06);
+      font-size: 13px; color: rgba(255,255,255,0.75);
+    }
+
     /* ─── HERO ─── */
     .hero {
       display: grid;
@@ -221,17 +241,43 @@
 
     /* ─── МОБИЛ (до 767px) ─── */
     @media (max-width: 767px) {
+      /* Шапка */
       .header { padding: 12px 16px; }
       .header-loc { display: none; }
+      .hamburger { display: flex; }
 
-      /* hero — текст сверху, картинка снизу */
-      .hero { grid-template-columns: 1fr; min-height: auto; }
-      .hero-left { padding: 36px 20px 24px; text-align: center; align-items: center; }
-      .hero-h1 { font-size: clamp(32px, 8vw, 44px); letter-spacing: -1.5px; }
-      .hero-desc { font-size: 14px; max-width: 100%; }
-      .hero-actions { justify-content: center; }
-      .hero-right { height: 280px; }
-      .hero-img { object-fit: contain; object-position: center; }
+      /* Бейдж локации */
+      .mobile-loc { display: flex; }
+
+      /* Hero: текст слева, картинка справа (как на макете) */
+      .hero {
+        display: block;
+        position: relative;
+        min-height: 420px;
+        overflow: hidden;
+      }
+      .hero-left {
+        position: relative; z-index: 2;
+        padding: 28px 20px 32px;
+        min-height: 420px;
+        display: flex; flex-direction: column; justify-content: space-between;
+        background: linear-gradient(to right, rgba(0,0,0,1) 55%, rgba(0,0,0,0) 100%);
+        width: 100%;
+      }
+      .hero-h1 { font-size: clamp(30px, 8vw, 42px); letter-spacing: -1.5px; }
+      .hero-desc { font-size: 14px; max-width: 65%; }
+      .hero-actions { flex-direction: column; gap: 10px; margin-top: 20px; }
+      .btn-red  { justify-content: center; width: 100%; border-radius: 14px; padding: 16px; }
+      .btn-ghost { justify-content: center; width: 100%; border-radius: 14px; padding: 16px; }
+
+      /* Картинка — абсолютно справа */
+      .hero-right {
+        position: absolute;
+        right: 0; top: 0; bottom: 0;
+        width: 65%;
+        z-index: 1;
+      }
+      .hero-img { object-fit: cover; object-position: left center; width: 100%; height: 100%; }
 
       /* features — 2 в ряд */
       .features { flex-wrap: wrap; }
@@ -267,7 +313,18 @@
     </svg>
     Производство в г. Актау, Казахстан
   </div>
+  <button class="hamburger" aria-label="Меню">
+    <span></span><span></span><span></span>
+  </button>
 </header>
+
+<!-- Бейдж локации для мобила -->
+<div class="mobile-loc">
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="#C8102E">
+    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"/>
+  </svg>
+  Производство в г. Актау, Казахстан
+</div>
 
 <!-- HERO -->
 <section class="hero">
