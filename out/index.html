@@ -91,30 +91,6 @@
       Белый центр нужен для mix-blend-mode: multiply на изображениях —
       белые пиксели фото "сливаются" с белым фоном и становятся невидимы.
     */
-    .hero-right::before {
-      content: '';
-      position: absolute; inset: 0; z-index: 0;
-      background:
-        radial-gradient(ellipse 85% 75% at 50% 80%,
-          #ffffff  0%,
-          #ffc0c8 18%,
-          #c80020 38%,
-          #500008 58%,
-          #000000 78%
-        );
-    }
-
-    /* Дополнительный красный glow поверх — усиливает свечение */
-    .hero-right::after {
-      content: '';
-      position: absolute; inset: 0; z-index: 3; pointer-events: none;
-      background:
-        radial-gradient(ellipse 100% 60% at 50% 100%,
-          rgba(200,16,46,0.6) 0%,
-          rgba(160,10,30,0.25) 45%,
-          transparent 70%
-        );
-    }
 
 
     /* ─── ORBITAL ─── */
