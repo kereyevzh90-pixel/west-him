@@ -278,11 +278,13 @@
         display: flex; flex-direction: column; justify-content: flex-start;
         height: 100%;
       }
-      .hero-h1 { font-size: clamp(20px, 6vw, 30px); letter-spacing: -1px; margin-bottom: 10px; line-height: 1; }
-      .hero-desc { font-size: 11px; max-width: 100%; margin-bottom: 14px; line-height: 1.5; }
-      .hero-actions { flex-direction: column; gap: 8px; }
-      .btn-red  { justify-content: center; width: 100%; border-radius: 10px; padding: 10px 12px; font-size: 12px; gap: 6px; box-shadow: none; }
-      .btn-ghost { justify-content: center; width: 100%; border-radius: 10px; padding: 10px 12px; font-size: 12px; gap: 6px; }
+      .hero-h1 { font-size: clamp(18px, 5.5vw, 26px); letter-spacing: -0.5px; margin-bottom: 8px; line-height: 1.05; }
+      .hero-desc { font-size: 10px; max-width: 100%; margin-bottom: 12px; line-height: 1.45; }
+      .hero-desc br { display: none; }
+      .hero-actions { flex-direction: column; gap: 7px; }
+      .btn-red  { justify-content: center; width: 100%; border-radius: 8px; padding: 8px 10px; font-size: 11px; gap: 5px; box-shadow: none; }
+      .btn-ghost { justify-content: center; width: 100%; border-radius: 8px; padding: 8px 10px; font-size: 11px; gap: 5px; }
+      .btn-red svg, .btn-ghost svg { width: 14px; height: 14px; flex-shrink: 0; }
 
       /* Картинка справа — заполняет высоту hero */
       .hero-right {
