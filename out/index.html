@@ -114,6 +114,8 @@
       object-position: center bottom;
       display: block;
     }
+    .img-tablet { display: none; }
+    .img-mobile  { display: none; }
 
     /*
       Фон под бутылками: белый в центре → красный → чёрный по краям.
@@ -252,6 +254,8 @@
       .hero-h1 { font-size: 38px; letter-spacing: -1.5px; }
       .hero-right { overflow: hidden; }
       .hero-img { object-fit: contain; object-position: center bottom; }
+      .img-desktop { display: none; }
+      .img-tablet  { display: block; }
       .products-grid { grid-template-columns: repeat(3, 1fr); }
       .products-section { padding: 48px 28px; }
       .feat { flex: 1 1 33%; }
@@ -307,6 +311,9 @@
 
       /* Убираем градиент-оверлей на мобиле */
       .hero-right::before { display: none; }
+      .img-desktop { display: none; }
+      .img-tablet  { display: none; }
+      .img-mobile  { display: block; }
 
       /* categories — 3 в ряд на мобиле */
       .cat-section { padding: 20px 12px; }
@@ -385,11 +392,9 @@
   </div>
 
   <div class="hero-right">
-    <picture>
-      <source media="(max-width: 767px)" srcset="images/photo_2026-05-11_14-50-30.jpg"/>
-      <source media="(min-width: 768px) and (max-width: 1024px)" srcset="images/IMG_0740.PNG"/>
-      <img src="images/IMG_0667.PNG" alt="West Him" class="hero-img"/>
-    </picture>
+    <img src="images/IMG_0667.PNG"                   alt="West Him" class="hero-img img-desktop"/>
+    <img src="images/IMG_0740.PNG"                   alt="West Him" class="hero-img img-tablet"/>
+    <img src="images/photo_2026-05-11_14-50-30.jpg"  alt="West Him" class="hero-img img-mobile"/>
   </div>
 </section>
 
