@@ -265,51 +265,40 @@
       /* Бейдж локации */
       .mobile-loc { display: flex; }
 
-      /* Hero: текст слева, картинка справа (как на макете) */
+      /* Hero: сетка 50/50 — текст слева, картинка справа */
       .hero {
-        display: block;
-        position: relative;
-        min-height: 420px;
+        display: grid;
+        grid-template-columns: 50% 50%;
+        min-height: auto;
         overflow: hidden;
       }
       .hero-left {
         position: relative; z-index: 2;
-        padding: 28px 20px 32px;
-        min-height: 420px;
-        display: flex; flex-direction: column; justify-content: space-between;
+        padding: 24px 16px 24px 16px;
+        display: flex; flex-direction: column; justify-content: center;
         background: transparent;
         width: 100%;
       }
-      .hero-h1 { font-size: clamp(30px, 8vw, 42px); letter-spacing: -1.5px; }
-      .hero-desc { font-size: 14px; max-width: 65%; }
-      .hero-actions { flex-direction: column; gap: 10px; margin-top: 20px; }
-      .btn-red  { justify-content: center; width: 100%; border-radius: 12px; padding: 12px 20px; font-size: 14px; }
-      .btn-ghost { justify-content: center; width: 100%; border-radius: 12px; padding: 12px 20px; font-size: 14px; }
+      .hero-h1 { font-size: clamp(22px, 6.5vw, 34px); letter-spacing: -1px; margin-bottom: 10px; }
+      .hero-desc { font-size: 12px; max-width: 100%; margin-bottom: 16px; line-height: 1.5; }
+      .hero-actions { flex-direction: column; gap: 8px; }
+      .btn-red  { justify-content: center; width: 100%; border-radius: 10px; padding: 10px 14px; font-size: 13px; gap: 6px; }
+      .btn-ghost { justify-content: center; width: 100%; border-radius: 10px; padding: 10px 14px; font-size: 13px; gap: 6px; }
 
-      /* Картинка — абсолютно справа */
+      /* Картинка справа — в потоке */
       .hero-right {
-        position: absolute;
-        right: 0; top: 0; bottom: 0;
-        width: 65%;
-        z-index: 1;
+        position: relative;
+        width: 100%;
+        height: auto;
+        min-height: 300px;
       }
       .hero-img {
-        object-fit: cover; object-position: left center; width: 100%; height: 100%;
+        object-fit: contain; object-position: center bottom; width: 100%; height: 100%;
         filter: brightness(1.2) drop-shadow(0 0 18px rgba(255,210,60,0.35)) drop-shadow(0 0 6px rgba(255,220,80,0.2));
       }
 
-      /* Градиент поверх картинки — текст не залезает на бутылки */
-      .hero-right::before {
-        content: '';
-        position: absolute; inset: 0; z-index: 2;
-        background: linear-gradient(
-          90deg,
-          rgba(0,0,0,0.95) 0%,
-          rgba(0,0,0,0.75) 45%,
-          rgba(0,0,0,0.2)  70%,
-          rgba(0,0,0,0)    100%
-        );
-      }
+      /* Убираем градиент-оверлей на мобиле */
+      .hero-right::before { display: none; }
 
       /* categories — 3 в ряд на мобиле */
       .cat-section { padding: 20px 12px; }
