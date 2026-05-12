@@ -316,14 +316,17 @@
       }
       .btn-red svg, .btn-ghost svg { width: 16px; height: 16px; flex-shrink: 0; }
 
-      /* categories — 3 в ряд на мобиле */
+      /* categories — 2×2 на мобиле, как ПК/iPad */
       .cat-section { padding: 20px 12px; }
-      .cat-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
-      .cat-card { height: 120px; border-radius: 10px; }
-      .cat-content { padding: 8px; }
-      .cat-icon svg { width: 16px; height: 16px; }
-      .cat-name { font-size: 11px; }
-      .cat-desc { display: none; }
+      .cat-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+      .cat-card { height: auto; aspect-ratio: 16/9; border-radius: 10px; }
+      .cat-card:nth-child(5), .cat-card:nth-child(6) { display: none; }
+      .cat-overlay { display: none; }
+      .cat-content { display: none; }
+      .cat-grid .cat-card:nth-child(1) .cat-bg { background-image: url('images/IMG_0747.PNG') !important; }
+      .cat-grid .cat-card:nth-child(2) .cat-bg { background-image: url('images/IMG_0744.PNG') !important; }
+      .cat-grid .cat-card:nth-child(3) .cat-bg { background-image: url('images/IMG_0745.PNG') !important; }
+      .cat-grid .cat-card:nth-child(4) .cat-bg { background-image: url('images/IMG_0746.PNG') !important; }
 
       /* products — 2 в ряд */
       .products-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
