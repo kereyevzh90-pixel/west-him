@@ -194,38 +194,80 @@
     .cat-desc { font-size: 10px; color: rgba(255,255,255,0.55); line-height: 1.3; }
 
     /* ─── FAQ ─── */
-    .faq-section { padding: 60px 52px; background: #000; }
-    .faq-title { font-size: 22px; font-weight: 800; margin-bottom: 28px; }
-    .faq-list { display: flex; flex-direction: column; gap: 10px; }
-    .faq-item {
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 14px; overflow: hidden;
-      background: #0a0a0a;
-      transition: border-color .2s;
+    .faq-section {
+      padding: 72px 52px; background: #000;
+      position: relative; overflow: hidden;
     }
-    .faq-item.open { border-color: rgba(200,16,46,0.4); }
+    .faq-section::before {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background: url('images/IMG_0763.PNG') no-repeat center center / cover;
+      opacity: 0.05;
+    }
+    .faq-section::after {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(200,16,46,0.06) 0%, transparent 70%);
+    }
+    .faq-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 5px 13px; border-radius: 100px;
+      border: 1px solid rgba(200,16,46,0.3);
+      background: rgba(200,16,46,0.07);
+      color: #C8102E; font-size: 11px; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      margin-bottom: 14px; position: relative; z-index: 1;
+    }
+    .faq-title {
+      font-size: 26px; font-weight: 900; letter-spacing: -0.5px;
+      margin-bottom: 32px; position: relative; z-index: 1;
+    }
+    .faq-list { display: flex; flex-direction: column; gap: 8px; position: relative; z-index: 1; }
+    .faq-item {
+      border: 1px solid rgba(255,255,255,0.05);
+      border-radius: 10px; overflow: hidden;
+      background: rgba(8,8,8,0.92);
+      transition: border-color .3s, box-shadow .3s;
+    }
+    .faq-item.open {
+      border-color: rgba(200,16,46,0.28);
+      box-shadow: 0 0 30px rgba(200,16,46,0.1);
+    }
     .faq-q {
       display: flex; align-items: center; justify-content: space-between;
-      gap: 12px; padding: 20px 24px;
+      gap: 16px; padding: 17px 20px;
       cursor: pointer; user-select: none;
-      font-size: 15px; font-weight: 600;
-      list-style: none;
+      font-size: 14px; font-weight: 600; letter-spacing: 0.01em;
     }
-    .faq-q::-webkit-details-marker { display: none; }
     .faq-icon {
-      flex-shrink: 0; width: 24px; height: 24px;
+      flex-shrink: 0; width: 22px; height: 22px;
       display: flex; align-items: center; justify-content: center;
-      border-radius: 50%; border: 1px solid rgba(255,255,255,0.15);
-      color: rgba(255,255,255,0.5); transition: all .2s;
-      transform: rotate(90deg);
+      border-radius: 5px; border: 1px solid rgba(255,255,255,0.09);
+      color: rgba(255,255,255,0.3); transition: all .3s;
+      position: relative;
     }
-    .faq-item.open .faq-icon { border-color: #C8102E; color: #C8102E; transform: rotate(0deg); }
+    .faq-item.open .faq-icon {
+      border-color: rgba(200,16,46,0.45);
+      color: #C8102E; background: rgba(200,16,46,0.07);
+    }
+    .faq-icon-line {
+      position: absolute; width: 10px; height: 1.5px;
+      background: currentColor; border-radius: 1px; transition: transform .3s;
+    }
+    .faq-icon-line:nth-child(1) { transform: rotate(0deg); }
+    .faq-icon-line:nth-child(2) { transform: rotate(90deg); }
+    .faq-item.open .faq-icon-line:nth-child(1) { transform: rotate(45deg); }
+    .faq-item.open .faq-icon-line:nth-child(2) { transform: rotate(-45deg); }
     .faq-a {
-      padding: 0 24px 20px;
-      font-size: 14px; color: rgba(255,255,255,0.55); line-height: 1.7;
-      display: none;
+      max-height: 0; overflow: hidden;
+      transition: max-height .35s ease;
     }
-    .faq-item.open .faq-a { display: block; }
+    .faq-item.open .faq-a { max-height: 160px; }
+    .faq-a-inner {
+      padding: 0 20px 18px;
+      font-size: 13px; color: #b0b0b0; line-height: 1.8;
+      border-top: 1px solid rgba(255,255,255,0.04);
+      padding-top: 14px;
+    }
+    .faq-a-inner .red { color: #C8102E; font-weight: 600; }
 
     /* ─── STATS ─── */
     .stats { display: flex; background: #C8102E; }
@@ -334,10 +376,10 @@
       .cat-grid .cat-card:nth-child(4) .cat-bg { background-image: url('images/IMG_0746.PNG') !important; }
 
       /* faq — мобил */
-      .faq-section { padding: 32px 16px; }
-      .faq-title { font-size: 18px; }
-      .faq-q { padding: 16px 18px; font-size: 14px; }
-      .faq-a { padding: 0 18px 16px; font-size: 13px; }
+      .faq-section { padding: 40px 16px; }
+      .faq-title { font-size: 20px; }
+      .faq-q { padding: 15px 16px; font-size: 13px; }
+      .faq-a-inner { padding: 0 16px 16px; padding-top: 12px; }
 
       /* stats — 2 в ряд */
       .stats { flex-wrap: wrap; }
@@ -484,47 +526,48 @@
 
 <!-- FAQ -->
 <section class="faq-section">
+  <div class="faq-badge">FAQ</div>
   <div class="faq-title">Часто задаваемые вопросы</div>
   <div class="faq-list">
 
     <div class="faq-item">
       <div class="faq-q" onclick="toggleFaq(this)">
         Как оформить оптовый заказ?
-        <span class="faq-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></span>
+        <span class="faq-icon"><span class="faq-icon-line"></span><span class="faq-icon-line"></span></span>
       </div>
-      <div class="faq-a">Свяжитесь с нами через WhatsApp — мы уточним объём, согласуем цену и условия доставки. Минимальный объём заказа — от одной коробки.</div>
+      <div class="faq-a"><div class="faq-a-inner">Свяжитесь с нами через <span class="red">WhatsApp</span> — уточним объём, согласуем цену и условия доставки. Минимальный заказ — от одной коробки.</div></div>
     </div>
 
     <div class="faq-item">
       <div class="faq-q" onclick="toggleFaq(this)">
         Есть ли сертификаты на продукцию?
-        <span class="faq-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></span>
+        <span class="faq-icon"><span class="faq-icon-line"></span><span class="faq-icon-line"></span></span>
       </div>
-      <div class="faq-a">Да, вся наша продукция сертифицирована согласно стандартам Республики Казахстан. Документы можем предоставить по запросу.</div>
+      <div class="faq-a"><div class="faq-a-inner">Да, вся продукция <span class="red">West Him</span> сертифицирована согласно стандартам Республики Казахстан. Документы предоставляем по запросу.</div></div>
     </div>
 
     <div class="faq-item">
       <div class="faq-q" onclick="toggleFaq(this)">
         В каких городах доступна продукция West Him?
-        <span class="faq-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></span>
+        <span class="faq-icon"><span class="faq-icon-line"></span><span class="faq-icon-line"></span></span>
       </div>
-      <div class="faq-a">Мы работаем по всему Казахстану. Производство находится в г. Актау, доставка осуществляется в Алматы, Астану, Актобе, Атырау и другие города.</div>
+      <div class="faq-a"><div class="faq-a-inner">Работаем <span class="red">по всему Казахстану</span>. Производство — г. Актау. Доставка в Алматы, Астану, Актобе, Атырау и другие города.</div></div>
     </div>
 
     <div class="faq-item">
       <div class="faq-q" onclick="toggleFaq(this)">
         Как получить прайс-лист?
-        <span class="faq-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></span>
+        <span class="faq-icon"><span class="faq-icon-line"></span><span class="faq-icon-line"></span></span>
       </div>
-      <div class="faq-a">Напишите нам в WhatsApp — отправим актуальный прайс-лист в формате PDF. Для постоянных партнёров цены обговариваются индивидуально.</div>
+      <div class="faq-a"><div class="faq-a-inner">Напишите в <span class="red">WhatsApp</span> — пришлём актуальный прайс в формате PDF. Для постоянных партнёров цены обсуждаются индивидуально.</div></div>
     </div>
 
     <div class="faq-item">
       <div class="faq-q" onclick="toggleFaq(this)">
         Можно ли заказать продукцию под своим брендом?
-        <span class="faq-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></span>
+        <span class="faq-icon"><span class="faq-icon-line"></span><span class="faq-icon-line"></span></span>
       </div>
-      <div class="faq-a">Да, мы работаем по схеме private label. Обсудим объём, разработаем этикетку и выпустим продукцию под вашим брендом. Свяжитесь с нами для уточнения деталей.</div>
+      <div class="faq-a"><div class="faq-a-inner">Да, работаем по схеме <span class="red">private label</span>. Обсудим объём, разработаем этикетку и выпустим продукцию под вашим брендом.</div></div>
     </div>
 
   </div>
@@ -532,8 +575,7 @@
 
 <script>
 function toggleFaq(el) {
-  var item = el.parentElement;
-  item.classList.toggle('open');
+  el.parentElement.classList.toggle('open');
 }
 </script>
 
