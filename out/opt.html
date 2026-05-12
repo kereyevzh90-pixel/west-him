@@ -36,7 +36,7 @@
       border-bottom: 1px solid rgba(255,255,255,0.06);
     }
     .blob { position: absolute; border-radius: 50%; pointer-events: none; }
-    .b1 { width:500px; height:500px; background:rgba(245,158,11,.08); filter:blur(100px); top:-100px; right:-80px; }
+    .b1 { width:500px; height:500px; background:rgba(200,16,46,.12); filter:blur(100px); top:-100px; right:-80px; }
     .b2 { width:300px; height:300px; background:rgba(200,16,46,.07); filter:blur(80px); bottom:-60px; left:40px; }
     .grid-bg {
       position:absolute; inset:0; pointer-events:none;
@@ -52,7 +52,7 @@
     }
     .cat-icon { width: 10px; height: 10px; border-radius: 50%; background: #C8102E; box-shadow: 0 0 6px #C8102E; }
     h1 { font-size: clamp(32px,4vw,52px); font-weight: 900; line-height: 1.08; letter-spacing: -1.5px; margin-bottom: 16px; }
-    .grad { background: linear-gradient(135deg,#ff4d6b,#ff9a3c); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+    .grad { background: linear-gradient(135deg,#ff3356,#C8102E); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
     .hero-desc { font-size: 16px; color: rgba(255,255,255,.55); line-height: 1.7; max-width: 560px; margin-bottom: 32px; }
     .cta-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
     .btn-amber {
@@ -104,7 +104,7 @@
     .price-actions { display: flex; flex-direction: column; gap: 10px; align-items: flex-end; }
     .btn-dl {
       display: flex; align-items: center; gap: 9px; padding: 13px 24px; border-radius: 12px;
-      background: linear-gradient(135deg,#C8102E,#9b0e24); color: #fff;
+      background: #C8102E; color: #fff;
       font-size: 15px; font-weight: 700; text-decoration: none; white-space: nowrap;
       box-shadow: 0 4px 24px rgba(200,16,46,.35); transition: all .2s;
     }
@@ -130,10 +130,13 @@
     @media(max-width:700px){
       .header { padding: 12px 20px; }
       .main { padding: 40px 20px 60px; }
-      .hero-cat { padding: 48px 20px 44px; }
+      .hero-cat { padding: 40px 20px 36px; }
       nav { display: none; }
-      .price-block { padding: 24px; }
-      .price-actions { align-items: stretch; }
+      .price-block { padding: 24px; flex-direction: column; }
+      .price-actions { align-items: stretch; width: 100%; }
+      .btn-dl, .btn-wa { width: 100%; justify-content: center; }
+      .cta-row { flex-direction: column; }
+      .btn-amber, .btn-ghost { width: 100%; justify-content: center; }
     }
   </style>
 </head>
