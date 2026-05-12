@@ -34,7 +34,14 @@
       position: relative; overflow: hidden;
       padding: 64px 40px 56px;
       border-bottom: 1px solid rgba(255,255,255,0.06);
+      background: url('images/IMG_0768.PNG') center center / cover no-repeat;
     }
+    .hero-cat::after {
+      content: ''; position: absolute; inset: 0;
+      background: rgba(0,0,0,0.65);
+      pointer-events: none;
+    }
+    .hero-cat > * { position: relative; z-index: 1; }
     .blob { position: absolute; border-radius: 50%; pointer-events: none; }
     .b1 { width:500px; height:500px; background:rgba(200,16,46,.12); filter:blur(100px); top:-100px; right:-80px; }
     .b2 { width:300px; height:300px; background:rgba(200,16,46,.08); filter:blur(80px); bottom:-60px; left:60px; }
