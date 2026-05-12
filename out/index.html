@@ -193,41 +193,38 @@
     .cat-name { font-size: 13px; font-weight: 700; margin-bottom: 2px; }
     .cat-desc { font-size: 10px; color: rgba(255,255,255,0.55); line-height: 1.3; }
 
-    /* ─── PRODUCTS ─── */
-    .products-section { padding: 60px 52px; background: #000; }
-    .section-head {
+    /* ─── FAQ ─── */
+    .faq-section { padding: 60px 52px; background: #000; }
+    .faq-title { font-size: 22px; font-weight: 800; margin-bottom: 28px; }
+    .faq-list { display: flex; flex-direction: column; gap: 10px; }
+    .faq-item {
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 14px; overflow: hidden;
+      background: #0a0a0a;
+      transition: border-color .2s;
+    }
+    .faq-item.open { border-color: rgba(200,16,46,0.4); }
+    .faq-q {
       display: flex; align-items: center; justify-content: space-between;
-      margin-bottom: 28px;
+      gap: 12px; padding: 20px 24px;
+      cursor: pointer; user-select: none;
+      font-size: 15px; font-weight: 600;
+      list-style: none;
     }
-    .section-title { font-size: 22px; font-weight: 800; }
-    .see-all { font-size: 13px; font-weight: 600; color: #C8102E; text-decoration: none; }
-    .see-all:hover { text-decoration: underline; }
-
-    .products-grid {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 14px;
-    }
-    .prod-card {
-      background: #111; border-radius: 14px; overflow: hidden;
-      border: 1px solid rgba(255,255,255,0.07);
-      text-decoration: none; color: #fff; display: block;
-      transition: transform .25s, border-color .25s;
-    }
-    .prod-card:hover { transform: translateY(-5px); border-color: rgba(200,16,46,0.45); }
-    .prod-img {
-      background: #181818; aspect-ratio: 1 / 1;
+    .faq-q::-webkit-details-marker { display: none; }
+    .faq-icon {
+      flex-shrink: 0; width: 24px; height: 24px;
       display: flex; align-items: center; justify-content: center;
-      padding: 18px; overflow: hidden;
+      border-radius: 50%; border: 1px solid rgba(255,255,255,0.15);
+      color: rgba(255,255,255,0.5); transition: all .2s;
     }
-    .prod-img img { width: 100%; height: 100%; object-fit: contain; }
-    .prod-info { padding: 14px 14px 16px; }
-    .prod-name { font-size: 13px; font-weight: 700; line-height: 1.35; margin-bottom: 10px; }
-    .prod-vol {
-      display: inline-block; font-size: 11px; font-weight: 700;
-      padding: 3px 9px; border-radius: 6px;
-      background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.55);
+    .faq-item.open .faq-icon { border-color: #C8102E; color: #C8102E; transform: rotate(45deg); }
+    .faq-a {
+      padding: 0 24px 20px;
+      font-size: 14px; color: rgba(255,255,255,0.55); line-height: 1.7;
+      display: none;
     }
+    .faq-item.open .faq-a { display: block; }
 
     /* ─── STATS ─── */
     .stats { display: flex; background: #C8102E; }
@@ -263,8 +260,7 @@
       .hero-h1 { font-size: 34px; letter-spacing: -1px; }
       .hero-right { background: #000 url('images/IMG_0740.PNG?v=3') no-repeat center bottom / contain; }
       .cat-grid { grid-template-columns: repeat(2, 1fr); }
-      .products-grid { grid-template-columns: repeat(3, 1fr); }
-      .products-section { padding: 48px 28px; }
+      .faq-section { padding: 48px 28px; }
     }
 
     /* ─── МОБИЛ (до 767px) ─── */
@@ -336,10 +332,11 @@
       .cat-grid .cat-card:nth-child(3) .cat-bg { background-image: url('images/IMG_0745.PNG') !important; }
       .cat-grid .cat-card:nth-child(4) .cat-bg { background-image: url('images/IMG_0746.PNG') !important; }
 
-      /* products — 2 в ряд */
-      .products-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-      .products-section { padding: 32px 16px; }
-      .section-title { font-size: 18px; }
+      /* faq — мобил */
+      .faq-section { padding: 32px 16px; }
+      .faq-title { font-size: 18px; }
+      .faq-q { padding: 16px 18px; font-size: 14px; }
+      .faq-a { padding: 0 18px 16px; font-size: 13px; }
 
       /* stats — 2 в ряд */
       .stats { flex-wrap: wrap; }
@@ -484,50 +481,60 @@
   </div>
 </section>
 
-<!-- PRODUCTS -->
-<section class="products-section">
-  <div class="section-head">
-    <span class="section-title">Популярная продукция</span>
-    <a href="bytovaya-himiya.html" class="see-all">Смотреть всё →</a>
-  </div>
-  <div class="products-grid">
-    <a href="bytovaya-himiya.html" class="prod-card">
-      <div class="prod-img"><img src="images/product1.jpg" alt=""/></div>
-      <div class="prod-info">
-        <div class="prod-name">Средство для мытья посуды</div>
-        <span class="prod-vol">1 л</span>
+<!-- FAQ -->
+<section class="faq-section">
+  <div class="faq-title">Часто задаваемые вопросы</div>
+  <div class="faq-list">
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        Как оформить оптовый заказ?
+        <span class="faq-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
       </div>
-    </a>
-    <a href="bytovaya-himiya.html" class="prod-card">
-      <div class="prod-img"><img src="images/product2.jpg" alt=""/></div>
-      <div class="prod-info">
-        <div class="prod-name">Средство для мытья посуды</div>
-        <span class="prod-vol">1 л</span>
+      <div class="faq-a">Свяжитесь с нами через WhatsApp — мы уточним объём, согласуем цену и условия доставки. Минимальный объём заказа — от одной коробки.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        Есть ли сертификаты на продукцию?
+        <span class="faq-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
       </div>
-    </a>
-    <a href="bytovaya-himiya.html" class="prod-card">
-      <div class="prod-img"><img src="images/product3.jpg" alt=""/></div>
-      <div class="prod-info">
-        <div class="prod-name">Средство для мытья посуды</div>
-        <span class="prod-vol">1 л</span>
+      <div class="faq-a">Да, вся наша продукция сертифицирована согласно стандартам Республики Казахстан. Документы можем предоставить по запросу.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        В каких городах доступна продукция West Him?
+        <span class="faq-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
       </div>
-    </a>
-    <a href="bytovaya-himiya.html" class="prod-card">
-      <div class="prod-img"><img src="images/product4.jpg" alt=""/></div>
-      <div class="prod-info">
-        <div class="prod-name">Средство для мытья посуды</div>
-        <span class="prod-vol">1 л</span>
+      <div class="faq-a">Мы работаем по всему Казахстану. Производство находится в г. Актау, доставка осуществляется в Алматы, Астану, Актобе, Атырау и другие города.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        Как получить прайс-лист?
+        <span class="faq-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
       </div>
-    </a>
-    <a href="bytovaya-himiya.html" class="prod-card">
-      <div class="prod-img"><img src="images/product5.jpg" alt=""/></div>
-      <div class="prod-info">
-        <div class="prod-name">Средство для мытья посуды</div>
-        <span class="prod-vol">1 л</span>
+      <div class="faq-a">Напишите нам в WhatsApp — отправим актуальный прайс-лист в формате PDF. Для постоянных партнёров цены обговариваются индивидуально.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        Можно ли заказать продукцию под своим брендом?
+        <span class="faq-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
       </div>
-    </a>
+      <div class="faq-a">Да, мы работаем по схеме private label. Обсудим объём, разработаем этикетку и выпустим продукцию под вашим брендом. Свяжитесь с нами для уточнения деталей.</div>
+    </div>
+
   </div>
 </section>
+
+<script>
+function toggleFaq(el) {
+  var item = el.parentElement;
+  item.classList.toggle('open');
+}
+</script>
 
 <!-- STATS -->
 <div class="stats">
