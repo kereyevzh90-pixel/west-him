@@ -269,17 +269,35 @@
     }
     .faq-a-inner .red { color: #C8102E; font-weight: 600; }
 
-    /* ─── STATS ─── */
-    .stats { display: flex; background: #C8102E; }
-    .stat {
-      flex: 1; text-align: center;
-      padding: 36px 16px;
-      border-right: 1px solid rgba(255,255,255,0.18);
+    /* ─── FOOTER STATS ─── */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      background: #000;
+      padding: 40px 52px 48px;
+      border-top: 1px solid rgba(255,255,255,0.06);
     }
-    .stat:last-child { border-right: none; }
-    .stat-num { font-size: 40px; font-weight: 900; line-height: 1; margin-bottom: 6px; }
-    .stat-num svg { width: 36px; height: 36px; display: inline-block; vertical-align: middle; }
-    .stat-lbl { font-size: 12px; color: rgba(255,255,255,0.85); font-weight: 500; line-height: 1.3; }
+    .stat {
+      display: flex; align-items: center; gap: 16px;
+      background: rgba(10,10,10,0.9);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 12px;
+      padding: 20px 22px;
+    }
+    .stat-icon {
+      flex-shrink: 0;
+      width: 48px; height: 48px;
+      border-radius: 12px;
+      background: rgba(200,16,46,0.12);
+      border: 1px solid rgba(200,16,46,0.2);
+      display: flex; align-items: center; justify-content: center;
+      color: #C8102E;
+    }
+    .stat-icon svg { width: 22px; height: 22px; display: block; }
+    .stat-body { display: flex; flex-direction: column; }
+    .stat-num { font-size: 28px; font-weight: 900; line-height: 1; color: #C8102E; margin-bottom: 4px; }
+    .stat-lbl { font-size: 12px; color: rgba(255,255,255,0.45); font-weight: 500; line-height: 1.3; }
 
     /* ─── FAQ: только ПК ─── */
     @media (min-width: 1025px) {
@@ -388,9 +406,10 @@
       .faq-a-inner { padding: 0 16px 16px; padding-top: 12px; }
 
       /* stats — 2 в ряд */
-      .stats { flex-wrap: wrap; }
-      .stat { flex: 1 1 50%; border-bottom: 1px solid rgba(255,255,255,0.18); padding: 24px 12px; }
-      .stat-num { font-size: 30px; }
+      .stats { grid-template-columns: repeat(2, 1fr); padding: 24px 16px 32px; gap: 10px; }
+      .stat { padding: 16px; border-radius: 10px; }
+      .stat-icon { width: 40px; height: 40px; border-radius: 10px; }
+      .stat-num { font-size: 22px; }
     }
   </style>
 </head>
@@ -585,28 +604,57 @@ function toggleFaq(el) {
 }
 </script>
 
-<!-- STATS -->
+<!-- FOOTER STATS -->
 <div class="stats">
+
   <div class="stat">
-    <div class="stat-num">5+</div>
-    <div class="stat-lbl">Лет на рынке</div>
+    <div class="stat-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <circle cx="12" cy="8" r="6"/><path d="M8.21 13.89L7 23l5-3 5 3-1.21-9.12"/>
+      </svg>
+    </div>
+    <div class="stat-body">
+      <div class="stat-num">5+</div>
+      <div class="stat-lbl">Лет на рынке</div>
+    </div>
   </div>
+
   <div class="stat">
-    <div class="stat-num">100+</div>
-    <div class="stat-lbl">Точек продаж</div>
+    <div class="stat-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>
+      </svg>
+    </div>
+    <div class="stat-body">
+      <div class="stat-num">100+</div>
+      <div class="stat-lbl">Точек продаж</div>
+    </div>
   </div>
+
   <div class="stat">
-    <div class="stat-num">5000+</div>
-    <div class="stat-lbl">Довольных клиентов</div>
+    <div class="stat-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+      </svg>
+    </div>
+    <div class="stat-body">
+      <div class="stat-num">5000+</div>
+      <div class="stat-lbl">Довольных клиентов</div>
+    </div>
   </div>
+
   <div class="stat">
-    <div class="stat-num">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <div class="stat-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
         <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
       </svg>
     </div>
-    <div class="stat-lbl">Сертифицированная<br/>продукция</div>
+    <div class="stat-body">
+      <div class="stat-num">100%</div>
+      <div class="stat-lbl">Сертифицированная продукция</div>
+    </div>
   </div>
+
 </div>
 
 </body>
