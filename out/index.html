@@ -142,27 +142,9 @@
     }
     .cat-card:hover { transform: translateY(-5px); box-shadow: 0 8px 32px rgba(0,0,0,0.12); }
     .cat-photo {
-      width: 100%; aspect-ratio: 4/3;
+      width: 100%; aspect-ratio: 3/4;
       background-size: cover; background-position: center;
-      flex-shrink: 0;
     }
-    .cat-content {
-      padding: 20px 20px 18px;
-      display: flex; flex-direction: column; flex: 1;
-    }
-    .cat-icon {
-      color: #C8102E; margin-bottom: 12px;
-    }
-    .cat-icon svg { width: 28px; height: 28px; display: block; }
-    .cat-name { font-size: 16px; font-weight: 800; margin-bottom: 6px; color: #111; }
-    .cat-desc { font-size: 13px; color: #777; line-height: 1.55; flex: 1; }
-    .cat-arrow {
-      display: inline-flex; align-items: center; gap: 4px;
-      color: #C8102E; font-size: 14px; font-weight: 700;
-      margin-top: 16px;
-    }
-    .cat-arrow svg { width: 16px; height: 16px; transition: transform .2s; }
-    .cat-card:hover .cat-arrow svg { transform: translateX(4px); }
 
     /* ─── FAQ ─── */
     .faq-section {
@@ -408,60 +390,18 @@
 
     <a href="proizvodstvo.html" class="cat-card">
       <div class="cat-photo" style="background-image:url('images/IMG_0845.PNG')"></div>
-      <div class="cat-content">
-        <div class="cat-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-            <rect x="2" y="9" width="4" height="12"/><rect x="10" y="5" width="4" height="16"/><rect x="18" y="1" width="4" height="20"/>
-          </svg>
-        </div>
-        <div class="cat-name">Производство</div>
-        <div class="cat-desc">Современное оборудование и строгий контроль качества на всех этапах.</div>
-        <div class="cat-arrow">
-          →
-        </div>
-      </div>
     </a>
 
     <a href="opt.html" class="cat-card">
       <div class="cat-photo" style="background-image:url('images/IMG_0847.PNG')"></div>
-      <div class="cat-content">
-        <div class="cat-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/>
-          </svg>
-        </div>
-        <div class="cat-name">Опт / Розница</div>
-        <div class="cat-desc">Выгодные условия для оптовых партнёров и розничных покупателей.</div>
-        <div class="cat-arrow">→</div>
-      </div>
     </a>
 
     <a href="bytovaya-himiya.html" class="cat-card">
       <div class="cat-photo" style="background-image:url('images/IMG_0846.PNG')"></div>
-      <div class="cat-content">
-        <div class="cat-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-            <path d="M9 3h6l1 7H8L9 3z"/><path d="M8 10v11h8V10"/><line x1="12" y1="3" x2="12" y2="10"/>
-          </svg>
-        </div>
-        <div class="cat-name">Бытовая химия</div>
-        <div class="cat-desc">Средства для дома и ежедневной чистоты. Эффективность и безопасность.</div>
-        <div class="cat-arrow">→</div>
-      </div>
     </a>
 
     <a href="avtohimiya.html" class="cat-card">
       <div class="cat-photo" style="background-image:url('images/IMG_0844.PNG')"></div>
-      <div class="cat-content">
-        <div class="cat-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-            <rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 5v3h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/>
-          </svg>
-        </div>
-        <div class="cat-name">Автохимия</div>
-        <div class="cat-desc">Профессиональная химия для ухода за автомобилем на всех этапах.</div>
-        <div class="cat-arrow">→</div>
-      </div>
     </a>
 
   </div>
