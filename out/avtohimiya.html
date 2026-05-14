@@ -8,252 +8,228 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body { min-height: 100%; background: #000; color: #fff; font-family: 'Inter', system-ui, sans-serif; }
+    html, body { background: #fff; color: #111; font-family: 'Inter', sans-serif; overflow-x: hidden; }
 
     .header {
       display: flex; align-items: center; justify-content: space-between;
-      padding: 14px 40px;
-      background: rgba(0,0,0,0.75); backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(255,255,255,0.08); position: sticky; top: 0; z-index: 50;
+      padding: 14px 52px; background: #fff;
+      border-bottom: 1px solid #ebebeb;
+      position: sticky; top: 0; z-index: 100; gap: 32px;
     }
-    .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: #fff; }
-    .logo img { width: 42px; height: 42px; border-radius: 50%; object-fit: cover; }
-    .logo-name { font-size: 20px; font-weight: 800; letter-spacing: -0.5px; }
-    .back-btn {
-      display: flex; align-items: center; gap: 8px; padding: 9px 18px;
-      border-radius: 10px; border: 1px solid rgba(255,255,255,0.1);
-      background: transparent; color: rgba(255,255,255,0.7); font-size: 14px; font-weight: 500;
-      text-decoration: none; transition: all .2s;
+    .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; color: #111; flex-shrink: 0; }
+    .logo img { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; }
+    .logo-name { display: block; font-size: 16px; font-weight: 800; letter-spacing: 0.3px; color: #111; line-height: 1.2; }
+    .logo-sub { display: block; font-size: 11px; color: #999; font-weight: 400; margin-top: 1px; }
+    .header-nav { display: flex; align-items: center; gap: 28px; flex: 1; justify-content: center; }
+    .header-nav a { font-size: 14px; font-weight: 500; color: #333; text-decoration: none; transition: color .2s; }
+    .header-nav a:hover { color: #C8102E; }
+    .header-nav a.active { color: #C8102E; font-weight: 600; position: relative; }
+    .header-nav a.active::after { content: ''; position: absolute; bottom: -4px; left: 0; right: 0; height: 2px; background: #C8102E; border-radius: 2px; }
+    .header-cta {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 20px; border-radius: 8px; white-space: nowrap;
+      background: #fff; border: 1.5px solid #C8102E;
+      color: #C8102E; font-size: 13px; font-weight: 700;
+      text-decoration: none; transition: background .2s, color .2s; flex-shrink: 0;
     }
-    .back-btn:hover { background: rgba(255,255,255,0.07); color: #fff; }
-    nav { display: flex; gap: 28px; }
-    nav a { color: rgba(255,255,255,0.5); text-decoration: none; font-size: 14px; font-weight: 500; transition: color .2s; }
-    nav a:hover { color: #fff; }
+    .header-cta:hover { background: #C8102E; color: #fff; }
+    .hamburger { display: none; flex-direction: column; justify-content: center; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; }
+    .hamburger span { display: block; width: 24px; height: 2px; background: #111; border-radius: 2px; }
 
-    .hero-cat {
-      position: relative; overflow: hidden;
-      padding: 64px 40px 56px;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-      background: url('images/IMG_0768.PNG?v=2') center center / cover no-repeat;
-    }
-    .hero-cat::after {
-      content: ''; position: absolute; inset: 0;
-      background: rgba(0,0,0,0.82);
-      pointer-events: none;
-    }
-    .hero-cat > * { position: relative; z-index: 1; }
-    .blob { display: none; }
-    .hero-inner { position: relative; max-width: 800px; }
-    .cat-badge {
-      display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px;
-      border-radius: 100px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.12);
-      font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.85); margin-bottom: 20px;
-      text-transform: uppercase; letter-spacing: .05em;
-    }
-    .cat-icon { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.4); }
-    h1 { font-size: clamp(32px,4vw,52px); font-weight: 900; line-height: 1.08; letter-spacing: -1.5px; margin-bottom: 16px; }
-    .grad { color: #fff; -webkit-text-fill-color: #fff; }
-    .hero-desc { font-size: 16px; color: rgba(255,255,255,.55); line-height: 1.7; max-width: 560px; margin-bottom: 32px; }
-    .cta-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
-    .btn-blue {
-      display: flex; align-items: center; gap: 8px; padding: 13px 24px; border-radius: 12px;
-      background: #C8102E; color: #fff; font-size: 15px; font-weight: 700; text-decoration: none;
-      box-shadow: 0 4px 24px rgba(200,16,46,.4); transition: all .2s;
-    }
-    .btn-blue:hover { background: #a00d24; transform: translateY(-1px); }
-    .btn-ghost {
-      display: flex; align-items: center; gap: 8px; padding: 13px 24px; border-radius: 12px;
-      background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1);
-      color: #fff; font-size: 15px; font-weight: 600; text-decoration: none; transition: background .2s;
-    }
-    .btn-ghost:hover { background: rgba(255,255,255,.1); }
+    .hero { display: grid; grid-template-columns: 46% 54%; min-height: 440px; overflow: hidden; }
+    .hero-left { display: flex; flex-direction: column; justify-content: center; padding: 56px 48px; background: #fff; }
+    .hero-badge { display: inline-flex; align-items: center; gap: 7px; color: #C8102E; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 18px; width: fit-content; }
+    .hero-h1 { font-size: clamp(32px, 3.4vw, 52px); font-weight: 900; line-height: 1.1; letter-spacing: -1.5px; margin-bottom: 18px; color: #111; }
+    .hero-h1 .red { color: #C8102E; }
+    .hero-desc { font-size: 15px; color: #666; line-height: 1.7; margin-bottom: 32px; max-width: 400px; }
+    .hero-actions { display: flex; gap: 12px; }
+    .btn-red { display: inline-flex; align-items: center; gap: 7px; padding: 13px 22px; border-radius: 10px; background: #C8102E; color: #fff; font-size: 14px; font-weight: 700; text-decoration: none; box-shadow: 0 4px 20px rgba(200,16,46,0.3); transition: background .2s, transform .2s; }
+    .btn-red:hover { background: #a50d25; transform: translateY(-1px); }
+    .btn-outline { display: inline-flex; align-items: center; gap: 7px; padding: 13px 22px; border-radius: 10px; background: #fff; border: 1.5px solid #ddd; color: #333; font-size: 14px; font-weight: 600; text-decoration: none; transition: border-color .2s; }
+    .btn-outline:hover { border-color: #bbb; }
+    .hero-photo { background: url('images/IMG_0768.PNG') center center / cover no-repeat; }
 
-    .main { max-width: 1200px; margin: 0 auto; padding: 56px 40px 80px; }
-    .section-title { font-size: 24px; font-weight: 800; letter-spacing: -.5px; margin-bottom: 6px; }
-    .section-sub { font-size: 14px; color: rgba(255,255,255,.45); margin-bottom: 32px; }
+    .props-strip { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid #ebebeb; border-bottom: 1px solid #ebebeb; background: #fff; }
+    .prop { padding: 28px 32px; border-right: 1px solid #ebebeb; }
+    .prop:last-child { border-right: none; }
+    .prop-n { font-size: 28px; font-weight: 900; color: #C8102E; letter-spacing: -1px; margin-bottom: 4px; }
+    .prop-l { font-size: 13px; color: #888; }
 
-    .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; margin-bottom: 56px; }
-    .prod-card {
-      background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.08);
-      border-radius: 16px; padding: 24px; transition: all .25s;
-    }
-    .prod-card:hover { background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.15); transform: translateY(-2px); }
-    .prod-icon { width: 44px; height: 44px; border-radius: 12px; background: rgba(200,16,46,.15); border: 1px solid rgba(200,16,46,.25); display: flex; align-items: center; justify-content: center; margin-bottom: 14px; }
-    .prod-icon svg { width: 22px; height: 22px; color: #ff6b7a; }
-    .prod-name { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
-    .prod-desc { font-size: 13px; color: rgba(255,255,255,.5); line-height: 1.6; margin-bottom: 12px; }
+    .main { max-width: 1200px; margin: 0 auto; padding: 52px 52px 80px; }
+    .section-title { font-size: 24px; font-weight: 800; letter-spacing: -0.5px; color: #111; margin-bottom: 6px; }
+    .section-sub { font-size: 14px; color: #888; margin-bottom: 32px; }
+
+    .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; margin-bottom: 52px; }
+    .prod-card { background: #fff; border: 1px solid #ebebeb; border-radius: 16px; padding: 24px; transition: box-shadow .25s, transform .25s; }
+    .prod-card:hover { box-shadow: 0 6px 24px rgba(0,0,0,0.09); transform: translateY(-2px); }
+    .prod-icon { width: 44px; height: 44px; border-radius: 12px; background: rgba(200,16,46,0.08); border: 1.5px solid rgba(200,16,46,0.18); display: flex; align-items: center; justify-content: center; margin-bottom: 14px; color: #C8102E; }
+    .prod-icon svg { width: 22px; height: 22px; }
+    .prod-name { font-size: 15px; font-weight: 700; color: #111; margin-bottom: 6px; }
+    .prod-desc { font-size: 13px; color: #777; line-height: 1.6; margin-bottom: 12px; }
     .prod-tags { display: flex; flex-wrap: wrap; gap: 6px; }
-    .prod-tag { padding: 3px 9px; border-radius: 6px; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.08); font-size: 11px; font-weight: 500; color: rgba(255,255,255,.5); }
+    .prod-tag { padding: 3px 9px; border-radius: 6px; background: #f5f5f5; border: 1px solid #e8e8e8; font-size: 11px; font-weight: 500; color: #666; }
 
-    .price-block {
-      background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.1);
-      border-radius: 20px; padding: 40px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 24px;
-    }
-    .price-block h3 { font-size: 22px; font-weight: 800; margin-bottom: 6px; }
-    .price-block p { font-size: 14px; color: rgba(255,255,255,.5); max-width: 420px; line-height: 1.6; }
+    .price-block { background: #f7f7f7; border: 1px solid #ebebeb; border-radius: 20px; padding: 40px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 24px; }
+    .price-block h3 { font-size: 22px; font-weight: 800; color: #111; margin-bottom: 6px; }
+    .price-block p { font-size: 14px; color: #777; max-width: 420px; line-height: 1.6; }
     .price-actions { display: flex; flex-direction: column; gap: 10px; align-items: flex-end; }
-    .btn-dl {
-      display: flex; align-items: center; gap: 9px; padding: 13px 24px; border-radius: 12px;
-      background: #C8102E; color: #fff;
-      font-size: 15px; font-weight: 700; text-decoration: none; white-space: nowrap;
-      box-shadow: 0 4px 24px rgba(200,16,46,.35); transition: all .2s;
-    }
-    .btn-dl:hover { box-shadow: 0 6px 32px rgba(200,16,46,.5); transform: translateY(-1px); }
-    .btn-wa {
-      display: flex; align-items: center; gap: 8px; padding: 10px 20px; border-radius: 10px;
-      background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1);
-      color: rgba(255,255,255,.8); font-size: 13px; font-weight: 600; text-decoration: none; transition: all .2s;
-    }
-    .btn-wa:hover { background: rgba(255,255,255,.1); }
+    .btn-dl { display: flex; align-items: center; gap: 9px; padding: 13px 24px; border-radius: 12px; background: #C8102E; color: #fff; font-size: 15px; font-weight: 700; text-decoration: none; white-space: nowrap; box-shadow: 0 4px 20px rgba(200,16,46,0.3); transition: all .2s; }
+    .btn-dl:hover { background: #a50d25; transform: translateY(-1px); }
+    .btn-wa { display: flex; align-items: center; gap: 8px; padding: 10px 20px; border-radius: 10px; background: #fff; border: 1.5px solid #ddd; color: #444; font-size: 13px; font-weight: 600; text-decoration: none; transition: border-color .2s; }
+    .btn-wa:hover { border-color: #bbb; }
 
-    .props { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; margin-bottom: 56px; }
-    .prop-card { background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.08); border-radius: 14px; padding: 20px; }
-    .prop-n { font-size: 28px; font-weight: 900; letter-spacing: -1px; margin-bottom: 4px; }
-    .prop-l { font-size: 13px; color: rgba(255,255,255,.45); }
-
-    @media(max-width:700px){
-      .header { padding: 12px 20px; }
-      .main { padding: 40px 20px 60px; }
-      .hero-cat { padding: 40px 20px 36px; }
-      nav { display: none; }
+    @media (max-width: 1024px) and (min-width: 768px) {
+      .header { padding: 14px 28px; gap: 20px; }
+      .header-nav { gap: 18px; }
+      .hero { grid-template-columns: 50% 50%; }
+      .hero-left { padding: 40px 28px; }
+      .props-strip { grid-template-columns: repeat(2, 1fr); }
+      .prop:nth-child(2) { border-right: none; }
+      .prop:nth-child(3) { border-top: 1px solid #ebebeb; }
+      .prop:nth-child(4) { border-top: 1px solid #ebebeb; border-right: none; }
+      .main { padding: 40px 28px 60px; }
+    }
+    @media (max-width: 767px) {
+      .header { padding: 12px 16px; gap: 12px; }
+      .header-nav { display: none; }
+      .header-cta { display: none; }
+      .hamburger { display: flex; }
+      .hero { display: flex; flex-direction: column; }
+      .hero-left { padding: 28px 16px 24px; }
+      .hero-h1 { font-size: clamp(28px, 7vw, 38px); }
+      .hero-desc { max-width: 100%; }
+      .hero-actions { flex-direction: column; }
+      .btn-red, .btn-outline { justify-content: center; }
+      .hero-photo { min-height: 220px; }
+      .props-strip { grid-template-columns: repeat(2, 1fr); }
+      .prop { padding: 20px 16px; border-right: none; border-bottom: 1px solid #ebebeb; }
+      .prop:nth-child(1) { border-right: 1px solid #ebebeb; }
+      .prop:nth-child(2) { border-bottom: 1px solid #ebebeb; }
+      .prop:nth-child(3) { border-right: 1px solid #ebebeb; border-bottom: none; }
+      .prop:nth-child(4) { border-bottom: none; }
+      .main { padding: 32px 16px 60px; }
       .price-block { padding: 24px; flex-direction: column; }
       .price-actions { align-items: stretch; width: 100%; }
       .btn-dl, .btn-wa { width: 100%; justify-content: center; }
-      .cta-row { flex-direction: column; }
-      .btn-blue, .btn-ghost { width: 100%; justify-content: center; }
     }
   </style>
 </head>
 <body>
 
-  <header class="header">
-    <a href="index.html" class="logo">
-      <img src="logo.jpg" alt="West Him"/>
-      <span class="logo-name">West Him</span>
-    </a>
-    <nav>
-      <a href="bytovaya-himiya.html">Бытовая химия</a>
-      <a href="avtohimiya.html" style="color:#fff;">Автохимия</a>
-      <a href="opt.html">Опт</a>
-      <a href="index.html">Главная</a>
-    </nav>
-    <a href="index.html" class="back-btn">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
-      На главную
-    </a>
-  </header>
-
-  <section class="hero-cat">
-    <div class="blob b1"></div>
-    <div class="blob b2"></div>
-    <div class="grid-bg"></div>
-    <div class="hero-inner">
-      <div class="cat-badge"><div class="cat-icon"></div>Линейка 2</div>
-      <h1>Авто<span class="grad">химия</span></h1>
-      <p class="hero-desc">
-        Профессиональные средства для ухода за автомобилем — кузов, салон, диски, стёкла.
-        Казахстанское производство, проверенное на дорогах Центральной Азии.
-      </p>
-      <div class="cta-row">
-        <a class="btn-blue" href="#price">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 15V3m0 12l-4-4m4 4l4-4M2 17l.621 2.485A2 2 0 004.561 21h14.878a2 2 0 001.94-1.515L22 17"/></svg>
-          Скачать прайс
-        </a>
-        <a class="btn-ghost" href="https://wa.me/77010706960" target="_blank">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-          Заказать в WhatsApp
-        </a>
-      </div>
+<header class="header">
+  <a href="index.html" class="logo">
+    <img src="logo.jpg" alt="West Him"/>
+    <div>
+      <span class="logo-name">WEST HIM</span>
+      <span class="logo-sub">Химическое производство</span>
     </div>
-  </section>
+  </a>
+  <nav class="header-nav">
+    <a href="index.html">Главная</a>
+    <a href="bytovaya-himiya.html">Каталог</a>
+    <a href="proizvodstvo.html">Производство</a>
+    <a href="opt.html">О компании</a>
+    <a href="opt.html">Партнёрам</a>
+    <a href="https://wa.me/77010706960" target="_blank">Контакты</a>
+  </nav>
+  <a class="header-cta" href="https://wa.me/77010706960" target="_blank">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.07 1.18 2 2 0 012 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14h0v2.92z"/></svg>
+    Связаться
+  </a>
+  <button class="hamburger" aria-label="Меню"><span></span><span></span><span></span></button>
+</header>
 
-  <main class="main">
-
-    <div class="props">
-      <div class="prop-card"><div class="prop-n grad">30+</div><div class="prop-l">Позиций в линейке</div></div>
-      <div class="prop-card"><div class="prop-n grad">КЗ</div><div class="prop-l">Производство Актау</div></div>
-      <div class="prop-card"><div class="prop-n grad">Проф</div><div class="prop-l">Качество детейлинга</div></div>
-      <div class="prop-card"><div class="prop-n grad">Опт</div><div class="prop-l">Автомагазины / СТО</div></div>
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-badge">→ Линейка автохимии</div>
+    <h1 class="hero-h1">Авто<span class="red">химия</span></h1>
+    <p class="hero-desc">Профессиональные средства для ухода за автомобилем — кузов, салон, диски, стёкла. Казахстанское производство.</p>
+    <div class="hero-actions">
+      <a class="btn-red" href="#price">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 15V3m0 12l-4-4m4 4l4-4M2 17l.621 2.485A2 2 0 004.561 21h14.878a2 2 0 001.94-1.515L22 17"/></svg>
+        Скачать прайс
+      </a>
+      <a class="btn-outline" href="https://wa.me/77010706960" target="_blank">Заказать в WhatsApp</a>
     </div>
+  </div>
+  <div class="hero-photo"></div>
+</section>
 
-    <div class="section-title">Продукты линейки</div>
-    <div class="section-sub">Для детейлинга, автомоек и розничных магазинов</div>
+<div class="props-strip">
+  <div class="prop"><div class="prop-n">30+</div><div class="prop-l">Позиций в линейке</div></div>
+  <div class="prop"><div class="prop-n">КЗ</div><div class="prop-l">Производство Актау</div></div>
+  <div class="prop"><div class="prop-n">Проф</div><div class="prop-l">Качество детейлинга</div></div>
+  <div class="prop"><div class="prop-n">Опт</div><div class="prop-l">Автомагазины / СТО</div></div>
+</div>
 
-    <div class="products-grid">
+<main class="main">
 
-      <div class="prod-card">
-        <div class="prod-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 9l-7 3-7-3V5l7-3 7 3v4zM5 9v6l7 3 7-3V9"/></svg>
-        </div>
-        <div class="prod-name">Автошампунь</div>
-        <div class="prod-desc">Бесконтактная и ручная мойка. Активная пена, удаляет дорожные загрязнения без царапин.</div>
-        <div class="prod-tags"><span class="prod-tag">1 л</span><span class="prod-tag">5 л</span><span class="prod-tag">Концентрат</span></div>
-      </div>
+  <div class="section-title">Продукты линейки</div>
+  <div class="section-sub">Для детейлинга, автомоек и розничных магазинов</div>
 
-      <div class="prod-card">
-        <div class="prod-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 3v9l5 5"/></svg>
-        </div>
-        <div class="prod-name">Полироль кузова</div>
-        <div class="prod-desc">Восстанавливает блеск лакокрасочного покрытия. Защита от УФ-лучей и мелких царапин.</div>
-        <div class="prod-tags"><span class="prod-tag">500 мл</span><span class="prod-tag">Паста</span></div>
-      </div>
+  <div class="products-grid">
 
-      <div class="prod-card">
-        <div class="prod-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
-        </div>
-        <div class="prod-name">Очиститель стёкол (авто)</div>
-        <div class="prod-desc">Мгновенно удаляет насекомых, масляные плёнки и дорожную грязь. Не оставляет разводов.</div>
-        <div class="prod-tags"><span class="prod-tag">500 мл</span><span class="prod-tag">Триггер</span></div>
-      </div>
-
-      <div class="prod-card">
-        <div class="prod-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-        </div>
-        <div class="prod-name">Очиститель салона</div>
-        <div class="prod-desc">Для пластика, ткани и кожи. Удаляет пятна, освежает поверхности, придаёт матовый блеск.</div>
-        <div class="prod-tags"><span class="prod-tag">500 мл</span><span class="prod-tag">Спрей</span></div>
-      </div>
-
-      <div class="prod-card">
-        <div class="prod-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="18" cy="18" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 15V5a2 2 0 00-2-2H8a2 2 0 00-2 2v10"/></svg>
-        </div>
-        <div class="prod-name">Очиститель дисков</div>
-        <div class="prod-desc">Растворяет тормозную пыль и битумные загрязнения. Безопасен для всех типов дисков.</div>
-        <div class="prod-tags"><span class="prod-tag">500 мл</span><span class="prod-tag">Активный</span></div>
-      </div>
-
-      <div class="prod-card">
-        <div class="prod-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l1.2 3.6L17 8l-2.8 2.7.7 3.8L12 13l-2.9 1.5.7-3.8L7 8l3.8-.4z"/></svg>
-        </div>
-        <div class="prod-name">Пенный очиститель двигателя</div>
-        <div class="prod-desc">Безопасно удаляет масло, смолу и грязь с моторного отсека. Концентрированная формула.</div>
-        <div class="prod-tags"><span class="prod-tag">1 л</span><span class="prod-tag">Пена</span></div>
-      </div>
-
+    <div class="prod-card">
+      <div class="prod-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 9l-7 3-7-3V5l7-3 7 3v4zM5 9v6l7 3 7-3V9"/></svg></div>
+      <div class="prod-name">Автошампунь</div>
+      <div class="prod-desc">Бесконтактная и ручная мойка. Активная пена, удаляет дорожные загрязнения без царапин.</div>
+      <div class="prod-tags"><span class="prod-tag">1 л</span><span class="prod-tag">5 л</span><span class="prod-tag">Концентрат</span></div>
     </div>
 
-    <div id="price" class="price-block">
-      <div>
-        <h3>Прайс-лист — Автохимия</h3>
-        <p>Оптовые цены для автомагазинов, автомоек, СТО и детейлинг-студий. Возможна поставка под СТМ (собственная торговая марка).</p>
-      </div>
-      <div class="price-actions">
-        <a class="btn-dl" href="#">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 15V3m0 12l-4-4m4 4l4-4M2 17l.621 2.485A2 2 0 004.561 21h14.878a2 2 0 001.94-1.515L22 17"/></svg>
-          Скачать прайс (PDF)
-        </a>
-        <a class="btn-wa" href="https://wa.me/77010706960?text=Здравствуйте%2C%20интересует%20прайс%20на%20автохимию" target="_blank">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-          Получить прайс в WhatsApp
-        </a>
-      </div>
+    <div class="prod-card">
+      <div class="prod-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 3v9l5 5"/></svg></div>
+      <div class="prod-name">Полироль кузова</div>
+      <div class="prod-desc">Восстанавливает блеск лакокрасочного покрытия. Защита от УФ-лучей и мелких царапин.</div>
+      <div class="prod-tags"><span class="prod-tag">500 мл</span><span class="prod-tag">Паста</span></div>
     </div>
 
-  </main>
+    <div class="prod-card">
+      <div class="prod-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12h18M3 6h18M3 18h18"/></svg></div>
+      <div class="prod-name">Очиститель стёкол (авто)</div>
+      <div class="prod-desc">Мгновенно удаляет насекомых, масляные плёнки и дорожную грязь. Не оставляет разводов.</div>
+      <div class="prod-tags"><span class="prod-tag">500 мл</span><span class="prod-tag">Триггер</span></div>
+    </div>
+
+    <div class="prod-card">
+      <div class="prod-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+      <div class="prod-name">Очиститель салона</div>
+      <div class="prod-desc">Для пластика, ткани и кожи. Удаляет пятна, освежает поверхности, придаёт матовый блеск.</div>
+      <div class="prod-tags"><span class="prod-tag">500 мл</span><span class="prod-tag">Спрей</span></div>
+    </div>
+
+    <div class="prod-card">
+      <div class="prod-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="18" cy="18" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 15V5a2 2 0 00-2-2H8a2 2 0 00-2 2v10"/></svg></div>
+      <div class="prod-name">Очиститель дисков</div>
+      <div class="prod-desc">Растворяет тормозную пыль и битумные загрязнения. Безопасен для всех типов дисков.</div>
+      <div class="prod-tags"><span class="prod-tag">500 мл</span><span class="prod-tag">Активный</span></div>
+    </div>
+
+    <div class="prod-card">
+      <div class="prod-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l1.2 3.6L17 8l-2.8 2.7.7 3.8L12 13l-2.9 1.5.7-3.8L7 8l3.8-.4z"/></svg></div>
+      <div class="prod-name">Пенный очиститель двигателя</div>
+      <div class="prod-desc">Безопасно удаляет масло, смолу и грязь с моторного отсека. Концентрированная формула.</div>
+      <div class="prod-tags"><span class="prod-tag">1 л</span><span class="prod-tag">Пена</span></div>
+    </div>
+
+  </div>
+
+  <div id="price" class="price-block">
+    <div>
+      <h3>Прайс-лист — Автохимия</h3>
+      <p>Оптовые цены для автомагазинов, автомоек, СТО и детейлинг-студий. Возможна поставка под СТМ.</p>
+    </div>
+    <div class="price-actions">
+      <a class="btn-dl" href="#">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 15V3m0 12l-4-4m4 4l4-4M2 17l.621 2.485A2 2 0 004.561 21h14.878a2 2 0 001.94-1.515L22 17"/></svg>
+        Скачать прайс (PDF)
+      </a>
+      <a class="btn-wa" href="https://wa.me/77010706960?text=Здравствуйте%2C%20интересует%20прайс%20на%20автохимию" target="_blank">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Получить прайс в WhatsApp
+      </a>
+    </div>
+  </div>
+
+</main>
 </body>
 </html>
