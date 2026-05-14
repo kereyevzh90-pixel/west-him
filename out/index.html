@@ -8,245 +8,209 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body { background: #000; color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; }
+    html, body { background: #fff; color: #111; font-family: 'Inter', sans-serif; overflow-x: hidden; }
 
     /* ─── HEADER ─── */
     .header {
       display: flex; align-items: center; justify-content: space-between;
-      padding: 18px 52px;
-      background: rgba(0,0,0,0.9);
-      backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(255,255,255,0.06);
+      padding: 16px 52px;
+      background: #fff;
+      border-bottom: 1px solid #ebebeb;
       position: sticky; top: 0; z-index: 100;
     }
-    .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; color: #fff; }
-    .logo img { width: 46px; height: 46px; border-radius: 50%; object-fit: cover; }
-    .logo-name { display: block; font-size: 17px; font-weight: 800; letter-spacing: 0.5px; }
-    .logo-sub  { display: block; font-size: 10px; color: rgba(255,255,255,0.4); letter-spacing: 0.06em; margin-top: 3px; }
+    .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; color: #111; }
+    .logo img { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; }
+    .logo-name { display: block; font-size: 17px; font-weight: 800; letter-spacing: 0.5px; color: #111; }
     .header-loc {
       display: flex; align-items: center; gap: 7px;
-      font-size: 13px; color: rgba(255,255,255,0.65);
-      border: 1px solid rgba(255,255,255,0.12);
+      font-size: 13px; color: #666;
+      border: 1px solid #e0e0e0;
       padding: 8px 16px; border-radius: 100px;
+      background: #fafafa;
     }
     .header-loc svg { color: #C8102E; flex-shrink: 0; }
+    .header-cta {
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 10px 20px; border-radius: 10px; white-space: nowrap;
+      background: #C8102E; color: #fff; font-size: 13px; font-weight: 700;
+      text-decoration: none; transition: background .2s;
+    }
+    .header-cta:hover { background: #a50d25; }
 
     /* Гамбургер — только мобил */
     .hamburger {
       display: none; flex-direction: column; justify-content: center; gap: 5px;
       background: none; border: none; cursor: pointer; padding: 4px;
     }
-    .hamburger span {
-      display: block; width: 24px; height: 2px;
-      background: #fff; border-radius: 2px;
-    }
-
-    /* Бейдж локации под шапкой — только мобил */
-    .mobile-loc {
-      display: none; align-items: center; gap: 6px;
-      margin: 6px 16px;
-      padding: 6px 14px; border-radius: 100px;
-      border: 1px solid rgba(200,16,46,0.2);
-      background: rgba(200,16,46,0.03);
-      font-size: 12px; color: rgba(255,255,255,0.45);
-      font-weight: 400;
-    }
+    .hamburger span { display: block; width: 24px; height: 2px; background: #111; border-radius: 2px; }
 
     /* ─── HERO ─── */
     .hero {
       display: grid;
-      grid-template-columns: 40% 60%;
-      min-height: 520px;
+      grid-template-columns: 42% 58%;
+      min-height: 500px;
       overflow: hidden;
-      background: #000;
     }
     .hero-left {
       display: flex; flex-direction: column; justify-content: center;
-      padding: 72px 48px;
-      position: relative; z-index: 2;
+      padding: 64px 52px;
+      background: #fff;
     }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 5px 13px; border-radius: 100px;
+      border: 1px solid #e0e0e0;
+      background: #f5f5f5;
+      color: #555; font-size: 11px; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      margin-bottom: 20px; width: fit-content;
+    }
+    .hero-badge span { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #C8102E; }
     .hero-h1 {
-      font-size: clamp(36px, 4.5vw, 66px);
+      font-size: clamp(32px, 3.8vw, 58px);
       font-weight: 900;
-      line-height: 1.15;
+      line-height: 1.1;
       letter-spacing: -2px;
-      white-space: nowrap;
       text-transform: uppercase;
-      margin-bottom: 24px;
+      margin-bottom: 20px;
+      color: #111;
     }
     .hero-h1 .red { color: #C8102E; }
     .hero-desc {
       font-size: 15px;
-      color: rgba(255,255,255,0.5);
-      line-height: 1.75;
+      color: #666;
+      line-height: 1.7;
       margin-bottom: 36px;
-      max-width: 380px;
+      max-width: 360px;
     }
     .hero-actions { display: flex; gap: 12px; flex-wrap: nowrap; }
     .btn-red {
       display: inline-flex; align-items: center; gap: 7px;
-      padding: 12px 20px; border-radius: 10px; white-space: nowrap;
-      background: #C8102E; color: #fff; font-size: 13px; font-weight: 700;
-      text-decoration: none; box-shadow: 0 4px 28px rgba(200,16,46,0.5);
-      transition: all .2s;
+      padding: 13px 22px; border-radius: 10px; white-space: nowrap;
+      background: #C8102E; color: #fff; font-size: 14px; font-weight: 700;
+      text-decoration: none; transition: background .2s, transform .2s;
+      box-shadow: 0 4px 20px rgba(200,16,46,0.3);
     }
-    .btn-red:hover { background: #a50d25; transform: translateY(-2px); box-shadow: 0 8px 36px rgba(200,16,46,0.65); }
-    .btn-ghost {
+    .btn-red:hover { background: #a50d25; transform: translateY(-1px); }
+    .btn-outline {
       display: inline-flex; align-items: center; gap: 7px;
-      padding: 12px 20px; border-radius: 10px; white-space: nowrap;
-      background: transparent; border: 1px solid rgba(255,255,255,0.18);
-      color: #fff; font-size: 13px; font-weight: 600;
-      text-decoration: none; transition: all .2s;
+      padding: 13px 22px; border-radius: 10px; white-space: nowrap;
+      background: #fff; border: 1.5px solid #ddd;
+      color: #333; font-size: 14px; font-weight: 600;
+      text-decoration: none; transition: border-color .2s, background .2s;
     }
-    .btn-ghost:hover { background: rgba(255,255,255,0.07); border-color: rgba(255,255,255,0.35); }
-    .btn-ghost-red {
-      display: inline-flex; align-items: center; gap: 7px;
-      padding: 12px 20px; border-radius: 10px; white-space: nowrap;
-      background: transparent; border: 1px solid rgba(200,16,46,0.35);
-      color: #C8102E; font-size: 13px; font-weight: 600;
-      text-decoration: none; transition: all .2s;
-    }
-    .btn-ghost-red:hover { background: rgba(200,16,46,0.08); border-color: rgba(200,16,46,0.6); }
+    .btn-outline:hover { border-color: #bbb; background: #f9f9f9; }
     .hero-right {
-      background: #000 url('images/IMG_0667.PNG') no-repeat center center / cover;
+      background: url('images/IMG_0838.PNG') no-repeat center center / cover;
+      min-height: 400px;
     }
-    .hero-img { display: none; }
-
-    /*
-      Фон под бутылками: белый в центре → красный → чёрный по краям.
-      Белый центр нужен для mix-blend-mode: multiply на изображениях —
-      белые пиксели фото "сливаются" с белым фоном и становятся невидимы.
-    */
-
-
-    /* ─── ORBITAL ─── */
-    .orb-section {
-      position: relative; overflow: hidden;
-      height: 500px;
-      background:
-        linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
-      background-size: 60px 60px;
-      border-top: 1px solid rgba(255,255,255,.07);
-    }
-    .orb-section::before {
-      content:''; position:absolute; inset:0; pointer-events:none;
-      background: radial-gradient(ellipse 70% 80% at 50% 50%, rgba(200,16,46,.07) 0%, transparent 70%);
-    }
-    #orb { position:relative; width:100%; height:100%; }
-    .stage { position:absolute; }
-    .o-ring {
-      position:absolute; top:50%; left:50%;
-      width:360px; height:360px; border-radius:50%;
-      border:1px solid rgba(255,255,255,.1);
-      transform:translate(-50%,-50%); pointer-events:none;
-    }
-    .o-center { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); z-index:10; }
-    .o-center img { width:64px; height:64px; border-radius:50%; object-fit:cover; display:block; position:relative; z-index:2; }
-    .ping1 { position:absolute; inset:-8px; border-radius:50%; border:1px solid rgba(255,255,255,.25); animation:ping 1.8s ease-out infinite; }
-    .ping2 { position:absolute; inset:-18px; border-radius:50%; border:1px solid rgba(255,255,255,.12); animation:ping 1.8s .6s ease-out infinite; }
-    @keyframes ping { 0%{transform:scale(1);opacity:.7} 100%{transform:scale(1.5);opacity:0} }
-    .o-node { position:absolute; top:50%; left:50%; cursor:pointer; }
-    .n-icon {
-      width:40px; height:40px; border-radius:50%;
-      display:flex; align-items:center; justify-content:center;
-      background:#000; color:#fff; border:2px solid rgba(255,255,255,.4);
-      transition:all .3s; position:relative; z-index:2;
-    }
-    .n-icon svg { width:16px; height:16px; }
-    .n-lbl {
-      position:absolute; top:48px; left:50%; transform:translateX(-50%);
-      white-space:nowrap; font-size:11px; font-weight:600; letter-spacing:.05em;
-      color:rgba(255,255,255,.7); pointer-events:none;
-    }
-    @keyframes pulse2 { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.6;transform:scale(1.3)} }
 
     /* ─── CATEGORIES ─── */
-    .cat-section { background: #000; padding: 32px 52px; }
+    .cat-section {
+      background: #f7f7f7;
+      padding: 56px 52px;
+      border-top: 1px solid #ebebeb;
+    }
+    .section-head {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    .section-label {
+      display: inline-block;
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: #C8102E; margin-bottom: 10px;
+    }
+    .section-title {
+      font-size: 30px; font-weight: 900;
+      letter-spacing: -0.5px; color: #111;
+    }
     .cat-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
     }
     .cat-card {
-      position: relative; border-radius: 14px; overflow: hidden;
-      height: 160px;
-      text-decoration: none; color: #fff;
-      display: flex; flex-direction: column; justify-content: flex-end;
-      border: 1px solid rgba(255,255,255,0.07);
-      transition: transform .25s, border-color .25s;
+      background: #fff;
+      border-radius: 16px;
+      overflow: hidden;
+      text-decoration: none; color: #111;
+      border: 1px solid #ebebeb;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      transition: transform .25s, box-shadow .25s;
+      display: flex; flex-direction: column;
     }
-    .cat-card:hover { transform: translateY(-4px); border-color: rgba(200,16,46,0.5); }
-    .cat-bg {
-      position: absolute; inset: 0;
+    .cat-card:hover { transform: translateY(-5px); box-shadow: 0 8px 32px rgba(0,0,0,0.12); }
+    .cat-photo {
+      width: 100%; aspect-ratio: 4/3;
       background-size: cover; background-position: center;
-      transition: transform .4s;
+      flex-shrink: 0;
     }
-    .cat-card:hover .cat-bg { transform: scale(1.05); }
-    .cat-overlay {
-      position: absolute; inset: 0;
-      background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.5) 55%, rgba(0,0,0,0.15) 100%);
+    .cat-content {
+      padding: 20px 20px 18px;
+      display: flex; flex-direction: column; flex: 1;
     }
-    .cat-content { position: relative; z-index: 1; padding: 12px; }
-    .cat-icon { color: #C8102E; margin-bottom: 5px; }
-    .cat-icon svg { width: 20px; height: 20px; display: block; }
-    .cat-name { font-size: 13px; font-weight: 700; margin-bottom: 2px; }
-    .cat-desc { font-size: 10px; color: rgba(255,255,255,0.55); line-height: 1.3; }
+    .cat-icon {
+      color: #C8102E; margin-bottom: 12px;
+    }
+    .cat-icon svg { width: 28px; height: 28px; display: block; }
+    .cat-name { font-size: 16px; font-weight: 800; margin-bottom: 6px; color: #111; }
+    .cat-desc { font-size: 13px; color: #777; line-height: 1.55; flex: 1; }
+    .cat-arrow {
+      display: inline-flex; align-items: center; gap: 4px;
+      color: #C8102E; font-size: 14px; font-weight: 700;
+      margin-top: 16px;
+    }
+    .cat-arrow svg { width: 16px; height: 16px; transition: transform .2s; }
+    .cat-card:hover .cat-arrow svg { transform: translateX(4px); }
 
     /* ─── FAQ ─── */
     .faq-section {
-      padding: 72px 52px; background: #000;
-      position: relative; overflow: hidden;
+      padding: 72px 52px;
+      background: #fff;
+      border-top: 1px solid #ebebeb;
     }
-    .faq-section::before {
-      content: ''; position: absolute; inset: 0; pointer-events: none;
-      background: url('images/IMG_0763.PNG') no-repeat center center / cover;
-      opacity: 0.03;
-    }
-    .faq-section::after {
-      content: ''; position: absolute; inset: 0; pointer-events: none;
-      background: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(200,16,46,0.06) 0%, transparent 70%);
-    }
+    .faq-inner { max-width: 740px; margin: 0 auto; }
     .faq-badge {
       display: inline-flex; align-items: center; gap: 6px;
       padding: 5px 13px; border-radius: 100px;
-      border: 1px solid rgba(200,16,46,0.3);
-      background: rgba(200,16,46,0.07);
+      border: 1px solid rgba(200,16,46,0.25);
+      background: rgba(200,16,46,0.06);
       color: #C8102E; font-size: 11px; font-weight: 700;
       letter-spacing: 0.12em; text-transform: uppercase;
-      margin-bottom: 14px; position: relative; z-index: 1;
+      margin-bottom: 14px;
     }
     .faq-title {
-      font-size: 26px; font-weight: 900; letter-spacing: -0.5px;
-      margin-bottom: 32px; position: relative; z-index: 1;
+      font-size: 28px; font-weight: 900; letter-spacing: -0.5px;
+      margin-bottom: 32px; color: #111;
     }
-    .faq-list { display: flex; flex-direction: column; gap: 8px; position: relative; z-index: 1; }
+    .faq-list { display: flex; flex-direction: column; gap: 8px; }
     .faq-item {
-      border: 1px solid rgba(255,255,255,0.05);
-      border-radius: 10px; overflow: hidden;
-      background: rgba(8,8,8,0.92);
+      border: 1px solid #ebebeb;
+      border-radius: 12px; overflow: hidden;
+      background: #fff;
       transition: border-color .3s, box-shadow .3s;
     }
     .faq-item.open {
-      border-color: rgba(200,16,46,0.28);
-      box-shadow: 0 0 30px rgba(200,16,46,0.1);
+      border-color: rgba(200,16,46,0.3);
+      box-shadow: 0 2px 20px rgba(200,16,46,0.08);
     }
     .faq-q {
       display: flex; align-items: center; justify-content: space-between;
-      gap: 16px; padding: 17px 20px;
+      gap: 16px; padding: 18px 20px;
       cursor: pointer; user-select: none;
-      font-size: 14px; font-weight: 600; letter-spacing: 0.01em;
+      font-size: 14px; font-weight: 600; color: #111;
     }
     .faq-icon {
-      flex-shrink: 0; width: 22px; height: 22px;
+      flex-shrink: 0; width: 24px; height: 24px;
       display: flex; align-items: center; justify-content: center;
-      border-radius: 5px; border: 1px solid rgba(255,255,255,0.09);
-      color: rgba(255,255,255,0.3); transition: all .3s;
+      border-radius: 6px; border: 1.5px solid #e0e0e0;
+      color: #aaa; transition: all .3s;
       position: relative;
     }
     .faq-item.open .faq-icon {
-      border-color: rgba(200,16,46,0.45);
-      color: #C8102E; background: rgba(200,16,46,0.07);
+      border-color: rgba(200,16,46,0.4);
+      color: #C8102E; background: rgba(200,16,46,0.06);
     }
     .faq-icon-line {
       position: absolute; width: 10px; height: 1.5px;
@@ -263,154 +227,116 @@
     .faq-item.open .faq-a { max-height: 160px; }
     .faq-a-inner {
       padding: 0 20px 18px;
-      font-size: 13px; color: #b0b0b0; line-height: 1.8;
-      border-top: 1px solid rgba(255,255,255,0.04);
+      font-size: 13px; color: #666; line-height: 1.8;
+      border-top: 1px solid #f0f0f0;
       padding-top: 14px;
     }
     .faq-a-inner .red { color: #C8102E; font-weight: 600; }
 
-    /* ─── FOOTER STATS ─── */
+    /* ─── STATS ─── */
     .stats {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 16px;
-      background: #000;
-      padding: 40px 52px 48px;
-      border-top: 1px solid rgba(255,255,255,0.06);
+      gap: 0;
+      background: #111;
+      padding: 0;
+      border-top: 1px solid #222;
     }
     .stat {
-      display: flex; align-items: center; gap: 16px;
-      background: rgba(10,10,10,0.9);
-      border: 1px solid rgba(255,255,255,0.06);
-      border-radius: 12px;
-      padding: 20px 22px;
+      display: flex; align-items: center; gap: 18px;
+      padding: 36px 32px;
+      border-right: 1px solid rgba(255,255,255,0.07);
     }
+    .stat:last-child { border-right: none; }
     .stat-icon {
       flex-shrink: 0;
-      width: 48px; height: 48px;
-      border-radius: 12px;
-      background: rgba(200,16,46,0.12);
-      border: 1px solid rgba(200,16,46,0.2);
+      width: 52px; height: 52px;
+      border-radius: 14px;
+      background: rgba(200,16,46,0.15);
+      border: 1px solid rgba(200,16,46,0.25);
       display: flex; align-items: center; justify-content: center;
       color: #C8102E;
     }
-    .stat-icon svg { width: 22px; height: 22px; display: block; }
+    .stat-icon svg { width: 24px; height: 24px; display: block; }
     .stat-body { display: flex; flex-direction: column; }
-    .stat-num { font-size: 28px; font-weight: 900; line-height: 1; color: #C8102E; margin-bottom: 4px; }
+    .stat-num { font-size: 30px; font-weight: 900; line-height: 1; color: #fff; margin-bottom: 5px; }
     .stat-lbl { font-size: 12px; color: rgba(255,255,255,0.45); font-weight: 500; line-height: 1.3; }
 
-    /* ─── FAQ: только ПК ─── */
-    @media (min-width: 1025px) {
-      .faq-item { background: rgba(2,2,2,0.98); }
-      .faq-item.open { background: rgba(4,0,0,0.98); }
+    /* ─── MOBILE NAV BADGE ─── */
+    .mobile-loc {
+      display: none; align-items: center; gap: 6px;
+      padding: 6px 14px; border-radius: 100px;
+      border: 1px solid #ebebeb;
+      background: #f7f7f7;
+      font-size: 12px; color: #666;
+      font-weight: 400;
     }
 
-    /* ─── КАРТОЧКИ: ПК + iPad (≥768px) ─── */
-    @media (min-width: 768px) {
-      .cat-grid { grid-template-columns: repeat(4, 1fr); gap: 24px; }
-      .cat-section { padding: 32px 52px; }
-      .cat-card:nth-child(5), .cat-card:nth-child(6) { display: none; }
-      .cat-card { height: auto; aspect-ratio: 16/9; }
-      .cat-overlay { display: none; }
-      .cat-content { display: none; }
-      .cat-grid .cat-card:nth-child(1) .cat-bg { background-image: url('images/IMG_0747.PNG') !important; }
-      .cat-grid .cat-card:nth-child(2) .cat-bg { background-image: url('images/IMG_0744.PNG') !important; }
-      .cat-grid .cat-card:nth-child(3) .cat-bg { background-image: url('images/IMG_0745.PNG') !important; }
-      .cat-grid .cat-card:nth-child(4) .cat-bg { background-image: url('images/IMG_0746.PNG') !important; }
-    }
-
-    /* ─── ПЛАНШЕТ (iPad: 768–1024px) ─── */
+    /* ─── ПЛАНШЕТ ─── */
     @media (max-width: 1024px) and (min-width: 768px) {
       .header { padding: 14px 28px; }
-      .hero { grid-template-columns: 45% 55%; min-height: 460px; }
-      .hero-left { padding: 40px 24px; }
+      .hero { grid-template-columns: 48% 52%; min-height: 420px; }
+      .hero-left { padding: 40px 28px; }
       .hero-h1 { font-size: 34px; letter-spacing: -1px; }
-      .hero-right { background: #000 url('images/IMG_0740.PNG?v=3') no-repeat center bottom / contain; }
+      .cat-section { padding: 40px 28px; }
       .cat-grid { grid-template-columns: repeat(2, 1fr); }
       .faq-section { padding: 48px 28px; }
+      .stats { grid-template-columns: repeat(2, 1fr); }
+      .stat:nth-child(2) { border-right: none; }
+      .stat:nth-child(3) { border-top: 1px solid rgba(255,255,255,0.07); }
+      .stat:nth-child(4) { border-top: 1px solid rgba(255,255,255,0.07); border-right: none; }
     }
 
-    /* ─── МОБИЛ (до 767px) ─── */
+    /* ─── МОБИЛ ─── */
     @media (max-width: 767px) {
       .header { padding: 12px 16px; }
       .header-loc { display: none; }
+      .header-cta { display: none; }
       .hamburger { display: flex; }
-      .mobile-loc { display: flex; width: fit-content; margin: 6px auto; }
 
       .hero {
-        display: flex;
-        flex-direction: column;
-        height: auto;
-        overflow: visible;
+        display: flex; flex-direction: column;
       }
-      .hero-left { display: contents; }
+      .hero-left { padding: 28px 16px 20px; }
+      .hero-badge { margin-bottom: 14px; }
       .hero-h1 {
-        order: 1;
-        font-size: clamp(26px, 7.5vw, 38px);
+        font-size: clamp(28px, 8vw, 40px);
         letter-spacing: -1px;
-        line-height: 1.1;
-        margin-bottom: 8px;
-        padding: 20px 16px 0;
-        white-space: normal;
-        text-align: center;
+        margin-bottom: 14px;
       }
-      .hero-desc {
-        order: 2;
-        font-size: 13px;
-        max-width: 100%;
-        margin-bottom: 0;
-        line-height: 1.5;
-        padding: 0 16px;
-        text-align: center;
-      }
-      .hero-desc br { display: none; }
-      .hero-right {
-        order: 3;
-        height: 280px;
-        background: #000 url('images/IMG_0740.PNG') no-repeat center center / contain;
-      }
-      .hero-actions {
-        order: 4;
-        display: flex;
-        flex-direction: row;
-        gap: 10px;
-        padding: 12px 16px 24px;
-        flex-wrap: nowrap;
-      }
-      .btn-ghost-red, .btn-ghost {
-        flex: 1;
+      .hero-desc { font-size: 14px; margin-bottom: 24px; max-width: 100%; }
+      .hero-actions { flex-direction: column; gap: 10px; }
+      .btn-red, .btn-outline {
         justify-content: center;
-        padding: 12px 10px;
-        font-size: 13px;
-        border-radius: 10px;
-        width: auto;
+        padding: 14px 20px;
+        font-size: 14px;
       }
-      .btn-red svg, .btn-ghost svg { width: 16px; height: 16px; flex-shrink: 0; }
+      .hero-right { min-height: 240px; }
 
-      /* categories — 2×2 на мобиле, как ПК/iPad */
-      .cat-section { padding: 20px 12px; }
+      .cat-section { padding: 32px 16px; }
       .cat-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
-      .cat-card { height: auto; aspect-ratio: 16/9; border-radius: 10px; }
-      .cat-card:nth-child(5), .cat-card:nth-child(6) { display: none; }
-      .cat-overlay { display: none; }
-      .cat-content { display: none; }
-      .cat-grid .cat-card:nth-child(1) .cat-bg { background-image: url('images/IMG_0747.PNG') !important; }
-      .cat-grid .cat-card:nth-child(2) .cat-bg { background-image: url('images/IMG_0744.PNG') !important; }
-      .cat-grid .cat-card:nth-child(3) .cat-bg { background-image: url('images/IMG_0745.PNG') !important; }
-      .cat-grid .cat-card:nth-child(4) .cat-bg { background-image: url('images/IMG_0746.PNG') !important; }
+      .cat-photo { aspect-ratio: 3/2; }
+      .cat-content { padding: 14px 14px 12px; }
+      .cat-icon { margin-bottom: 8px; }
+      .cat-icon svg { width: 22px; height: 22px; }
+      .cat-name { font-size: 14px; }
+      .cat-desc { font-size: 12px; }
+      .cat-arrow { font-size: 13px; margin-top: 12px; }
 
-      /* faq — мобил */
       .faq-section { padding: 40px 16px; }
-      .faq-title { font-size: 20px; }
+      .faq-title { font-size: 22px; }
       .faq-q { padding: 15px 16px; font-size: 13px; }
       .faq-a-inner { padding: 0 16px 16px; padding-top: 12px; }
 
-      /* stats — 2 в ряд */
-      .stats { grid-template-columns: repeat(2, 1fr); padding: 16px 12px 24px; gap: 8px; }
-      .stat { padding: 12px; border-radius: 10px; gap: 10px; }
-      .stat-icon { width: 32px; height: 32px; border-radius: 8px; flex-shrink: 0; }
-      .stat-icon svg { width: 15px; height: 15px; }
-      .stat-num { font-size: 18px; margin-bottom: 2px; }
+      .stats { grid-template-columns: repeat(2, 1fr); }
+      .stat { padding: 20px 16px; gap: 12px; border-right: none; border-bottom: 1px solid rgba(255,255,255,0.07); }
+      .stat:nth-child(1), .stat:nth-child(2) { border-bottom: 1px solid rgba(255,255,255,0.07); }
+      .stat:nth-child(1) { border-right: 1px solid rgba(255,255,255,0.07); }
+      .stat:nth-child(3) { border-right: 1px solid rgba(255,255,255,0.07); border-bottom: none; }
+      .stat:nth-child(4) { border-bottom: none; }
+      .stat-icon { width: 40px; height: 40px; border-radius: 10px; }
+      .stat-icon svg { width: 18px; height: 18px; }
+      .stat-num { font-size: 22px; margin-bottom: 3px; }
       .stat-lbl { font-size: 11px; }
     }
   </style>
@@ -431,120 +357,110 @@
     </svg>
     Производство в г. Актау, Казахстан
   </div>
+  <a class="header-cta" href="https://wa.me/77010706960" target="_blank">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+    Связаться
+  </a>
   <button class="hamburger" aria-label="Меню">
     <span></span><span></span><span></span>
   </button>
 </header>
 
-<!-- Бейдж локации для мобила -->
-<div class="mobile-loc">
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="#C8102E">
-    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"/>
-  </svg>
-  Производство в г. Актау, Казахстан
-</div>
-
 <!-- HERO -->
 <section class="hero">
   <div class="hero-left">
+    <div class="hero-badge">
+      <span></span>
+      Производство в г. Актау
+    </div>
     <h1 class="hero-h1">
       ВСЁ ДЛЯ<br/>
       ИДЕАЛЬНОЙ<br/>
-      <span class="red">ЧИСТОТЫ</span><br/>
-      АВТО И ДОМА
+      <span class="red">ЧИСТОТЫ</span>
     </h1>
     <p class="hero-desc">
-      Профессиональная бытовая химия<br/>
-      от производителя из Актау.<br/>
-      Опт и розница по Казахстану.
+      Профессиональная бытовая и автохимия
+      от производителя. Опт и розница
+      по всему Казахстану.
     </p>
     <div class="hero-actions">
-      <a class="btn-ghost-red" href="https://wa.me/77010706960" target="_blank">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+      <a class="btn-red" href="https://wa.me/77010706960" target="_blank">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor">
           <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
         </svg>
         Связаться с нами
       </a>
-      <a class="btn-ghost" href="bytovaya-himiya.html">Смотреть каталог</a>
+      <a class="btn-outline" href="bytovaya-himiya.html">Смотреть каталог</a>
     </div>
   </div>
-
   <div class="hero-right"></div>
 </section>
 
 <!-- CATEGORIES -->
 <section class="cat-section">
+  <div class="section-head">
+    <div class="section-label">Наша продукция</div>
+    <div class="section-title">Каталог направлений</div>
+  </div>
   <div class="cat-grid">
 
     <a href="proizvodstvo.html" class="cat-card">
-      <div class="cat-bg" style="background-image:url('images/IMG_0663.PNG')"></div>
-      <div class="cat-overlay"></div>
+      <div class="cat-photo" style="background-image:url('images/IMG_0845.PNG')"></div>
       <div class="cat-content">
         <div class="cat-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <rect x="2" y="9" width="4" height="12"/><rect x="10" y="5" width="4" height="16"/><rect x="18" y="1" width="4" height="20"/>
+          </svg>
         </div>
         <div class="cat-name">Производство</div>
-        <div class="cat-desc">Собственное производство в Актау</div>
+        <div class="cat-desc">Современное оборудование и строгий контроль качества на всех этапах.</div>
+        <div class="cat-arrow">
+          →
+        </div>
       </div>
     </a>
 
     <a href="opt.html" class="cat-card">
-      <div class="cat-bg" style="background-image:url('images/product4.jpg')"></div>
-      <div class="cat-overlay"></div>
+      <div class="cat-photo" style="background-image:url('images/IMG_0847.PNG')"></div>
       <div class="cat-content">
         <div class="cat-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/>
+          </svg>
         </div>
         <div class="cat-name">Опт / Розница</div>
-        <div class="cat-desc">Выгодные условия для опта и розницы</div>
+        <div class="cat-desc">Выгодные условия для оптовых партнёров и розничных покупателей.</div>
+        <div class="cat-arrow">→</div>
       </div>
     </a>
 
     <a href="bytovaya-himiya.html" class="cat-card">
-      <div class="cat-bg" style="background-image:url('images/product1.jpg')"></div>
-      <div class="cat-overlay"></div>
+      <div class="cat-photo" style="background-image:url('images/IMG_0846.PNG')"></div>
       <div class="cat-content">
         <div class="cat-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 3h6l1 7H8L9 3z"/><path d="M8 10v11h8V10"/><line x1="12" y1="3" x2="12" y2="10"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M9 3h6l1 7H8L9 3z"/><path d="M8 10v11h8V10"/><line x1="12" y1="3" x2="12" y2="10"/>
+          </svg>
         </div>
         <div class="cat-name">Бытовая химия</div>
-        <div class="cat-desc">Средства для дома и ежедневной чистоты</div>
+        <div class="cat-desc">Средства для дома и ежедневной чистоты. Эффективность и безопасность.</div>
+        <div class="cat-arrow">→</div>
       </div>
     </a>
 
     <a href="avtohimiya.html" class="cat-card">
-      <div class="cat-bg" style="background-image:url('images/product2.jpg')"></div>
-      <div class="cat-overlay"></div>
+      <div class="cat-photo" style="background-image:url('images/IMG_0844.PNG')"></div>
       <div class="cat-content">
         <div class="cat-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 5v3h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/>
+          </svg>
         </div>
         <div class="cat-name">Автохимия</div>
-        <div class="cat-desc">Профессиональная химия для вашего автомобиля</div>
-      </div>
-    </a>
-
-    <a href="novinki.html" class="cat-card">
-      <div class="cat-bg" style="background-image:url('images/product5.jpg')"></div>
-      <div class="cat-overlay"></div>
-      <div class="cat-content">
-        <div class="cat-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-        </div>
-        <div class="cat-name">Новинки</div>
-        <div class="cat-desc">Новые поступления и специальные предложения</div>
-      </div>
-    </a>
-
-    <a href="bytovaya-himiya.html" class="cat-card">
-      <div class="cat-bg" style="background-image:url('images/photo_2026-05-09_10-08-25.jpg')"></div>
-      <div class="cat-overlay"></div>
-      <div class="cat-content">
-        <div class="cat-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
-        </div>
-        <div class="cat-name">Каталог</div>
-        <div class="cat-desc">Полный каталог всей нашей продукции</div>
+        <div class="cat-desc">Профессиональная химия для ухода за автомобилем на всех этапах.</div>
+        <div class="cat-arrow">→</div>
       </div>
     </a>
 
@@ -553,50 +469,52 @@
 
 <!-- FAQ -->
 <section class="faq-section">
-  <div class="faq-badge">FAQ</div>
-  <div class="faq-title">Часто задаваемые вопросы</div>
-  <div class="faq-list">
+  <div class="faq-inner">
+    <div class="faq-badge">FAQ</div>
+    <div class="faq-title">Часто задаваемые вопросы</div>
+    <div class="faq-list">
 
-    <div class="faq-item">
-      <div class="faq-q" onclick="toggleFaq(this)">
-        Как оформить оптовый заказ?
-        <span class="faq-icon"><span class="faq-icon-line"></span><span class="faq-icon-line"></span></span>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          Как оформить оптовый заказ?
+          <span class="faq-icon"><span class="faq-icon-line"></span><span class="faq-icon-line"></span></span>
+        </div>
+        <div class="faq-a"><div class="faq-a-inner">Свяжитесь с нами через <span class="red">WhatsApp</span> — уточним объём, согласуем цену и условия доставки. Минимальный заказ — от одной коробки.</div></div>
       </div>
-      <div class="faq-a"><div class="faq-a-inner">Свяжитесь с нами через <span class="red">WhatsApp</span> — уточним объём, согласуем цену и условия доставки. Минимальный заказ — от одной коробки.</div></div>
-    </div>
 
-    <div class="faq-item">
-      <div class="faq-q" onclick="toggleFaq(this)">
-        Есть ли сертификаты на продукцию?
-        <span class="faq-icon"><span class="faq-icon-line"></span><span class="faq-icon-line"></span></span>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          Есть ли сертификаты на продукцию?
+          <span class="faq-icon"><span class="faq-icon-line"></span><span class="faq-icon-line"></span></span>
+        </div>
+        <div class="faq-a"><div class="faq-a-inner">Да, вся продукция <span class="red">West Him</span> сертифицирована согласно стандартам Республики Казахстан. Документы предоставляем по запросу.</div></div>
       </div>
-      <div class="faq-a"><div class="faq-a-inner">Да, вся продукция <span class="red">West Him</span> сертифицирована согласно стандартам Республики Казахстан. Документы предоставляем по запросу.</div></div>
-    </div>
 
-    <div class="faq-item">
-      <div class="faq-q" onclick="toggleFaq(this)">
-        В каких городах доступна продукция West Him?
-        <span class="faq-icon"><span class="faq-icon-line"></span><span class="faq-icon-line"></span></span>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          В каких городах доступна продукция West Him?
+          <span class="faq-icon"><span class="faq-icon-line"></span><span class="faq-icon-line"></span></span>
+        </div>
+        <div class="faq-a"><div class="faq-a-inner">Работаем <span class="red">по всему Казахстану</span>. Производство — г. Актау. Доставка в Алматы, Астану, Актобе, Атырау и другие города.</div></div>
       </div>
-      <div class="faq-a"><div class="faq-a-inner">Работаем <span class="red">по всему Казахстану</span>. Производство — г. Актау. Доставка в Алматы, Астану, Актобе, Атырау и другие города.</div></div>
-    </div>
 
-    <div class="faq-item">
-      <div class="faq-q" onclick="toggleFaq(this)">
-        Как получить прайс-лист?
-        <span class="faq-icon"><span class="faq-icon-line"></span><span class="faq-icon-line"></span></span>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          Как получить прайс-лист?
+          <span class="faq-icon"><span class="faq-icon-line"></span><span class="faq-icon-line"></span></span>
+        </div>
+        <div class="faq-a"><div class="faq-a-inner">Напишите в <span class="red">WhatsApp</span> — пришлём актуальный прайс в формате PDF. Для постоянных партнёров цены обсуждаются индивидуально.</div></div>
       </div>
-      <div class="faq-a"><div class="faq-a-inner">Напишите в <span class="red">WhatsApp</span> — пришлём актуальный прайс в формате PDF. Для постоянных партнёров цены обсуждаются индивидуально.</div></div>
-    </div>
 
-    <div class="faq-item">
-      <div class="faq-q" onclick="toggleFaq(this)">
-        Можно ли заказать продукцию под своим брендом?
-        <span class="faq-icon"><span class="faq-icon-line"></span><span class="faq-icon-line"></span></span>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          Можно ли заказать продукцию под своим брендом?
+          <span class="faq-icon"><span class="faq-icon-line"></span><span class="faq-icon-line"></span></span>
+        </div>
+        <div class="faq-a"><div class="faq-a-inner">Да, работаем по схеме <span class="red">private label</span>. Обсудим объём, разработаем этикетку и выпустим продукцию под вашим брендом.</div></div>
       </div>
-      <div class="faq-a"><div class="faq-a-inner">Да, работаем по схеме <span class="red">private label</span>. Обсудим объём, разработаем этикетку и выпустим продукцию под вашим брендом.</div></div>
-    </div>
 
+    </div>
   </div>
 </section>
 
