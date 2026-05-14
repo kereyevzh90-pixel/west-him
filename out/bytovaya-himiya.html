@@ -39,12 +39,12 @@
 
     /* HERO */
     .hero {
-      display: grid; grid-template-columns: 46% 54%;
-      min-height: 440px; overflow: hidden;
+      background: #f7f7f7;
+      border-bottom: 1px solid #ebebeb;
     }
     .hero-left {
-      display: flex; flex-direction: column; justify-content: center;
-      padding: 56px 48px; background: #fff;
+      display: flex; flex-direction: column; justify-content: flex-start;
+      padding: 64px 52px; max-width: 760px;
     }
     .hero-badge {
       display: inline-flex; align-items: center; gap: 7px;
@@ -76,10 +76,6 @@
       text-decoration: none; transition: border-color .2s;
     }
     .btn-outline:hover { border-color: #bbb; }
-    .hero-photo {
-      background: url('images/IMG_0773.PNG') center center / cover no-repeat;
-    }
-
     /* PROPS */
     .props-strip {
       display: grid; grid-template-columns: repeat(4, 1fr);
@@ -137,7 +133,6 @@
     @media (max-width: 1024px) and (min-width: 768px) {
       .header { padding: 14px 28px; gap: 20px; }
       .header-nav { gap: 18px; }
-      .hero { grid-template-columns: 50% 50%; }
       .hero-left { padding: 40px 28px; }
       .props-strip { grid-template-columns: repeat(2, 1fr); }
       .prop:nth-child(2) { border-right: none; }
@@ -156,7 +151,6 @@
       .hero-desc { max-width: 100%; }
       .hero-actions { flex-direction: column; }
       .btn-red, .btn-outline { justify-content: center; }
-      .hero-photo { min-height: 220px; }
       .props-strip { grid-template-columns: repeat(2, 1fr); }
       .prop { padding: 20px 16px; border-right: none; border-bottom: 1px solid #ebebeb; }
       .prop:nth-child(1) { border-right: 1px solid #ebebeb; }
@@ -208,7 +202,6 @@
       <a class="btn-outline" href="https://wa.me/77010706960" target="_blank">Заказать в WhatsApp</a>
     </div>
   </div>
-  <div class="hero-photo"></div>
 </section>
 
 <div class="props-strip">

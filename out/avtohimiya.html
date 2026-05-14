@@ -36,8 +36,8 @@
     .hamburger { display: none; flex-direction: column; justify-content: center; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; }
     .hamburger span { display: block; width: 24px; height: 2px; background: #111; border-radius: 2px; }
 
-    .hero { display: grid; grid-template-columns: 46% 54%; min-height: 440px; overflow: hidden; }
-    .hero-left { display: flex; flex-direction: column; justify-content: center; padding: 56px 48px; background: #fff; }
+    .hero { display: block; background: #f7f7f7; border-bottom: 1px solid #ebebeb; }
+    .hero-left { display: flex; flex-direction: column; justify-content: flex-start; padding: 64px 52px; background: #f7f7f7; max-width: 760px; }
     .hero-badge { display: inline-flex; align-items: center; gap: 7px; color: #C8102E; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 18px; width: fit-content; }
     .hero-h1 { font-size: clamp(32px, 3.4vw, 52px); font-weight: 900; line-height: 1.1; letter-spacing: -1.5px; margin-bottom: 18px; color: #111; }
     .hero-h1 .red { color: #C8102E; }
@@ -47,7 +47,6 @@
     .btn-red:hover { background: #a50d25; transform: translateY(-1px); }
     .btn-outline { display: inline-flex; align-items: center; gap: 7px; padding: 13px 22px; border-radius: 10px; background: #fff; border: 1.5px solid #ddd; color: #333; font-size: 14px; font-weight: 600; text-decoration: none; transition: border-color .2s; }
     .btn-outline:hover { border-color: #bbb; }
-    .hero-photo { background: url('images/IMG_0768.PNG') center center / cover no-repeat; }
 
     .props-strip { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid #ebebeb; border-bottom: 1px solid #ebebeb; background: #fff; }
     .prop { padding: 28px 32px; border-right: 1px solid #ebebeb; }
@@ -100,7 +99,6 @@
       .hero-desc { max-width: 100%; }
       .hero-actions { flex-direction: column; }
       .btn-red, .btn-outline { justify-content: center; }
-      .hero-photo { min-height: 220px; }
       .props-strip { grid-template-columns: repeat(2, 1fr); }
       .prop { padding: 20px 16px; border-right: none; border-bottom: 1px solid #ebebeb; }
       .prop:nth-child(1) { border-right: 1px solid #ebebeb; }
@@ -152,7 +150,6 @@
       <a class="btn-outline" href="https://wa.me/77010706960" target="_blank">Заказать в WhatsApp</a>
     </div>
   </div>
-  <div class="hero-photo"></div>
 </section>
 
 <div class="props-strip">
