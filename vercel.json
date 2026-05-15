@@ -1,5 +1,8 @@
 {
   "buildCommand": "",
   "outputDirectory": "out",
-  "installCommand": ""
+  "installCommand": "",
+  "functions": {
+    "api/upload.js": { "maxDuration": 30 }
+  }
 }

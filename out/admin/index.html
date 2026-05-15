@@ -269,34 +269,23 @@
 </div>
 
 <script>
-  // ══════════════════════════════════════════════════
-  //  НАСТРОЙКИ — заполни перед первым использованием
-  // ══════════════════════════════════════════════════
-  const CONFIG = {
-    token:    'ЗАМЕНИ_НА_GITHUB_TOKEN',   // Personal Access Token (repo scope)
-    owner:    'kereyevzh90-pixel',
-    repo:     'west-him',
-    branch:   'master',
-    password: 'ЗАМЕНИ_НА_ПАРОЛЬ'          // пароль для входа в панель
-  };
-  // ══════════════════════════════════════════════════
+  // Токен и пароль хранятся в Vercel → Environment Variables (не в коде)
+  // Пароль вводится при входе и хранится только в памяти сессии
 
-  const pendingFiles = {}; // key → { file, path }
+  const pendingFiles = {};
 
   // ── Login ──
   function doLogin() {
-    const val = document.getElementById('pwd-input').value;
-    if (val === CONFIG.password) {
-      document.getElementById('login-screen').style.display = 'none';
-      document.getElementById('admin-panel').style.display = 'block';
-    } else {
-      document.getElementById('login-err').textContent = 'Неверный пароль';
-      document.getElementById('pwd-input').value = '';
-      document.getElementById('pwd-input').focus();
-    }
+    const pwd = document.getElementById('pwd-input').value.trim();
+    if (!pwd) return;
+    sessionStorage.setItem('adminPwd', pwd);
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('admin-panel').style.display = 'block';
+    document.getElementById('login-err').textContent = '';
   }
 
   function doLogout() {
+    sessionStorage.removeItem('adminPwd');
     document.getElementById('admin-panel').style.display = 'none';
     document.getElementById('login-screen').style.display = 'flex';
     document.getElementById('pwd-input').value = '';
@@ -312,75 +301,56 @@
     const file = input.files[0];
     if (!file) return;
     pendingFiles[key] = { file, path };
-    document.getElementById('fn-' + key).textContent = file.name.length > 22
-      ? file.name.slice(0, 20) + '…'
-      : file.name;
+    document.getElementById('fn-' + key).textContent =
+      file.name.length > 22 ? file.name.slice(0, 20) + '…' : file.name;
     document.getElementById('btn-' + key).disabled = false;
     setStatus(key, '', '');
   }
 
-  // ── Upload ──
+  // ── Upload → /api/upload ──
   async function doUpload(key) {
     const { file, path } = pendingFiles[key] || {};
     if (!file) return;
 
+    const password = sessionStorage.getItem('adminPwd');
+    if (!password) { doLogout(); return; }
+
     const btn = document.getElementById('btn-' + key);
     btn.disabled = true;
-    setStatus(key, 'Загружаем…', 'loading');
+    setStatus(key, 'Конвертируем файл…', 'loading');
     showProgress(key, true);
-    animateProgress(key, 30);
+    animateProgress(key, 20);
 
     try {
-      // 1. Get current SHA (needed for update)
-      let sha = null;
-      const headRes = await fetch(
-        `https://api.github.com/repos/${CONFIG.owner}/${CONFIG.repo}/contents/${path}?ref=${CONFIG.branch}`,
-        { headers: { Authorization: `token ${CONFIG.token}`, Accept: 'application/vnd.github+json' } }
-      );
-      if (headRes.ok) {
-        const headData = await headRes.json();
-        sha = headData.sha;
-      } else if (headRes.status !== 404) {
-        throw new Error(`GitHub API: ${headRes.status}`);
+      const content = await toBase64(file);
+      animateProgress(key, 50);
+      setStatus(key, 'Загружаем на сервер…', 'loading');
+
+      const res = await fetch('/api/upload', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password, path, content }),
+      });
+
+      animateProgress(key, 90);
+
+      if (res.status === 401) {
+        showProgress(key, false);
+        setStatus(key, 'Неверный пароль — войдите снова', 'err');
+        btn.disabled = false;
+        setTimeout(doLogout, 1500);
+        return;
       }
 
-      animateProgress(key, 60);
-
-      // 2. Convert file to base64
-      const b64 = await toBase64(file);
-
-      animateProgress(key, 80);
-
-      // 3. PUT to GitHub
-      const body = {
-        message: `Admin: обновлён ${path.split('/').pop()}`,
-        content: b64,
-        branch: CONFIG.branch,
-        ...(sha ? { sha } : {})
-      };
-
-      const putRes = await fetch(
-        `https://api.github.com/repos/${CONFIG.owner}/${CONFIG.repo}/contents/${path}`,
-        {
-          method: 'PUT',
-          headers: {
-            Authorization: `token ${CONFIG.token}`,
-            Accept: 'application/vnd.github+json',
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(body)
-        }
-      );
-
-      if (!putRes.ok) {
-        const errData = await putRes.json().catch(() => ({}));
-        throw new Error(errData.message || `HTTP ${putRes.status}`);
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.error || `HTTP ${res.status}`);
       }
 
       animateProgress(key, 100);
-      await delay(400);
+      await delay(300);
       showProgress(key, false);
-      setStatus(key, `Готово! Сайт обновится через ~1 мин.`, 'ok');
+      setStatus(key, 'Готово! Сайт обновится через ~1 мин.', 'ok');
       document.getElementById('fn-' + key).textContent = 'Выбрать файл';
       delete pendingFiles[key];
 
@@ -418,10 +388,7 @@
   function toBase64(file) {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
-      reader.onload = () => {
-        const b64 = reader.result.split(',')[1];
-        resolve(b64);
-      };
+      reader.onload = () => resolve(reader.result.split(',')[1]);
       reader.onerror = reject;
       reader.readAsDataURL(file);
     });
