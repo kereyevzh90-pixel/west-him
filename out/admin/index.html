@@ -92,6 +92,14 @@
     .upload-btn:hover { background: #a50d25; }
     .upload-btn:disabled { background: #ccc; cursor: default; }
 
+    .delete-btn {
+      padding: 9px 16px; background: #fff; color: #C8102E; border: 1.5px solid #C8102E;
+      border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer;
+      font-family: inherit; white-space: nowrap; transition: all .2s; flex-shrink: 0;
+    }
+    .delete-btn:hover { background: #C8102E; color: #fff; }
+    .delete-btn:disabled { border-color: #ccc; color: #ccc; cursor: default; background: #fff; }
+
     .status {
       font-size: 12px; margin-top: 8px; min-height: 16px; width: 100%;
     }
@@ -163,6 +171,7 @@
           <input type="file" accept="image/*" onchange="onFile(this,'hero','out/images/IMG_0838.PNG')">
         </div>
         <button class="upload-btn" onclick="doUpload('hero')" disabled id="btn-hero">Загрузить</button>
+        <button class="delete-btn" onclick="doDelete('hero','out/images/IMG_0838.PNG')" id="del-hero">Удалить</button>
       </div>
     </div>
 
@@ -179,6 +188,7 @@
           <input type="file" accept="image/*" onchange="onFile(this,'herom','out/images/IMG_0851.PNG')">
         </div>
         <button class="upload-btn" onclick="doUpload('herom')" disabled id="btn-herom">Загрузить</button>
+        <button class="delete-btn" onclick="doDelete('herom','out/images/IMG_0851.PNG')" id="del-herom">Удалить</button>
       </div>
     </div>
 
@@ -198,6 +208,7 @@
           <input type="file" accept="image/*" onchange="onFile(this,'c1','out/images/IMG_0845.PNG')">
         </div>
         <button class="upload-btn" onclick="doUpload('c1')" disabled id="btn-c1">Загрузить</button>
+        <button class="delete-btn" onclick="doDelete('c1','out/images/IMG_0845.PNG')" id="del-c1">Удалить</button>
       </div>
     </div>
 
@@ -214,6 +225,7 @@
           <input type="file" accept="image/*" onchange="onFile(this,'c2','out/images/IMG_0847.PNG')">
         </div>
         <button class="upload-btn" onclick="doUpload('c2')" disabled id="btn-c2">Загрузить</button>
+        <button class="delete-btn" onclick="doDelete('c2','out/images/IMG_0847.PNG')" id="del-c2">Удалить</button>
       </div>
     </div>
 
@@ -230,6 +242,7 @@
           <input type="file" accept="image/*" onchange="onFile(this,'c3','out/images/IMG_0846.PNG')">
         </div>
         <button class="upload-btn" onclick="doUpload('c3')" disabled id="btn-c3">Загрузить</button>
+        <button class="delete-btn" onclick="doDelete('c3','out/images/IMG_0846.PNG')" id="del-c3">Удалить</button>
       </div>
     </div>
 
@@ -246,6 +259,7 @@
           <input type="file" accept="image/*" onchange="onFile(this,'c4','out/images/IMG_0844.PNG')">
         </div>
         <button class="upload-btn" onclick="doUpload('c4')" disabled id="btn-c4">Загрузить</button>
+        <button class="delete-btn" onclick="doDelete('c4','out/images/IMG_0844.PNG')" id="del-c4">Удалить</button>
       </div>
     </div>
 
@@ -265,6 +279,7 @@
           <input type="file" accept=".pdf,application/pdf" onchange="onFile(this,'pdf','out/price.pdf')">
         </div>
         <button class="upload-btn" onclick="doUpload('pdf')" disabled id="btn-pdf">Загрузить</button>
+        <button class="delete-btn" onclick="doDelete('pdf','out/price.pdf')" id="del-pdf">Удалить</button>
       </div>
     </div>
 
@@ -427,6 +442,63 @@
       showProgress(key, false);
       setStatus(key, `Ошибка: ${err.message}`, 'err');
       btn.disabled = false;
+    }
+  }
+
+  // ── Delete → GitHub API ──
+  async function doDelete(key, path) {
+    if (!confirm(`Удалить файл ${path.split('/').pop()} из репозитория?`)) return;
+
+    const token = localStorage.getItem('ghToken');
+    if (!token) { doLogout(); return; }
+
+    const delBtn = document.getElementById('del-' + key);
+    const upBtn  = document.getElementById('btn-' + key);
+    delBtn.disabled = true;
+    if (upBtn) upBtn.disabled = true;
+    setStatus(key, 'Удаляем файл…', 'loading');
+
+    const apiBase = `https://api.github.com/repos/${OWNER}/${REPO}/contents`;
+    const headers = {
+      Authorization: `token ${token}`,
+      Accept: 'application/vnd.github+json',
+      'Content-Type': 'application/json',
+    };
+
+    try {
+      const getRes = await fetch(`${apiBase}/${path}?ref=${BRANCH}`, { headers });
+      if (!getRes.ok) {
+        if (getRes.status === 404) { setStatus(key, 'Файл уже удалён или не существует', 'err'); delBtn.disabled = false; return; }
+        throw new Error(`HTTP ${getRes.status}`);
+      }
+      const { sha } = await getRes.json();
+
+      const delRes = await fetch(`${apiBase}/${path}`, {
+        method: 'DELETE',
+        headers,
+        body: JSON.stringify({
+          message: `Admin: удалён ${path.split('/').pop()}`,
+          sha,
+          branch: BRANCH,
+        }),
+      });
+
+      if (delRes.status === 401) { setStatus(key, 'Токен недействителен', 'err'); setTimeout(doLogout, 1500); return; }
+      if (!delRes.ok) {
+        const err = await delRes.json().catch(() => ({}));
+        throw new Error(err.message || `HTTP ${delRes.status}`);
+      }
+
+      setStatus(key, 'Удалено! Сайт обновится через ~1 мин.', 'ok');
+      document.getElementById('fn-' + key).textContent = 'Выбрать файл';
+      delete pendingFiles[key];
+      delBtn.disabled = false;
+      if (upBtn) upBtn.disabled = true;
+
+    } catch (err) {
+      setStatus(key, `Ошибка: ${err.message}`, 'err');
+      delBtn.disabled = false;
+      if (upBtn) upBtn.disabled = true;
     }
   }
 
