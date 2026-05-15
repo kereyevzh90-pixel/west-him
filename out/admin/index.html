@@ -123,10 +123,13 @@
         <span class="sub">Химическое производство</span>
       </div>
     </div>
-    <div class="login-title">Вход в панель</div>
-    <div class="login-sub">Только для администраторов</div>
+    <div class="login-title" id="login-title">Вход в панель</div>
+    <div class="login-sub" id="login-sub">Только для администраторов</div>
     <input type="password" id="pwd-input" class="login-input" placeholder="Пароль" autocomplete="current-password">
-    <button class="login-btn" onclick="doLogin()">Войти</button>
+    <!-- показывается только при первом входе -->
+    <input type="password" id="token-input" class="login-input" placeholder="GitHub Token (только первый раз)" autocomplete="off" style="display:none">
+    <button class="login-btn" id="login-btn" onclick="doLogin()">Войти</button>
+    <button class="login-btn" id="reset-btn" onclick="doReset()" style="display:none;background:#fff;color:#C8102E;border:1.5px solid #C8102E;margin-top:8px">Сбросить и войти заново</button>
     <div class="login-err" id="login-err"></div>
   </div>
 </div>
@@ -269,23 +272,65 @@
 </div>
 
 <script>
-  // Токен и пароль хранятся в Vercel → Environment Variables (не в коде)
-  // Пароль вводится при входе и хранится только в памяти сессии
+  // Пароль и токен хранятся в localStorage браузера — в коде нет никаких секретов
+
+  const OWNER  = 'kereyevzh90-pixel';
+  const REPO   = 'west-him';
+  const BRANCH = 'master';
 
   const pendingFiles = {};
 
+  // ── Инициализация экрана входа ──
+  function initLogin() {
+    const hasPassword = !!localStorage.getItem('adminPwd');
+    if (hasPassword) {
+      // Повторный вход — только пароль
+      document.getElementById('login-title').textContent = 'Вход в панель';
+      document.getElementById('login-sub').textContent = 'Введи пароль';
+      document.getElementById('token-input').style.display = 'none';
+      document.getElementById('reset-btn').style.display = 'block';
+    } else {
+      // Первый вход — задаём пароль и токен
+      document.getElementById('login-title').textContent = 'Первый вход';
+      document.getElementById('login-sub').textContent = 'Придумай пароль и введи GitHub Token';
+      document.getElementById('token-input').style.display = 'block';
+      document.getElementById('reset-btn').style.display = 'none';
+    }
+  }
+
   // ── Login ──
   function doLogin() {
-    const pwd = document.getElementById('pwd-input').value.trim();
-    if (!pwd) return;
-    sessionStorage.setItem('adminPwd', pwd);
+    const pwd   = document.getElementById('pwd-input').value.trim();
+    const token = document.getElementById('token-input').value.trim();
+    const err   = document.getElementById('login-err');
+
+    const savedPwd = localStorage.getItem('adminPwd');
+
+    if (!savedPwd) {
+      // Первый вход — сохраняем пароль и токен
+      if (!pwd || !token) { err.textContent = 'Заполни оба поля'; return; }
+      localStorage.setItem('adminPwd', pwd);
+      localStorage.setItem('ghToken', token);
+    } else {
+      // Повторный вход — проверяем пароль
+      if (pwd !== savedPwd) { err.textContent = 'Неверный пароль'; document.getElementById('pwd-input').value = ''; return; }
+    }
+
+    err.textContent = '';
     document.getElementById('login-screen').style.display = 'none';
     document.getElementById('admin-panel').style.display = 'block';
-    document.getElementById('login-err').textContent = '';
+  }
+
+  // ── Сброс (если нужно сменить пароль или токен) ──
+  function doReset() {
+    if (!confirm('Сбросить пароль и токен? Придётся ввести заново.')) return;
+    localStorage.removeItem('adminPwd');
+    localStorage.removeItem('ghToken');
+    initLogin();
+    document.getElementById('pwd-input').value = '';
   }
 
   function doLogout() {
-    sessionStorage.removeItem('adminPwd');
     document.getElementById('admin-panel').style.display = 'none';
     document.getElementById('login-screen').style.display = 'flex';
     document.getElementById('pwd-input').value = '';
@@ -295,6 +340,11 @@
   document.getElementById('pwd-input').addEventListener('keydown', e => {
     if (e.key === 'Enter') doLogin();
   });
+  document.getElementById('token-input').addEventListener('keydown', e => {
+    if (e.key === 'Enter') doLogin();
+  });
+
+  initLogin();
 
   // ── File picker ──
   function onFile(input, key, path) {
@@ -307,13 +357,13 @@
     setStatus(key, '', '');
   }
 
-  // ── Upload → /api/upload ──
+  // ── Upload → GitHub API напрямую ──
   async function doUpload(key) {
     const { file, path } = pendingFiles[key] || {};
     if (!file) return;
 
-    const password = sessionStorage.getItem('adminPwd');
-    if (!password) { doLogout(); return; }
+    const token = localStorage.getItem('ghToken');
+    if (!token) { doLogout(); return; }
 
     const btn = document.getElementById('btn-' + key);
     btn.disabled = true;
@@ -321,30 +371,49 @@
     showProgress(key, true);
     animateProgress(key, 20);
 
+    const apiBase = `https://api.github.com/repos/${OWNER}/${REPO}/contents`;
+    const headers = {
+      Authorization: `token ${token}`,
+      Accept: 'application/vnd.github+json',
+      'Content-Type': 'application/json',
+    };
+
     try {
       const content = await toBase64(file);
       animateProgress(key, 50);
-      setStatus(key, 'Загружаем на сервер…', 'loading');
+      setStatus(key, 'Получаем данные из GitHub…', 'loading');
 
-      const res = await fetch('/api/upload', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ password, path, content }),
+      // Получаем текущий SHA файла
+      let sha = null;
+      const getRes = await fetch(`${apiBase}/${path}?ref=${BRANCH}`, { headers });
+      if (getRes.ok) sha = (await getRes.json()).sha;
+
+      animateProgress(key, 70);
+      setStatus(key, 'Загружаем файл…', 'loading');
+
+      // Загружаем файл
+      const putRes = await fetch(`${apiBase}/${path}`, {
+        method: 'PUT',
+        headers,
+        body: JSON.stringify({
+          message: `Admin: обновлён ${path.split('/').pop()}`,
+          content,
+          branch: BRANCH,
+          ...(sha ? { sha } : {}),
+        }),
       });
 
-      animateProgress(key, 90);
-
-      if (res.status === 401) {
+      if (putRes.status === 401) {
         showProgress(key, false);
-        setStatus(key, 'Неверный пароль — войдите снова', 'err');
+        setStatus(key, 'Токен недействителен — войдите снова', 'err');
         btn.disabled = false;
         setTimeout(doLogout, 1500);
         return;
       }
 
-      if (!res.ok) {
-        const err = await res.json().catch(() => ({}));
-        throw new Error(err.error || `HTTP ${res.status}`);
+      if (!putRes.ok) {
+        const err = await putRes.json().catch(() => ({}));
+        throw new Error(err.message || `HTTP ${putRes.status}`);
       }
 
       animateProgress(key, 100);
