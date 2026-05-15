@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>West Him — Админ</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: #f5f5f5; color: #111; min-height: 100vh; }
+
+    /* ── LOGIN ── */
+    #login-screen {
+      min-height: 100vh; display: flex; align-items: center; justify-content: center;
+    }
+    .login-card {
+      background: #fff; border-radius: 20px; padding: 48px 40px;
+      width: 100%; max-width: 400px; box-shadow: 0 4px 40px rgba(0,0,0,.08);
+      text-align: center;
+    }
+    .login-logo { display: flex; align-items: center; gap: 10px; justify-content: center; margin-bottom: 32px; }
+    .login-logo img { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; }
+    .login-logo span { font-size: 20px; font-weight: 800; letter-spacing: .5px; }
+    .login-logo .sub { font-size: 11px; color: #777; font-weight: 400; display: block; text-align: left; }
+    .login-title { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
+    .login-sub { font-size: 14px; color: #777; margin-bottom: 28px; }
+    .login-input {
+      width: 100%; padding: 13px 16px; border: 1.5px solid #e0e0e0; border-radius: 10px;
+      font-size: 15px; font-family: inherit; outline: none; transition: border .2s;
+      margin-bottom: 14px;
+    }
+    .login-input:focus { border-color: #C8102E; }
+    .login-btn {
+      width: 100%; padding: 13px; background: #C8102E; color: #fff; border: none;
+      border-radius: 10px; font-size: 15px; font-weight: 600; font-family: inherit;
+      cursor: pointer; transition: background .2s;
+    }
+    .login-btn:hover { background: #a50d25; }
+    .login-err { color: #C8102E; font-size: 13px; margin-top: 10px; min-height: 18px; }
+
+    /* ── ADMIN PANEL ── */
+    #admin-panel { display: none; }
+    .admin-header {
+      background: #fff; border-bottom: 1px solid #ebebeb;
+      padding: 0 32px; height: 64px; display: flex; align-items: center; justify-content: space-between;
+      position: sticky; top: 0; z-index: 10;
+    }
+    .admin-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: inherit; }
+    .admin-logo img { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; }
+    .admin-logo .name { font-weight: 800; font-size: 16px; }
+    .admin-logo .tag {
+      font-size: 11px; font-weight: 600; color: #C8102E; background: rgba(200,16,46,.1);
+      padding: 2px 8px; border-radius: 20px; letter-spacing: .5px; text-transform: uppercase;
+    }
+    .logout-btn {
+      padding: 8px 18px; border: 1.5px solid #e0e0e0; background: #fff; border-radius: 8px;
+      font-size: 13px; font-weight: 500; cursor: pointer; font-family: inherit; transition: all .2s;
+    }
+    .logout-btn:hover { border-color: #C8102E; color: #C8102E; }
+
+    .admin-body { max-width: 900px; margin: 0 auto; padding: 40px 24px 80px; }
+    .section-title { font-size: 18px; font-weight: 700; margin: 36px 0 16px; padding-bottom: 10px; border-bottom: 1px solid #ebebeb; }
+    .section-title:first-child { margin-top: 0; }
+
+    /* ── UPLOAD CARD ── */
+    .upload-card {
+      background: #fff; border-radius: 16px; padding: 20px 24px;
+      border: 1.5px solid #ebebeb; margin-bottom: 12px;
+      display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+    }
+    .upload-info { flex: 1; min-width: 200px; }
+    .upload-label { font-size: 14px; font-weight: 600; margin-bottom: 3px; }
+    .upload-path { font-size: 12px; color: #999; font-family: monospace; }
+    .upload-controls { display: flex; align-items: center; gap: 10px; }
+    .file-input-wrap { position: relative; }
+    .file-input-wrap input[type="file"] {
+      position: absolute; opacity: 0; inset: 0; cursor: pointer; width: 100%; height: 100%;
+    }
+    .file-pick-btn {
+      padding: 9px 16px; border: 1.5px solid #e0e0e0; background: #fff; border-radius: 8px;
+      font-size: 13px; font-weight: 500; cursor: pointer; font-family: inherit; white-space: nowrap;
+      transition: border .2s;
+    }
+    .file-pick-btn:hover { border-color: #aaa; }
+    .file-name { font-size: 12px; color: #555; max-width: 160px; overflow: hidden;
+      text-overflow: ellipsis; white-space: nowrap; }
+    .upload-btn {
+      padding: 9px 20px; background: #C8102E; color: #fff; border: none; border-radius: 8px;
+      font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit;
+      white-space: nowrap; transition: background .2s; flex-shrink: 0;
+    }
+    .upload-btn:hover { background: #a50d25; }
+    .upload-btn:disabled { background: #ccc; cursor: default; }
+
+    .status {
+      font-size: 12px; margin-top: 8px; min-height: 16px; width: 100%;
+    }
+    .status.ok { color: #1a8c3e; }
+    .status.err { color: #C8102E; }
+    .status.loading { color: #888; }
+
+    .progress-bar-wrap { width: 100%; height: 4px; background: #f0f0f0; border-radius: 4px; margin-top: 8px; display: none; }
+    .progress-bar { height: 100%; background: #C8102E; border-radius: 4px; width: 0%; transition: width .3s; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      .admin-header { padding: 0 16px; }
+      .admin-body { padding: 24px 16px 60px; }
+      .upload-card { flex-direction: column; align-items: flex-start; }
+      .upload-controls { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════ LOGIN ══════════════ -->
+<div id="login-screen">
+  <div class="login-card">
+    <div class="login-logo">
+      <img src="../logo.jpg" alt="West Him">
+      <div>
+        <span>WEST HIM</span>
+        <span class="sub">Химическое производство</span>
+      </div>
+    </div>
+    <div class="login-title">Вход в панель</div>
+    <div class="login-sub">Только для администраторов</div>
+    <input type="password" id="pwd-input" class="login-input" placeholder="Пароль" autocomplete="current-password">
+    <button class="login-btn" onclick="doLogin()">Войти</button>
+    <div class="login-err" id="login-err"></div>
+  </div>
+</div>
+
+<!-- ══════════════ ADMIN PANEL ══════════════ -->
+<div id="admin-panel">
+  <header class="admin-header">
+    <a class="admin-logo" href="../index.html" target="_blank">
+      <img src="../logo.jpg" alt="">
+      <span class="name">WEST HIM</span>
+      <span class="tag">Admin</span>
+    </a>
+    <button class="logout-btn" onclick="doLogout()">Выйти</button>
+  </header>
+
+  <div class="admin-body">
+
+    <!-- Hero фото -->
+    <div class="section-title">Главное фото (Hero)</div>
+
+    <div class="upload-card" id="card-hero">
+      <div class="upload-info">
+        <div class="upload-label">Hero — десктоп (фон)</div>
+        <div class="upload-path">out/images/IMG_0838.PNG</div>
+        <div class="status" id="st-hero"></div>
+        <div class="progress-bar-wrap" id="pb-hero"><div class="progress-bar" id="pbr-hero"></div></div>
+      </div>
+      <div class="upload-controls">
+        <div class="file-input-wrap">
+          <button class="file-pick-btn" id="fn-hero">Выбрать файл</button>
+          <input type="file" accept="image/*" onchange="onFile(this,'hero','out/images/IMG_0838.PNG')">
+        </div>
+        <button class="upload-btn" onclick="doUpload('hero')" disabled id="btn-hero">Загрузить</button>
+      </div>
+    </div>
+
+    <div class="upload-card" id="card-herom">
+      <div class="upload-info">
+        <div class="upload-label">Hero — мобильное фото</div>
+        <div class="upload-path">out/images/IMG_0851.PNG</div>
+        <div class="status" id="st-herom"></div>
+        <div class="progress-bar-wrap" id="pb-herom"><div class="progress-bar" id="pbr-herom"></div></div>
+      </div>
+      <div class="upload-controls">
+        <div class="file-input-wrap">
+          <button class="file-pick-btn" id="fn-herom">Выбрать файл</button>
+          <input type="file" accept="image/*" onchange="onFile(this,'herom','out/images/IMG_0851.PNG')">
+        </div>
+        <button class="upload-btn" onclick="doUpload('herom')" disabled id="btn-herom">Загрузить</button>
+      </div>
+    </div>
+
+    <!-- Карточки -->
+    <div class="section-title">Карточки категорий (главная страница)</div>
+
+    <div class="upload-card">
+      <div class="upload-info">
+        <div class="upload-label">Карточка — Производство</div>
+        <div class="upload-path">out/images/IMG_0845.PNG</div>
+        <div class="status" id="st-c1"></div>
+        <div class="progress-bar-wrap" id="pb-c1"><div class="progress-bar" id="pbr-c1"></div></div>
+      </div>
+      <div class="upload-controls">
+        <div class="file-input-wrap">
+          <button class="file-pick-btn" id="fn-c1">Выбрать файл</button>
+          <input type="file" accept="image/*" onchange="onFile(this,'c1','out/images/IMG_0845.PNG')">
+        </div>
+        <button class="upload-btn" onclick="doUpload('c1')" disabled id="btn-c1">Загрузить</button>
+      </div>
+    </div>
+
+    <div class="upload-card">
+      <div class="upload-info">
+        <div class="upload-label">Карточка — Опт / Розница</div>
+        <div class="upload-path">out/images/IMG_0847.PNG</div>
+        <div class="status" id="st-c2"></div>
+        <div class="progress-bar-wrap" id="pb-c2"><div class="progress-bar" id="pbr-c2"></div></div>
+      </div>
+      <div class="upload-controls">
+        <div class="file-input-wrap">
+          <button class="file-pick-btn" id="fn-c2">Выбрать файл</button>
+          <input type="file" accept="image/*" onchange="onFile(this,'c2','out/images/IMG_0847.PNG')">
+        </div>
+        <button class="upload-btn" onclick="doUpload('c2')" disabled id="btn-c2">Загрузить</button>
+      </div>
+    </div>
+
+    <div class="upload-card">
+      <div class="upload-info">
+        <div class="upload-label">Карточка — Бытовая химия</div>
+        <div class="upload-path">out/images/IMG_0846.PNG</div>
+        <div class="status" id="st-c3"></div>
+        <div class="progress-bar-wrap" id="pb-c3"><div class="progress-bar" id="pbr-c3"></div></div>
+      </div>
+      <div class="upload-controls">
+        <div class="file-input-wrap">
+          <button class="file-pick-btn" id="fn-c3">Выбрать файл</button>
+          <input type="file" accept="image/*" onchange="onFile(this,'c3','out/images/IMG_0846.PNG')">
+        </div>
+        <button class="upload-btn" onclick="doUpload('c3')" disabled id="btn-c3">Загрузить</button>
+      </div>
+    </div>
+
+    <div class="upload-card">
+      <div class="upload-info">
+        <div class="upload-label">Карточка — Автохимия</div>
+        <div class="upload-path">out/images/IMG_0844.PNG</div>
+        <div class="status" id="st-c4"></div>
+        <div class="progress-bar-wrap" id="pb-c4"><div class="progress-bar" id="pbr-c4"></div></div>
+      </div>
+      <div class="upload-controls">
+        <div class="file-input-wrap">
+          <button class="file-pick-btn" id="fn-c4">Выбрать файл</button>
+          <input type="file" accept="image/*" onchange="onFile(this,'c4','out/images/IMG_0844.PNG')">
+        </div>
+        <button class="upload-btn" onclick="doUpload('c4')" disabled id="btn-c4">Загрузить</button>
+      </div>
+    </div>
+
+    <!-- PDF Прайс -->
+    <div class="section-title">PDF Прайс-лист</div>
+
+    <div class="upload-card">
+      <div class="upload-info">
+        <div class="upload-label">Прайс-лист (PDF)</div>
+        <div class="upload-path">out/price.pdf</div>
+        <div class="status" id="st-pdf"></div>
+        <div class="progress-bar-wrap" id="pb-pdf"><div class="progress-bar" id="pbr-pdf"></div></div>
+      </div>
+      <div class="upload-controls">
+        <div class="file-input-wrap">
+          <button class="file-pick-btn" id="fn-pdf">Выбрать файл</button>
+          <input type="file" accept=".pdf,application/pdf" onchange="onFile(this,'pdf','out/price.pdf')">
+        </div>
+        <button class="upload-btn" onclick="doUpload('pdf')" disabled id="btn-pdf">Загрузить</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  // ══════════════════════════════════════════════════
+  //  НАСТРОЙКИ — заполни перед первым использованием
+  // ══════════════════════════════════════════════════
+  const CONFIG = {
+    token:    'ЗАМЕНИ_НА_GITHUB_TOKEN',   // Personal Access Token (repo scope)
+    owner:    'kereyevzh90-pixel',
+    repo:     'west-him',
+    branch:   'master',
+    password: 'ЗАМЕНИ_НА_ПАРОЛЬ'          // пароль для входа в панель
+  };
+  // ══════════════════════════════════════════════════
+
+  const pendingFiles = {}; // key → { file, path }
+
+  // ── Login ──
+  function doLogin() {
+    const val = document.getElementById('pwd-input').value;
+    if (val === CONFIG.password) {
+      document.getElementById('login-screen').style.display = 'none';
+      document.getElementById('admin-panel').style.display = 'block';
+    } else {
+      document.getElementById('login-err').textContent = 'Неверный пароль';
+      document.getElementById('pwd-input').value = '';
+      document.getElementById('pwd-input').focus();
+    }
+  }
+
+  function doLogout() {
+    document.getElementById('admin-panel').style.display = 'none';
+    document.getElementById('login-screen').style.display = 'flex';
+    document.getElementById('pwd-input').value = '';
+    document.getElementById('login-err').textContent = '';
+  }
+
+  document.getElementById('pwd-input').addEventListener('keydown', e => {
+    if (e.key === 'Enter') doLogin();
+  });
+
+  // ── File picker ──
+  function onFile(input, key, path) {
+    const file = input.files[0];
+    if (!file) return;
+    pendingFiles[key] = { file, path };
+    document.getElementById('fn-' + key).textContent = file.name.length > 22
+      ? file.name.slice(0, 20) + '…'
+      : file.name;
+    document.getElementById('btn-' + key).disabled = false;
+    setStatus(key, '', '');
+  }
+
+  // ── Upload ──
+  async function doUpload(key) {
+    const { file, path } = pendingFiles[key] || {};
+    if (!file) return;
+
+    const btn = document.getElementById('btn-' + key);
+    btn.disabled = true;
+    setStatus(key, 'Загружаем…', 'loading');
+    showProgress(key, true);
+    animateProgress(key, 30);
+
+    try {
+      // 1. Get current SHA (needed for update)
+      let sha = null;
+      const headRes = await fetch(
+        `https://api.github.com/repos/${CONFIG.owner}/${CONFIG.repo}/contents/${path}?ref=${CONFIG.branch}`,
+        { headers: { Authorization: `token ${CONFIG.token}`, Accept: 'application/vnd.github+json' } }
+      );
+      if (headRes.ok) {
+        const headData = await headRes.json();
+        sha = headData.sha;
+      } else if (headRes.status !== 404) {
+        throw new Error(`GitHub API: ${headRes.status}`);
+      }
+
+      animateProgress(key, 60);
+
+      // 2. Convert file to base64
+      const b64 = await toBase64(file);
+
+      animateProgress(key, 80);
+
+      // 3. PUT to GitHub
+      const body = {
+        message: `Admin: обновлён ${path.split('/').pop()}`,
+        content: b64,
+        branch: CONFIG.branch,
+        ...(sha ? { sha } : {})
+      };
+
+      const putRes = await fetch(
+        `https://api.github.com/repos/${CONFIG.owner}/${CONFIG.repo}/contents/${path}`,
+        {
+          method: 'PUT',
+          headers: {
+            Authorization: `token ${CONFIG.token}`,
+            Accept: 'application/vnd.github+json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(body)
+        }
+      );
+
+      if (!putRes.ok) {
+        const errData = await putRes.json().catch(() => ({}));
+        throw new Error(errData.message || `HTTP ${putRes.status}`);
+      }
+
+      animateProgress(key, 100);
+      await delay(400);
+      showProgress(key, false);
+      setStatus(key, `Готово! Сайт обновится через ~1 мин.`, 'ok');
+      document.getElementById('fn-' + key).textContent = 'Выбрать файл';
+      delete pendingFiles[key];
+
+    } catch (err) {
+      showProgress(key, false);
+      setStatus(key, `Ошибка: ${err.message}`, 'err');
+      btn.disabled = false;
+    }
+  }
+
+  // ── Helpers ──
+  function setStatus(key, text, type) {
+    const el = document.getElementById('st-' + key);
+    if (!el) return;
+    el.textContent = text;
+    el.className = 'status' + (type ? ' ' + type : '');
+  }
+
+  function showProgress(key, show) {
+    const el = document.getElementById('pb-' + key);
+    if (el) el.style.display = show ? 'block' : 'none';
+    if (!show) {
+      const bar = document.getElementById('pbr-' + key);
+      if (bar) bar.style.width = '0%';
+    }
+  }
+
+  function animateProgress(key, pct) {
+    const bar = document.getElementById('pbr-' + key);
+    if (bar) bar.style.width = pct + '%';
+  }
+
+  function delay(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+  function toBase64(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const b64 = reader.result.split(',')[1];
+        resolve(b64);
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
+</script>
+
+</body>
+</html>
