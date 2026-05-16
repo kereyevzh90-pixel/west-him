@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Редактор — West Him</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: #fff; min-height: 100vh; }
+
+    /* ─── TOOLBAR ─── */
+    #ed-bar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 9999;
+      background: #111; height: 56px;
+      display: flex; align-items: center; gap: 8px; padding: 0 18px;
+      box-shadow: 0 2px 20px rgba(0,0,0,.5); font-family: 'Inter', sans-serif;
+    }
+    .ed-logo { font-size: 13px; font-weight: 800; color: #fff; letter-spacing: .5px; white-space: nowrap; margin-right: 4px; }
+    .ed-sep { width: 1px; height: 22px; background: #2a2a2a; flex-shrink: 0; margin: 0 2px; }
+    .ed-select {
+      padding: 7px 10px; background: #1c1c1c; border: 1px solid #333;
+      border-radius: 7px; color: #ddd; font-size: 13px; font-family: inherit;
+      cursor: pointer; outline: none;
+    }
+    .ed-select:focus { border-color: #C8102E; }
+    .ed-btn {
+      padding: 8px 13px; border-radius: 8px; font-size: 13px; font-weight: 600;
+      font-family: inherit; cursor: pointer; border: none; transition: all .2s;
+      white-space: nowrap; display: inline-flex; align-items: center; gap: 5px;
+    }
+    #btn-edit { background: #1e1e1e; color: #888; border: 1px solid #2e2e2e; }
+    #btn-edit:hover { color: #fff; border-color: #444; }
+    #btn-edit.on { background: #C8102E; color: #fff; border-color: #C8102E; }
+    #btn-save { background: #14532d; color: #86efac; }
+    #btn-save:hover:not(:disabled) { background: #166534; color: #fff; }
+    #btn-save:disabled { background: #1a1a1a; color: #3a3a3a; cursor: default; border: 1px solid #252525; }
+    .ed-spacer { flex: 1; }
+    #ed-status { font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 240px; }
+    #ed-status.ok { color: #4ade80; }
+    #ed-status.err { color: #f87171; }
+    #ed-status.loading { color: #888; }
+    .ed-link {
+      padding: 7px 11px; border-radius: 7px; font-size: 12px; color: #666;
+      text-decoration: none; transition: all .2s; white-space: nowrap; font-weight: 500;
+    }
+    .ed-link:hover { background: #1e1e1e; color: #ddd; }
+
+    /* ─── PAGE FRAME ─── */
+    #page-frame { margin-top: 56px; }
+
+    /* ─── LOADING ─── */
+    #ed-loading {
+      position: fixed; top: 56px; left: 0; right: 0; bottom: 0;
+      background: #f9f9f9; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 14px; z-index: 9998;
+    }
+    .spin { width: 36px; height: 36px; border: 3px solid #e8e8e8; border-top-color: #C8102E; border-radius: 50%; animation: spin .7s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .spin-text { font-size: 13px; color: #aaa; }
+
+    /* ─── EDIT MODE ─── */
+    [data-ed]:not(:empty) {
+      outline: 2px dashed transparent;
+      border-radius: 3px;
+      transition: outline .15s;
+    }
+    .ed-mode [data-ed]:not(:empty) {
+      outline-color: rgba(200,16,46,.35);
+      cursor: text;
+    }
+    .ed-mode [data-ed]:not(:empty):hover { outline-color: rgba(200,16,46,.65); }
+    .ed-mode [data-ed]:not(:empty):focus { outline-color: #C8102E !important; background: rgba(200,16,46,.03) !important; }
+
+    /* Image overlay */
+    .ed-mode .ed-has-img { position: relative; }
+    .ed-mode .ed-has-img::after {
+      content: '📷 Заменить фото';
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(0,0,0,0); color: transparent;
+      font-size: 14px; font-weight: 700; font-family: 'Inter', sans-serif;
+      transition: background .2s, color .2s;
+      cursor: pointer; border-radius: inherit;
+    }
+    .ed-mode .ed-has-img:hover::after {
+      background: rgba(0,0,0,.42);
+      color: #fff;
+    }
+
+    /* ─── FLOAT BADGE ─── */
+    #ed-badge {
+      position: fixed; bottom: 20px; right: 20px; z-index: 9997;
+      background: #C8102E; color: #fff; padding: 9px 18px;
+      border-radius: 100px; font-size: 12px; font-weight: 700;
+      font-family: 'Inter', sans-serif;
+      box-shadow: 0 4px 20px rgba(200,16,46,.4); display: none;
+      animation: pulse 2.5s ease-in-out infinite;
+    }
+    @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .7; } }
+
+    /* ─── LOGIN ─── */
+    #login-screen {
+      position: fixed; inset: 0; background: #f5f5f5;
+      display: flex; align-items: center; justify-content: center; z-index: 99999;
+    }
+    .lc {
+      background: #fff; border-radius: 20px; padding: 48px 40px;
+      width: 100%; max-width: 400px;
+      box-shadow: 0 4px 40px rgba(0,0,0,.08); text-align: center;
+    }
+    .ll { display: flex; align-items: center; gap: 10px; justify-content: center; margin-bottom: 28px; }
+    .ll img { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; }
+    .ll-name { font-size: 18px; font-weight: 800; display: block; text-align: left; }
+    .ll-sub { font-size: 11px; color: #999; display: block; text-align: left; }
+    .lt { font-size: 21px; font-weight: 700; margin-bottom: 6px; }
+    .ld { font-size: 14px; color: #888; margin-bottom: 24px; }
+    .li {
+      width: 100%; padding: 13px 16px; border: 1.5px solid #e0e0e0; border-radius: 10px;
+      font-size: 15px; font-family: inherit; outline: none; margin-bottom: 12px; transition: border .2s;
+    }
+    .li:focus { border-color: #C8102E; }
+    .lb {
+      width: 100%; padding: 13px; background: #C8102E; color: #fff;
+      border: none; border-radius: 10px; font-size: 15px; font-weight: 600;
+      font-family: inherit; cursor: pointer; transition: background .2s;
+    }
+    .lb:hover { background: #a50d25; }
+    .le { color: #C8102E; font-size: 13px; margin-top: 10px; min-height: 18px; }
+  </style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="lc">
+    <div class="ll">
+      <img src="../logo.jpg" alt="West Him">
+      <div>
+        <span class="ll-name">WEST HIM</span>
+        <span class="ll-sub">Редактор сайта</span>
+      </div>
+    </div>
+    <div class="lt" id="lt">Вход</div>
+    <div class="ld" id="ld">Введи пароль</div>
+    <input type="password" id="pwd" class="li" placeholder="Пароль">
+    <input type="password" id="tok" class="li" placeholder="GitHub Token (только первый раз)" style="display:none">
+    <button class="lb" onclick="doLogin()">Войти</button>
+    <button class="lb" id="reset-btn" onclick="doReset()"
+      style="display:none;background:#fff;color:#C8102E;border:1.5px solid #C8102E;margin-top:8px">
+      Сбросить токен
+    </button>
+    <div class="le" id="lerr"></div>
+  </div>
+</div>
+
+<!-- TOOLBAR -->
+<div id="ed-bar">
+  <span class="ed-logo">✦ Редактор</span>
+  <div class="ed-sep"></div>
+  <select class="ed-select" id="pg" onchange="loadPage(this.value)">
+    <option value="index.html">Главная</option>
+    <option value="katalog.html">Каталог</option>
+    <option value="bytovaya-himiya.html">Бытовая химия</option>
+    <option value="avtohimiya.html">Автохимия</option>
+    <option value="proizvodstvo.html">Производство</option>
+    <option value="opt.html">Опт / Розница</option>
+    <option value="novinki.html">Новинки</option>
+  </select>
+  <div class="ed-sep"></div>
+  <button class="ed-btn" id="btn-edit" onclick="toggleEdit()">✏️ Редактировать</button>
+  <button class="ed-btn" id="btn-save" disabled onclick="saveHtml()">💾 Сохранить</button>
+  <span id="ed-status" class="ed-status"></span>
+  <div class="ed-spacer"></div>
+  <a class="ed-link" id="site-link" href="../index.html" target="_blank">↗ Открыть сайт</a>
+  <div class="ed-sep"></div>
+  <a class="ed-link" href="./index.html">← Админ</a>
+</div>
+
+<!-- Loading -->
+<div id="ed-loading" style="display:none">
+  <div class="spin"></div>
+  <div class="spin-text" id="load-text">Загружаем...</div>
+</div>
+
+<!-- Page content rendered here -->
+<div id="page-frame"></div>
+
+<!-- Edit mode badge -->
+<div id="ed-badge">✏️ Режим редактирования — кликай на любой текст</div>
+
+<!-- Hidden file inputs -->
+<input type="file" id="img-picker" accept="image/*" style="display:none">
+
+<script>
+const OWNER = 'kereyevzh90-pixel', REPO = 'west-him', BRANCH = 'master';
+
+let curPage = 'index.html';
+let srcHtml = '', srcSha = '';
+let editMode = false, dirty = false;
+
+// Selectors that become editable
+const TEXT_SELS = [
+  '.hero-badge', '.hero-h1', '.hero-desc',
+  '.section-label', '.section-title', '.section-sub',
+  '.prop-n', '.prop-l',
+  '.prod-name', '.prod-desc',
+  '.faq-title', '.faq-badge', '.faq-a-inner',
+  '.stat-num', '.stat-lbl',
+  '.price-block h3', '.price-block p',
+  '.feat-name', '.feat-desc', '.feat-sub',
+  '.tier-name', '.tier-desc', '.tier-price',
+];
+
+// ─── AUTH ───
+
+function initLogin() {
+  const has = !!localStorage.getItem('adminPwd');
+  document.getElementById('lt').textContent = has ? 'Вход в редактор' : 'Первый вход';
+  document.getElementById('ld').textContent = has ? 'Введи пароль' : 'Придумай пароль и введи GitHub Token';
+  document.getElementById('tok').style.display = has ? 'none' : 'block';
+  document.getElementById('reset-btn').style.display = has ? 'block' : 'none';
+}
+
+function doLogin() {
+  const pwd = document.getElementById('pwd').value.trim();
+  const tok = document.getElementById('tok').value.trim();
+  const err = document.getElementById('lerr');
+  const saved = localStorage.getItem('adminPwd');
+  if (!saved) {
+    if (!pwd || !tok) { err.textContent = 'Заполни оба поля'; return; }
+    localStorage.setItem('adminPwd', pwd);
+    localStorage.setItem('ghToken', tok);
+  } else {
+    if (pwd !== saved) { err.textContent = 'Неверный пароль'; document.getElementById('pwd').value = ''; return; }
+  }
+  err.textContent = '';
+  document.getElementById('login-screen').style.display = 'none';
+  loadPage('index.html');
+}
+
+function doReset() {
+  if (!confirm('Сбросить пароль и токен?')) return;
+  localStorage.removeItem('adminPwd'); localStorage.removeItem('ghToken'); location.reload();
+}
+
+document.getElementById('pwd').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+document.getElementById('tok').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+initLogin();
+
+// ─── LOAD PAGE ───
+
+async function loadPage(file) {
+  if (dirty && !confirm('Есть несохранённые изменения. Продолжить без сохранения?')) {
+    document.getElementById('pg').value = curPage; return;
+  }
+  curPage = file;
+  document.getElementById('pg').value = file;
+  document.getElementById('site-link').href = '../' + file;
+  if (editMode) exitEditMode();
+  dirty = false;
+  document.getElementById('btn-save').disabled = true;
+  document.getElementById('page-frame').innerHTML = '';
+  showLoad(true, 'Загружаем ' + file + '…');
+
+  const token = localStorage.getItem('ghToken');
+  const headers = { Authorization: 'token ' + token, Accept: 'application/vnd.github+json' };
+  try {
+    const res = await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/contents/out/${file}?ref=${BRANCH}`, { headers });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const data = await res.json();
+    srcSha = data.sha;
+    srcHtml = b64decode(data.content);
+    renderPage(srcHtml);
+    showLoad(false);
+    setStatus('');
+  } catch(e) {
+    showLoad(false);
+    setStatus('Ошибка: ' + e.message, 'err');
+  }
+}
+
+function b64decode(b64) {
+  return decodeURIComponent(escape(atob(b64.replace(/\n/g, ''))));
+}
+
+function b64encode(str) {
+  return btoa(unescape(encodeURIComponent(str)));
+}
+
+function renderPage(html) {
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(html, 'text/html');
+
+  // Inject page CSS into our head (remove old)
+  document.querySelectorAll('style.pg').forEach(s => s.remove());
+  doc.querySelectorAll('style').forEach(st => {
+    const s = document.createElement('style');
+    s.className = 'pg';
+    s.textContent = st.textContent
+      .replace(/url\(['"]?images\//g, "url('../images/")
+      .replace(/url\("images\//g, "url('../images/");
+    document.head.appendChild(s);
+  });
+
+  const body = doc.body;
+
+  // Fix image src paths
+  body.querySelectorAll('img').forEach(img => {
+    const src = img.getAttribute('src') || '';
+    if (!src.startsWith('http') && !src.startsWith('//') && !src.startsWith('../') && !src.startsWith('data:')) {
+      img.setAttribute('src', '../' + src);
+    }
+  });
+
+  // Fix inline background-image paths
+  body.querySelectorAll('[style]').forEach(el => {
+    const s = el.getAttribute('style');
+    if (s && s.includes("url('images/")) {
+      el.setAttribute('style', s.replace(/url\('images\//g, "url('../images/"));
+    }
+  });
+
+  // Disable internal links (so they don't navigate away from editor)
+  body.querySelectorAll('a').forEach(a => {
+    const href = a.getAttribute('href') || '';
+    if (!href.startsWith('http') && !href.startsWith('#') && !href.startsWith('//') && href !== '') {
+      a.setAttribute('data-href', href);
+      a.removeAttribute('href');
+    }
+  });
+
+  // Remove inline scripts
+  body.querySelectorAll('script').forEach(s => s.remove());
+
+  document.getElementById('page-frame').innerHTML = body.innerHTML;
+
+  // Re-init FAQ toggle
+  document.querySelectorAll('.faq-q').forEach(q => {
+    q.style.cursor = 'pointer';
+    q.addEventListener('click', function() {
+      if (!editMode) this.parentElement.classList.toggle('open');
+    });
+  });
+
+  // Fix sticky header offset
+  document.querySelectorAll('.header').forEach(h => { h.style.top = '56px'; });
+}
+
+// ─── EDIT MODE ───
+
+function toggleEdit() {
+  editMode ? exitEditMode() : enterEditMode();
+}
+
+function enterEditMode() {
+  editMode = true;
+  const frame = document.getElementById('page-frame');
+  frame.classList.add('ed-mode');
+  document.getElementById('btn-edit').classList.add('on');
+  document.getElementById('btn-edit').textContent = '✕ Выйти';
+  document.getElementById('ed-badge').style.display = 'block';
+
+  // Make text elements editable
+  TEXT_SELS.forEach(sel => {
+    frame.querySelectorAll(sel).forEach(el => {
+      if (el.closest('[data-ed]')) return;
+      el.setAttribute('data-ed', '1');
+      el.contentEditable = 'true';
+      el.addEventListener('input', markDirty);
+    });
+  });
+
+  // FAQ questions — only text node (not icon)
+  frame.querySelectorAll('.faq-q').forEach(q => {
+    const tn = Array.from(q.childNodes).find(n => n.nodeType === 3 && n.textContent.trim());
+    if (!tn) return;
+    const span = document.createElement('span');
+    span.setAttribute('data-ed', 'faqq');
+    span.contentEditable = 'true';
+    span.textContent = tn.textContent.trim();
+    tn.replaceWith(span);
+    span.addEventListener('input', markDirty);
+  });
+
+  // Images — add click-to-replace
+  frame.querySelectorAll('img').forEach(img => {
+    const path = imgToGithubPath(img.getAttribute('src'));
+    if (!path) return;
+    img.classList.add('ed-has-img');
+    img.style.cursor = 'pointer';
+    img.addEventListener('click', () => pickAndUploadImg(path, img, null), { once: false });
+    img._edPath = path;
+  });
+
+  // Background images (cat-photo etc.)
+  frame.querySelectorAll('[style*="background-image"]').forEach(el => {
+    const s = el.getAttribute('style') || '';
+    const m = s.match(/url\(['"]?\.\.\/(images\/[\w.\-]+)['"]?\)/);
+    if (!m) return;
+    const path = 'out/' + m[1];
+    el.classList.add('ed-has-img');
+    el.style.cursor = 'pointer';
+    el.addEventListener('click', (e) => {
+      if (e.target !== el && !el.contains(e.target)) return;
+      pickAndUploadImg(path, null, el);
+    });
+    el._edPath = path;
+  });
+}
+
+function exitEditMode() {
+  editMode = false;
+  const frame = document.getElementById('page-frame');
+  frame.classList.remove('ed-mode');
+  document.getElementById('btn-edit').classList.remove('on');
+  document.getElementById('btn-edit').textContent = '✏️ Редактировать';
+  document.getElementById('ed-badge').style.display = 'none';
+
+  // Remove editable attrs
+  frame.querySelectorAll('[data-ed]').forEach(el => {
+    el.removeAttribute('data-ed');
+    el.removeAttribute('contenteditable');
+    el.removeEventListener('input', markDirty);
+  });
+
+  // Unwrap FAQ spans
+  frame.querySelectorAll('.faq-q span[data-ed="faqq"]').forEach(span => {
+    span.replaceWith(document.createTextNode('\n          ' + span.textContent + '\n          '));
+  });
+
+  // Remove image edit classes
+  frame.querySelectorAll('.ed-has-img').forEach(el => {
+    el.classList.remove('ed-has-img');
+    el.style.cursor = '';
+  });
+}
+
+function markDirty() {
+  dirty = true;
+  document.getElementById('btn-save').disabled = false;
+  setStatus('Есть несохранённые изменения', '');
+}
+
+// ─── IMAGE UPLOAD ───
+
+function imgToGithubPath(src) {
+  if (!src) return null;
+  if (src.includes('../images/')) return 'out/images/' + src.split('../images/')[1].split('?')[0];
+  if (src.includes('../logo.jpg')) return 'out/logo.jpg';
+  return null;
+}
+
+function pickAndUploadImg(githubPath, imgEl, bgEl) {
+  const picker = document.getElementById('img-picker');
+  const handler = async () => {
+    picker.removeEventListener('change', handler);
+    const file = picker.files[0];
+    if (!file) return;
+    picker.value = '';
+    await uploadImgFile(githubPath, file, imgEl, bgEl);
+  };
+  picker.addEventListener('change', handler);
+  picker.click();
+}
+
+async function uploadImgFile(githubPath, file, imgEl, bgEl) {
+  const token = localStorage.getItem('ghToken');
+  const headers = { Authorization: 'token ' + token, Accept: 'application/vnd.github+json', 'Content-Type': 'application/json' };
+  const apiBase = `https://api.github.com/repos/${OWNER}/${REPO}/contents`;
+  setStatus('Загружаем фото…', 'loading');
+  try {
+    const content = await toBase64(file);
+    let sha = null;
+    const getRes = await fetch(`${apiBase}/${githubPath}?ref=${BRANCH}`, { headers });
+    if (getRes.ok) sha = (await getRes.json()).sha;
+    const putRes = await fetch(`${apiBase}/${githubPath}`, {
+      method: 'PUT', headers,
+      body: JSON.stringify({ message: 'Редактор: заменено ' + githubPath.split('/').pop(), content, branch: BRANCH, ...(sha ? { sha } : {}) }),
+    });
+    if (!putRes.ok) { const e = await putRes.json().catch(() => ({})); throw new Error(e.message || 'HTTP ' + putRes.status); }
+    // Update DOM immediately (cache bust)
+    const newSrc = '../' + githubPath.replace(/^out\//, '') + '?t=' + Date.now();
+    if (imgEl) imgEl.src = newSrc;
+    if (bgEl) {
+      const s = bgEl.getAttribute('style');
+      bgEl.setAttribute('style', s.replace(/url\(['"][^'"]+['"]\)/, `url('${newSrc}')`));
+    }
+    setStatus('✓ Фото загружено! Появится на сайте через ~1 мин.', 'ok');
+  } catch(e) {
+    setStatus('Ошибка: ' + e.message, 'err');
+  }
+}
+
+// ─── SAVE HTML ───
+
+async function saveHtml() {
+  if (!dirty) return;
+  const token = localStorage.getItem('ghToken');
+  if (!token) return;
+  setStatus('Сохраняем…', 'loading');
+  document.getElementById('btn-save').disabled = true;
+
+  try {
+    const parser = new DOMParser();
+    const saveDoc = parser.parseFromString(srcHtml, 'text/html');
+    const frame = document.getElementById('page-frame');
+
+    // Apply text changes by selector index
+    TEXT_SELS.forEach(sel => {
+      frame.querySelectorAll(sel).forEach((el, i) => {
+        const target = saveDoc.querySelectorAll(sel)[i];
+        if (target) target.innerHTML = el.innerHTML;
+      });
+    });
+
+    // FAQ question text nodes
+    frame.querySelectorAll('.faq-q').forEach((q, i) => {
+      const span = q.querySelector('[data-ed="faqq"]');
+      const saveQ = saveDoc.querySelectorAll('.faq-q')[i];
+      if (!span || !saveQ) return;
+      const tn = Array.from(saveQ.childNodes).find(n => n.nodeType === 3 && n.textContent.trim());
+      if (tn) tn.textContent = '\n          ' + span.textContent.trim() + '\n          ';
+    });
+
+    const newHtml = '<!DOCTYPE html>\n' + saveDoc.documentElement.outerHTML;
+    const content = b64encode(newHtml);
+    const headers = { Authorization: 'token ' + token, Accept: 'application/vnd.github+json', 'Content-Type': 'application/json' };
+    const putRes = await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/contents/out/${curPage}`, {
+      method: 'PUT', headers,
+      body: JSON.stringify({ message: 'Редактор: изменена страница ' + curPage, content, sha: srcSha, branch: BRANCH }),
+    });
+
+    if (putRes.status === 401) { setStatus('Токен недействителен — войди снова', 'err'); return; }
+    if (!putRes.ok) { const e = await putRes.json().catch(() => ({})); throw new Error(e.message || 'HTTP ' + putRes.status); }
+
+    const result = await putRes.json();
+    srcSha = result.content.sha;
+    srcHtml = newHtml;
+    dirty = false;
+    setStatus('✓ Сохранено! Сайт обновится через ~1 мин.', 'ok');
+  } catch(e) {
+    setStatus('Ошибка: ' + e.message, 'err');
+    document.getElementById('btn-save').disabled = false;
+  }
+}
+
+// ─── HELPERS ───
+
+function showLoad(on, text) {
+  document.getElementById('ed-loading').style.display = on ? 'flex' : 'none';
+  if (text) document.getElementById('load-text').textContent = text;
+}
+
+function setStatus(text, type) {
+  const el = document.getElementById('ed-status');
+  el.textContent = text;
+  el.className = type ? 'ed-status ' + type : 'ed-status';
+}
+
+function toBase64(file) {
+  return new Promise((res, rej) => {
+    const r = new FileReader();
+    r.onload = () => res(r.result.split(',')[1]);
+    r.onerror = rej;
+    r.readAsDataURL(file);
+  });
+}
+
+window.addEventListener('beforeunload', e => { if (dirty) { e.preventDefault(); e.returnValue = ''; } });
+</script>
+</body>
+</html>
