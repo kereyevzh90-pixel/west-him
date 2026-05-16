@@ -78,11 +78,13 @@
     .prod-card { border-radius: 14px; overflow: hidden; background: #fff; border: 1px solid #ebebeb; box-shadow: 0 2px 8px rgba(0,0,0,0.04); transition: transform .25s, box-shadow .25s; display: flex; flex-direction: column; }
     .prod-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.1); }
 
-    .prod-card-img { aspect-ratio: 1/1; overflow: hidden; background: linear-gradient(135deg, #f8f8f8 0%, #eeeeee 100%); flex-shrink: 0; }
+    .prod-card-img { aspect-ratio: 1/1; overflow: hidden; background: linear-gradient(135deg, #f8f8f8 0%, #eeeeee 100%); flex-shrink: 0; position: relative; }
     .prod-card-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .3s; }
     .prod-card:hover .prod-card-img img { transform: scale(1.05); }
     .prod-card-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
     .prod-card-placeholder svg { width: 44px; height: 44px; }
+    .prod-card-overlay { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.28) 60%, transparent 100%); padding: 28px 12px 12px; pointer-events: none; }
+    .prod-card-overlay-text { color: #fff; font-size: 12px; font-weight: 600; line-height: 1.4; text-shadow: 0 1px 4px rgba(0,0,0,0.5); }
 
     .prod-card-info { padding: 12px 14px 14px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
     .prod-card-cat { font-size: 10px; font-weight: 700; color: #C8102E; text-transform: uppercase; letter-spacing: 0.12em; }
@@ -396,10 +398,12 @@
     const catLabel = CAT_LABELS[p.category] || '';
     const hasImg = p.image && p.image !== '';
     const inCart = cart[p.id] && cart[p.id].qty > 0;
+    const overlayText = p.description && p.description.trim() !== '' ? p.description.trim() : '';
     return `
       <div class="prod-card" data-cat="${p.category}" data-id="${p.id}">
         <div class="prod-card-img">
           ${hasImg ? `<img src="${p.image}" alt="${p.name}" loading="lazy"/>` : `<div class="prod-card-placeholder">${PLACEHOLDER_SVG}</div>`}
+          ${overlayText ? `<div class="prod-card-overlay"><div class="prod-card-overlay-text">${overlayText}</div></div>` : ''}
         </div>
         <div class="prod-card-info">
           ${catLabel ? `<div class="prod-card-cat">${catLabel}</div>` : ''}
