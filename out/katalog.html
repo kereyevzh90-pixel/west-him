@@ -11,12 +11,7 @@
     html, body { background: #fff; color: #111; font-family: 'Inter', sans-serif; overflow-x: hidden; }
 
     /* HEADER */
-    .header {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 14px 52px; background: #fff;
-      border-bottom: 1px solid #ebebeb;
-      position: sticky; top: 0; z-index: 100; gap: 32px;
-    }
+    .header { display: flex; align-items: center; justify-content: space-between; padding: 14px 52px; background: #fff; border-bottom: 1px solid #ebebeb; position: sticky; top: 0; z-index: 100; gap: 32px; }
     .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; color: #111; flex-shrink: 0; }
     .logo img { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; }
     .logo-name { display: block; font-size: 16px; font-weight: 800; letter-spacing: 0.3px; color: #111; line-height: 1.2; }
@@ -26,63 +21,26 @@
     .header-nav a:hover { color: #C8102E; }
     .header-nav a.active { color: #C8102E; font-weight: 600; position: relative; }
     .header-nav a.active::after { content: ''; position: absolute; bottom: -4px; left: 0; right: 0; height: 2px; background: #C8102E; border-radius: 2px; }
-    .header-cta {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 10px 20px; border-radius: 8px; white-space: nowrap;
-      background: #fff; border: 1.5px solid #C8102E;
-      color: #C8102E; font-size: 13px; font-weight: 700;
-      text-decoration: none; transition: background .2s, color .2s; flex-shrink: 0;
-    }
+    .header-cta { display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; border-radius: 8px; white-space: nowrap; background: #fff; border: 1.5px solid #C8102E; color: #C8102E; font-size: 13px; font-weight: 700; text-decoration: none; transition: background .2s, color .2s; flex-shrink: 0; }
     .header-cta:hover { background: #C8102E; color: #fff; }
     .hamburger { display: none; flex-direction: column; justify-content: center; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; }
     .hamburger span { display: block; width: 24px; height: 2px; background: #111; border-radius: 2px; }
 
     /* HERO */
-    .hero {
-      background: #f7f7f7;
-      border-bottom: 1px solid #ebebeb;
-    }
-    .hero-left {
-      display: flex; flex-direction: column; justify-content: flex-start;
-      padding: 64px 52px; max-width: 760px;
-    }
-    .hero-badge {
-      display: inline-flex; align-items: center; gap: 7px;
-      color: #C8102E; font-size: 11px; font-weight: 700;
-      letter-spacing: 0.12em; text-transform: uppercase;
-      margin-bottom: 18px; width: fit-content;
-    }
-    .hero-h1 {
-      font-size: clamp(32px, 3.4vw, 52px); font-weight: 900;
-      line-height: 1.1; letter-spacing: -1.5px;
-      margin-bottom: 18px; color: #111;
-    }
+    .hero { background: #f7f7f7; border-bottom: 1px solid #ebebeb; }
+    .hero-left { display: flex; flex-direction: column; justify-content: flex-start; padding: 64px 52px; max-width: 760px; }
+    .hero-badge { display: inline-flex; align-items: center; gap: 7px; color: #C8102E; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 18px; width: fit-content; }
+    .hero-h1 { font-size: clamp(32px, 3.4vw, 52px); font-weight: 900; line-height: 1.1; letter-spacing: -1.5px; margin-bottom: 18px; color: #111; }
     .hero-h1 .red { color: #C8102E; }
     .hero-desc { font-size: 15px; color: #666; line-height: 1.7; margin-bottom: 32px; max-width: 440px; }
     .hero-actions { display: flex; gap: 12px; }
-    .btn-red {
-      display: inline-flex; align-items: center; gap: 7px;
-      padding: 13px 22px; border-radius: 10px;
-      background: #C8102E; color: #fff; font-size: 14px; font-weight: 700;
-      text-decoration: none; box-shadow: 0 4px 20px rgba(200,16,46,0.3);
-      transition: background .2s, transform .2s;
-    }
+    .btn-red { display: inline-flex; align-items: center; gap: 7px; padding: 13px 22px; border-radius: 10px; background: #C8102E; color: #fff; font-size: 14px; font-weight: 700; text-decoration: none; box-shadow: 0 4px 20px rgba(200,16,46,0.3); transition: background .2s, transform .2s; }
     .btn-red:hover { background: #a50d25; transform: translateY(-1px); }
-    .btn-outline {
-      display: inline-flex; align-items: center; gap: 7px;
-      padding: 13px 22px; border-radius: 10px;
-      background: #fff; border: 1.5px solid #ddd;
-      color: #333; font-size: 14px; font-weight: 600;
-      text-decoration: none; transition: border-color .2s;
-    }
+    .btn-outline { display: inline-flex; align-items: center; gap: 7px; padding: 13px 22px; border-radius: 10px; background: #fff; border: 1.5px solid #ddd; color: #333; font-size: 14px; font-weight: 600; text-decoration: none; transition: border-color .2s; }
     .btn-outline:hover { border-color: #bbb; }
 
     /* PROPS */
-    .props-strip {
-      display: grid; grid-template-columns: repeat(4, 1fr);
-      border-top: 1px solid #ebebeb; border-bottom: 1px solid #ebebeb;
-      background: #fff;
-    }
+    .props-strip { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid #ebebeb; border-bottom: 1px solid #ebebeb; background: #fff; }
     .prop { padding: 28px 32px; border-right: 1px solid #ebebeb; }
     .prop:last-child { border-right: none; }
     .prop-n { font-size: 28px; font-weight: 900; color: #C8102E; letter-spacing: -1px; margin-bottom: 4px; }
@@ -91,72 +49,75 @@
     /* MAIN */
     .main { max-width: 1200px; margin: 0 auto; padding: 52px 52px 80px; }
 
-    /* CATEGORY TABS */
-    .cat-tabs {
-      display: flex; gap: 8px; margin-bottom: 40px; flex-wrap: wrap;
+    /* FILTER TABS */
+    .filter-tabs { display: flex; gap: 8px; margin-bottom: 36px; flex-wrap: wrap; }
+    .tab {
+      padding: 10px 22px; border-radius: 100px; border: 1.5px solid #e0e0e0;
+      background: #fff; font-size: 14px; font-weight: 600; color: #666;
+      cursor: pointer; transition: all .2s; font-family: inherit;
     }
-    .cat-tab {
-      padding: 10px 22px; border-radius: 100px;
-      border: 1.5px solid #ebebeb; background: #fff;
-      font-size: 14px; font-weight: 600; color: #555;
-      cursor: pointer; transition: all .2s; text-decoration: none;
-    }
-    .cat-tab:hover { border-color: #C8102E; color: #C8102E; }
-    .cat-tab.active { background: #C8102E; border-color: #C8102E; color: #fff; }
+    .tab:hover { border-color: #C8102E; color: #C8102E; }
+    .tab.active { background: #C8102E; border-color: #C8102E; color: #fff; }
 
-    /* SECTION */
-    .cat-section { margin-bottom: 64px; }
-    .cat-section-head {
-      display: flex; align-items: baseline; justify-content: space-between;
-      margin-bottom: 8px; flex-wrap: wrap; gap: 12px;
+    /* PRODUCT GRID */
+    .prod-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 16px;
     }
-    .section-title { font-size: 22px; font-weight: 800; letter-spacing: -0.5px; color: #111; }
-    .section-link {
-      font-size: 13px; font-weight: 600; color: #C8102E;
-      text-decoration: none; display: flex; align-items: center; gap: 4px;
-    }
-    .section-link:hover { text-decoration: underline; }
-    .section-sub { font-size: 14px; color: #888; margin-bottom: 24px; }
 
-    /* PRODUCTS GRID */
-    .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+    /* PRODUCT CARD */
     .prod-card {
-      background: #fff; border: 1px solid #ebebeb;
-      border-radius: 16px; padding: 24px;
-      transition: box-shadow .25s, transform .25s;
+      border-radius: 16px; overflow: hidden;
+      aspect-ratio: 3/4; position: relative;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+      transition: transform .25s, box-shadow .25s;
+      background: #f0f0f0;
+      cursor: default;
     }
-    .prod-card:hover { box-shadow: 0 6px 24px rgba(0,0,0,0.09); transform: translateY(-2px); }
-    .prod-icon { width: 44px; height: 44px; border-radius: 12px; background: rgba(200,16,46,0.08); border: 1.5px solid rgba(200,16,46,0.18); display: flex; align-items: center; justify-content: center; margin-bottom: 14px; color: #C8102E; }
-    .prod-icon svg { width: 22px; height: 22px; }
-    .prod-name { font-size: 15px; font-weight: 700; color: #111; margin-bottom: 6px; }
-    .prod-desc { font-size: 13px; color: #777; line-height: 1.6; margin-bottom: 12px; }
-    .prod-tags { display: flex; flex-wrap: wrap; gap: 6px; }
-    .prod-tag { padding: 3px 9px; border-radius: 6px; background: #f5f5f5; border: 1px solid #e8e8e8; font-size: 11px; font-weight: 500; color: #666; }
+    .prod-card:hover { transform: translateY(-4px); box-shadow: 0 10px 32px rgba(0,0,0,0.14); }
 
-    /* DIVIDER */
-    .divider { border: none; border-top: 1px solid #ebebeb; margin: 0 0 64px; }
+    .prod-card-bg {
+      position: absolute; inset: 0;
+      background-size: cover; background-position: center;
+    }
+    .prod-card-placeholder {
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .prod-card-placeholder svg { width: 48px; height: 48px; color: #ccc; }
+
+    .prod-card-overlay {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.15) 55%, transparent 100%);
+      padding: 36px 16px 16px;
+    }
+    .prod-card-cat {
+      font-size: 10px; font-weight: 700; color: rgba(255,255,255,0.6);
+      text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 5px;
+    }
+    .prod-card-name {
+      font-size: 15px; font-weight: 700; color: #fff; line-height: 1.3;
+    }
+
+    /* Empty state */
+    .empty-state { text-align: center; padding: 80px 20px; color: #bbb; }
+    .empty-state svg { width: 48px; height: 48px; margin-bottom: 16px; }
+    .empty-state p { font-size: 15px; }
+
+    /* Loading skeleton */
+    .skel { background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%); background-size: 200% 100%; animation: skel 1.2s infinite; border-radius: 16px; aspect-ratio: 3/4; }
+    @keyframes skel { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
 
     /* PRICE BLOCK */
-    .price-block {
-      background: #f7f7f7; border: 1px solid #ebebeb;
-      border-radius: 20px; padding: 40px;
-      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 24px;
-    }
+    .price-block { background: #f7f7f7; border: 1px solid #ebebeb; border-radius: 20px; padding: 40px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 24px; margin-top: 60px; }
     .price-block h3 { font-size: 22px; font-weight: 800; color: #111; margin-bottom: 6px; }
     .price-block p { font-size: 14px; color: #777; max-width: 420px; line-height: 1.6; }
     .price-actions { display: flex; flex-direction: column; gap: 10px; align-items: flex-end; }
-    .btn-dl {
-      display: flex; align-items: center; gap: 9px; padding: 13px 24px; border-radius: 12px;
-      background: #C8102E; color: #fff; font-size: 15px; font-weight: 700;
-      text-decoration: none; white-space: nowrap;
-      box-shadow: 0 4px 20px rgba(200,16,46,0.3); transition: all .2s;
-    }
+    .btn-dl { display: flex; align-items: center; gap: 9px; padding: 13px 24px; border-radius: 12px; background: #C8102E; color: #fff; font-size: 15px; font-weight: 700; text-decoration: none; white-space: nowrap; box-shadow: 0 4px 20px rgba(200,16,46,0.3); transition: all .2s; }
     .btn-dl:hover { background: #a50d25; transform: translateY(-1px); }
-    .btn-wa {
-      display: flex; align-items: center; gap: 8px; padding: 10px 20px; border-radius: 10px;
-      background: #fff; border: 1.5px solid #ddd;
-      color: #444; font-size: 13px; font-weight: 600; text-decoration: none; transition: border-color .2s;
-    }
+    .btn-wa { display: flex; align-items: center; gap: 8px; padding: 10px 20px; border-radius: 10px; background: #fff; border: 1.5px solid #ddd; color: #444; font-size: 13px; font-weight: 600; text-decoration: none; transition: border-color .2s; }
     .btn-wa:hover { border-color: #bbb; }
 
     /* MOBILE */
@@ -186,8 +147,8 @@
       .prop:nth-child(2) { border-bottom: 1px solid #ebebeb; }
       .prop:nth-child(3) { border-right: 1px solid #ebebeb; border-bottom: none; }
       .prop:nth-child(4) { border-bottom: none; }
-      .main { padding: 32px 16px 60px; }
-      .cat-section-head { flex-direction: column; align-items: flex-start; }
+      .main { padding: 28px 16px 60px; }
+      .prod-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
       .price-block { padding: 24px; flex-direction: column; }
       .price-actions { align-items: stretch; width: 100%; }
       .btn-dl, .btn-wa { width: 100%; justify-content: center; }
@@ -199,10 +160,7 @@
 <header class="header">
   <a href="index.html" class="logo">
     <img src="logo.jpg" alt="West Him"/>
-    <div>
-      <span class="logo-name">WEST HIM</span>
-      <span class="logo-sub">Химическое производство</span>
-    </div>
+    <div><span class="logo-name">WEST HIM</span><span class="logo-sub">Химическое производство</span></div>
   </a>
   <nav class="header-nav">
     <a href="index.html">Главная</a>
@@ -223,7 +181,7 @@
   <div class="hero-left">
     <div class="hero-badge">→ Собственное производство в Актау</div>
     <h1 class="hero-h1">Каталог<br/><span class="red">продукции</span></h1>
-    <p class="hero-desc">Бытовая и автохимия казахстанского производства. Более 80 наименований для дома и автомобиля — опт и розница.</p>
+    <p class="hero-desc">Бытовая и автохимия казахстанского производства. Опт и розница по всему Казахстану.</p>
     <div class="hero-actions">
       <a class="btn-red" href="#price">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 15V3m0 12l-4-4m4 4l4-4M2 17l.621 2.485A2 2 0 004.561 21h14.878a2 2 0 001.94-1.515L22 17"/></svg>
@@ -235,7 +193,7 @@
 </section>
 
 <div class="props-strip">
-  <div class="prop"><div class="prop-n">80+</div><div class="prop-l">Наименований продукции</div></div>
+  <div class="prop"><div class="prop-n" id="count-total">—</div><div class="prop-l">Наименований продукции</div></div>
   <div class="prop"><div class="prop-n">2</div><div class="prop-l">Категории товаров</div></div>
   <div class="prop"><div class="prop-n">Опт</div><div class="prop-l">Выгодные условия</div></div>
   <div class="prop"><div class="prop-n">✓</div><div class="prop-l">Сертифицировано</div></div>
@@ -243,117 +201,22 @@
 
 <main class="main">
 
-  <!-- БЫТОВАЯ ХИМИЯ -->
-  <div class="cat-section">
-    <div class="cat-section-head">
-      <div class="section-title">Бытовая химия</div>
-      <a class="section-link" href="bytovaya-himiya.html">Смотреть всё →</a>
-    </div>
-    <div class="section-sub">Профессиональные средства для уборки дома — безопасные, эффективные, казахстанского производства</div>
-    <div class="products-grid">
-
-      <div class="prod-card">
-        <div class="prod-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18"/></svg></div>
-        <div class="prod-name">Средство для мытья посуды</div>
-        <div class="prod-desc">Эффективно удаляет жир, не сушит кожу. Приятный аромат, густая консистенция.</div>
-        <div class="prod-tags"><span class="prod-tag">500 мл</span><span class="prod-tag">1 л</span><span class="prod-tag">5 л</span></div>
-      </div>
-
-      <div class="prod-card">
-        <div class="prod-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg></div>
-        <div class="prod-name">Универсальный очиститель</div>
-        <div class="prod-desc">Для всех твёрдых поверхностей — кухня, ванная, подсобные помещения. Без агрессивных щелочей.</div>
-        <div class="prod-tags"><span class="prod-tag">500 мл</span><span class="prod-tag">1 л</span></div>
-      </div>
-
-      <div class="prod-card">
-        <div class="prod-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
-        <div class="prod-name">Очиститель стёкол и зеркал</div>
-        <div class="prod-desc">Блеск без разводов. Быстро испаряется, безопасен для тонированных стёкол.</div>
-        <div class="prod-tags"><span class="prod-tag">500 мл</span><span class="prod-tag">Триггер</span></div>
-      </div>
-
-      <div class="prod-card">
-        <div class="prod-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg></div>
-        <div class="prod-name">Средство для сантехники</div>
-        <div class="prod-desc">Удаляет известковый налёт, ржавчину и мыльный камень. Антибактериальный эффект.</div>
-        <div class="prod-tags"><span class="prod-tag">750 мл</span><span class="prod-tag">Гель</span></div>
-      </div>
-
-      <div class="prod-card">
-        <div class="prod-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 21h10M12 21V3M5 7l7-4 7 4"/></svg></div>
-        <div class="prod-name">Средство для пола</div>
-        <div class="prod-desc">Чистящий концентрат для всех видов напольного покрытия. Оставляет приятный аромат.</div>
-        <div class="prod-tags"><span class="prod-tag">1 л</span><span class="prod-tag">5 л</span><span class="prod-tag">Концентрат</span></div>
-      </div>
-
-      <div class="prod-card">
-        <div class="prod-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v1m0 16v1M3 12h1m16 0h1M5.636 5.636l.707.707m11.314 11.314.707.707M5.636 18.364l.707-.707m11.314-11.314.707-.707"/></svg></div>
-        <div class="prod-name">Освежитель воздуха</div>
-        <div class="prod-desc">Нейтрализует запахи, не маскирует их. Линейка ароматов на выбор.</div>
-        <div class="prod-tags"><span class="prod-tag">300 мл</span><span class="prod-tag">Аэрозоль</span></div>
-      </div>
-
-    </div>
+  <div class="filter-tabs">
+    <button class="tab active" onclick="filter('all', this)">Все</button>
+    <button class="tab" onclick="filter('bytovaya', this)">Бытовая химия</button>
+    <button class="tab" onclick="filter('avto', this)">Автохимия</button>
   </div>
 
-  <hr class="divider"/>
-
-  <!-- АВТОХИМИЯ -->
-  <div class="cat-section">
-    <div class="cat-section-head">
-      <div class="section-title">Автохимия</div>
-      <a class="section-link" href="avtohimiya.html">Смотреть всё →</a>
-    </div>
-    <div class="section-sub">Профессиональная автохимия для мойки, чистки и защиты автомобиля — подходит для СТО и автомоек</div>
-    <div class="products-grid">
-
-      <div class="prod-card">
-        <div class="prod-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12l18 0M3 12c0-4.97 4.03-9 9-9s9 4.03 9 9M3 12c0 4.97 4.03 9 9 9s9-4.03 9-9"/><path d="M12 3c2.5 2.5 4 5.5 4 9s-1.5 6.5-4 9M12 3c-2.5 2.5-4 5.5-4 9s1.5 6.5 4 9"/></svg></div>
-        <div class="prod-name">Автошампунь</div>
-        <div class="prod-desc">Активная пена для бесконтактной и контактной мойки. Не смывает воск и защитные покрытия.</div>
-        <div class="prod-tags"><span class="prod-tag">1 л</span><span class="prod-tag">5 л</span><span class="prod-tag">Концентрат</span></div>
-      </div>
-
-      <div class="prod-card">
-        <div class="prod-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
-        <div class="prod-name">Очиститель стёкол</div>
-        <div class="prod-desc">Быстро удаляет загрязнения, дорожную плёнку и жир. Без разводов даже на тонированных стёклах.</div>
-        <div class="prod-tags"><span class="prod-tag">500 мл</span><span class="prod-tag">Триггер</span></div>
-      </div>
-
-      <div class="prod-card">
-        <div class="prod-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
-        <div class="prod-name">Полироль кузова</div>
-        <div class="prod-desc">Восстанавливает блеск и защищает лакокрасочное покрытие. Легко наносится, долго держится.</div>
-        <div class="prod-tags"><span class="prod-tag">500 мл</span><span class="prod-tag">Паста</span></div>
-      </div>
-
-      <div class="prod-card">
-        <div class="prod-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></svg></div>
-        <div class="prod-name">Чернитель шин</div>
-        <div class="prod-desc">Восстанавливает насыщенный чёрный цвет резины, защищает от выцветания и растрескивания.</div>
-        <div class="prod-tags"><span class="prod-tag">500 мл</span><span class="prod-tag">Гель</span></div>
-      </div>
-
-      <div class="prod-card">
-        <div class="prod-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18"/></svg></div>
-        <div class="prod-name">Очиститель салона</div>
-        <div class="prod-desc">Универсальное средство для пластика, кожи и ткани. Удаляет стойкие загрязнения и запахи.</div>
-        <div class="prod-tags"><span class="prod-tag">500 мл</span><span class="prod-tag">1 л</span></div>
-      </div>
-
-      <div class="prod-card">
-        <div class="prod-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 00-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 012-3.95A12.88 12.88 0 0122 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 01-4 2z"/></svg></div>
-        <div class="prod-name">Антидождь</div>
-        <div class="prod-desc">Гидрофобное покрытие для стёкол. Вода скатывается каплями при скорости от 60 км/ч.</div>
-        <div class="prod-tags"><span class="prod-tag">150 мл</span><span class="prod-tag">Спрей</span></div>
-      </div>
-
-    </div>
+  <div class="prod-grid" id="prod-grid">
+    <!-- Skeleton placeholders -->
+    <div class="skel"></div>
+    <div class="skel"></div>
+    <div class="skel"></div>
+    <div class="skel"></div>
+    <div class="skel"></div>
+    <div class="skel"></div>
   </div>
 
-  <!-- PRICE BLOCK -->
   <div id="price" class="price-block">
     <div>
       <h3>Полный прайс-лист</h3>
@@ -374,7 +237,62 @@
 </main>
 
 <script>
-  fetch('/price.pdf',{method:'HEAD'}).then(r=>{if(!r.ok)document.querySelectorAll('.btn-dl').forEach(el=>el.style.display='none')}).catch(()=>document.querySelectorAll('.btn-dl').forEach(el=>el.style.display='none'));
+  let allProducts = [];
+  let curFilter = 'all';
+
+  const CAT_LABELS = { bytovaya: 'Бытовая химия', avto: 'Автохимия', all: '' };
+  const PLACEHOLDER_SVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>`;
+
+  function renderCard(p) {
+    const catLabel = CAT_LABELS[p.category] || '';
+    const hasImg = p.image && p.image !== '';
+    return `
+      <div class="prod-card" data-cat="${p.category}">
+        ${hasImg
+          ? `<div class="prod-card-bg" style="background-image:url('${p.image}')"></div>`
+          : `<div class="prod-card-placeholder">${PLACEHOLDER_SVG}</div>`
+        }
+        <div class="prod-card-overlay">
+          ${catLabel ? `<div class="prod-card-cat">${catLabel}</div>` : ''}
+          <div class="prod-card-name">${p.name}</div>
+        </div>
+      </div>`;
+  }
+
+  function renderGrid(products) {
+    const grid = document.getElementById('prod-grid');
+    const filtered = curFilter === 'all' ? products : products.filter(p => p.category === curFilter);
+    if (filtered.length === 0) {
+      grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1">${PLACEHOLDER_SVG}<p>Карточки пока не добавлены</p></div>`;
+    } else {
+      grid.innerHTML = filtered.map(renderCard).join('');
+    }
+  }
+
+  function filter(cat, btn) {
+    curFilter = cat;
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+    renderGrid(allProducts);
+  }
+
+  async function loadProducts() {
+    try {
+      const res = await fetch('/products.json?t=' + Date.now());
+      if (!res.ok) throw new Error();
+      allProducts = await res.json();
+      document.getElementById('count-total').textContent = allProducts.length + '+';
+      renderGrid(allProducts);
+    } catch {
+      document.getElementById('prod-grid').innerHTML = '<div class="skel"></div>'.repeat(4);
+    }
+  }
+
+  fetch('/price.pdf', { method: 'HEAD' })
+    .then(r => { if (!r.ok) document.querySelectorAll('.btn-dl').forEach(el => el.style.display = 'none'); })
+    .catch(() => document.querySelectorAll('.btn-dl').forEach(el => el.style.display = 'none'));
+
+  loadProducts();
 </script>
 </body>
 </html>
