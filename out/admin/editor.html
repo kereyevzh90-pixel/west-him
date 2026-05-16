@@ -167,6 +167,9 @@
     <option value="opt.html">Опт / Розница</option>
     <option value="novinki.html">Новинки</option>
   </select>
+  <a id="btn-products" href="./products.html" style="display:none;padding:8px 14px;border-radius:8px;background:#C8102E;color:#fff;font-size:13px;font-weight:700;text-decoration:none;font-family:inherit;white-space:nowrap;align-items:center;gap:5px;">
+    + Добавить товары
+  </a>
   <div class="ed-sep"></div>
   <button class="ed-btn" id="btn-edit" onclick="toggleEdit()">✏️ Редактировать</button>
   <button class="ed-btn" id="btn-save" disabled onclick="saveHtml()">💾 Сохранить</button>
@@ -257,6 +260,8 @@ async function loadPage(file) {
   curPage = file;
   document.getElementById('pg').value = file;
   document.getElementById('site-link').href = '../' + file;
+  const btnP = document.getElementById('btn-products');
+  btnP.style.display = file === 'katalog.html' ? 'inline-flex' : 'none';
   if (editMode) exitEditMode();
   dirty = false;
   document.getElementById('btn-save').disabled = true;
