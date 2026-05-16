@@ -1,14 +1,1 @@
-[
-  {"id":"bh1","name":"Средство для мытья посуды","category":"bytovaya","image":""},
-  {"id":"bh2","name":"Универсальный очиститель","category":"bytovaya","image":""},
-  {"id":"bh3","name":"Очиститель стёкол и зеркал","category":"bytovaya","image":""},
-  {"id":"bh4","name":"Средство для сантехники","category":"bytovaya","image":""},
-  {"id":"bh5","name":"Средство для пола","category":"bytovaya","image":""},
-  {"id":"bh6","name":"Освежитель воздуха","category":"bytovaya","image":""},
-  {"id":"av1","name":"Автошампунь","category":"avto","image":""},
-  {"id":"av2","name":"Очиститель стёкол авто","category":"avto","image":""},
-  {"id":"av3","name":"Полироль кузова","category":"avto","image":""},
-  {"id":"av4","name":"Чернитель шин","category":"avto","image":""},
-  {"id":"av5","name":"Очиститель салона","category":"avto","image":""},
-  {"id":"av6","name":"Антидождь","category":"avto","image":""}
-]
+[]

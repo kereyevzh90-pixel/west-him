@@ -84,16 +84,32 @@
     .btn-del { padding: 8px 10px; border-radius: 8px; font-size: 12px; font-weight: 600; font-family: inherit; cursor: pointer; background: #fff; border: 1.5px solid #ddd; color: #999; transition: all .2s; }
     .btn-del:hover { border-color: #C8102E; background: #C8102E; color: #fff; }
 
-    /* ADD CARD (in grid) */
+    /* EMPTY STATE */
+    .empty-state {
+      padding: 80px 20px; text-align: center;
+    }
+    .empty-plus {
+      width: 88px; height: 88px; border-radius: 50%;
+      background: rgba(200,16,46,.07); border: 2px dashed rgba(200,16,46,.3);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 20px; cursor: pointer; transition: all .2s;
+      color: #C8102E;
+    }
+    .empty-plus:hover { background: rgba(200,16,46,.13); border-color: #C8102E; transform: scale(1.05); }
+    .empty-plus svg { width: 36px; height: 36px; }
+    .empty-title { font-size: 18px; font-weight: 700; color: #111; margin-bottom: 8px; }
+    .empty-sub { font-size: 14px; color: #aaa; }
+
+    /* ADD CARD (in grid, when cards already exist) */
     .prod-add {
       aspect-ratio: unset; min-height: 200px;
-      border: 2px dashed #ddd; border-radius: 16px;
+      border: 2px dashed #e0e0e0; border-radius: 16px;
       display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
-      cursor: pointer; transition: all .2s; color: #bbb; font-size: 14px; font-weight: 600;
+      cursor: pointer; transition: all .2s; color: #ccc; font-size: 14px; font-weight: 600;
       background: #fff;
     }
     .prod-add:hover { border-color: #C8102E; color: #C8102E; }
-    .prod-add svg { width: 32px; height: 32px; }
+    .prod-add svg { width: 28px; height: 28px; }
 
     /* MODAL */
     #modal-overlay {
@@ -307,8 +323,20 @@ const CAT = { bytovaya: 'Бытовая химия', avto: 'Автохимия' 
 
 function renderGrid() {
   const grid = document.getElementById('prod-grid');
-  let html = '';
 
+  if (products.length === 0) {
+    grid.innerHTML = `
+      <div class="empty-state" style="grid-column:1/-1">
+        <div class="empty-plus" onclick="openModal()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </div>
+        <div class="empty-title">Нажмите + чтобы добавить карточку</div>
+        <div class="empty-sub">Добавьте фото и название продукта — они появятся в каталоге</div>
+      </div>`;
+    return;
+  }
+
+  let html = '';
   products.forEach(p => {
     const hasPic = p.image && p.image !== '';
     const bgStyle = hasPic ? `background-image:url('../${p.image}');` : '';
@@ -330,8 +358,8 @@ function renderGrid() {
 
   html += `
     <div class="prod-add" onclick="openModal()">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-      Добавить карточку
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      Добавить
     </div>`;
 
   grid.innerHTML = html;
