@@ -58,64 +58,90 @@
     }
     .logout-btn:hover { border-color: #C8102E; color: #C8102E; }
 
-    .admin-body { max-width: 900px; margin: 0 auto; padding: 40px 24px 80px; }
-    .section-title { font-size: 18px; font-weight: 700; margin: 36px 0 16px; padding-bottom: 10px; border-bottom: 1px solid #ebebeb; }
-    .section-title:first-child { margin-top: 0; }
+    .admin-body { max-width: 640px; margin: 0 auto; padding: 48px 24px 80px; }
 
-    /* ── UPLOAD CARD ── */
-    .upload-card {
-      background: #fff; border-radius: 16px; padding: 20px 24px;
-      border: 1.5px solid #ebebeb; margin-bottom: 12px;
-      display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+    /* ── PRAIS CARD ── */
+    .price-card {
+      background: #fff; border-radius: 20px; border: 1.5px solid #ebebeb;
+      overflow: hidden; box-shadow: 0 2px 16px rgba(0,0,0,.05);
     }
-    .upload-info { flex: 1; min-width: 200px; }
-    .upload-label { font-size: 14px; font-weight: 600; margin-bottom: 3px; }
-    .upload-path { font-size: 12px; color: #999; font-family: monospace; }
-    .upload-controls { display: flex; align-items: center; gap: 10px; }
-    .file-input-wrap { position: relative; }
-    .file-input-wrap input[type="file"] {
-      position: absolute; opacity: 0; inset: 0; cursor: pointer; width: 100%; height: 100%;
+    .price-card-head {
+      padding: 28px 32px 24px;
+      border-bottom: 1px solid #f0f0f0;
     }
-    .file-pick-btn {
-      padding: 9px 16px; border: 1.5px solid #e0e0e0; background: #fff; border-radius: 8px;
-      font-size: 13px; font-weight: 500; cursor: pointer; font-family: inherit; white-space: nowrap;
-      transition: border .2s;
+    .price-card-icon {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: rgba(200,16,46,.08); border: 1.5px solid rgba(200,16,46,.18);
+      display: flex; align-items: center; justify-content: center;
+      color: #C8102E; margin-bottom: 16px;
     }
-    .file-pick-btn:hover { border-color: #aaa; }
-    .file-name { font-size: 12px; color: #555; max-width: 160px; overflow: hidden;
-      text-overflow: ellipsis; white-space: nowrap; }
-    .upload-btn {
-      padding: 9px 20px; background: #C8102E; color: #fff; border: none; border-radius: 8px;
-      font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit;
-      white-space: nowrap; transition: background .2s; flex-shrink: 0;
-    }
-    .upload-btn:hover { background: #a50d25; }
-    .upload-btn:disabled { background: #ccc; cursor: default; }
+    .price-card-icon svg { width: 24px; height: 24px; }
+    .price-card-title { font-size: 20px; font-weight: 800; margin-bottom: 6px; }
+    .price-card-desc { font-size: 14px; color: #777; line-height: 1.6; }
 
-    .delete-btn {
-      padding: 9px 16px; background: #fff; color: #C8102E; border: 1.5px solid #C8102E;
-      border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer;
-      font-family: inherit; white-space: nowrap; transition: all .2s; flex-shrink: 0;
-    }
-    .delete-btn:hover { background: #C8102E; color: #fff; }
-    .delete-btn:disabled { border-color: #ccc; color: #ccc; cursor: default; background: #fff; }
+    .price-card-body { padding: 28px 32px; }
 
-    .status {
-      font-size: 12px; margin-top: 8px; min-height: 16px; width: 100%;
+    /* Зона перетаскивания */
+    .drop-zone {
+      border: 2px dashed #ddd; border-radius: 14px;
+      padding: 36px 24px; text-align: center;
+      cursor: pointer; transition: all .2s; position: relative;
+      background: #fafafa;
     }
-    .status.ok { color: #1a8c3e; }
+    .drop-zone:hover, .drop-zone.drag-over {
+      border-color: #C8102E; background: rgba(200,16,46,.03);
+    }
+    .drop-zone input[type="file"] {
+      position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%;
+    }
+    .drop-icon { font-size: 36px; margin-bottom: 10px; }
+    .drop-text { font-size: 15px; font-weight: 600; color: #333; margin-bottom: 4px; }
+    .drop-hint { font-size: 13px; color: #999; }
+    .drop-zone.has-file .drop-text { color: #C8102E; }
+
+    /* Кнопки */
+    .btn-row { display: flex; gap: 10px; margin-top: 16px; }
+    .btn-upload {
+      flex: 1; padding: 13px 20px; background: #C8102E; color: #fff; border: none;
+      border-radius: 10px; font-size: 15px; font-weight: 700; font-family: inherit;
+      cursor: pointer; transition: background .2s; display: flex; align-items: center;
+      justify-content: center; gap: 8px;
+    }
+    .btn-upload:hover { background: #a50d25; }
+    .btn-upload:disabled { background: #ddd; color: #aaa; cursor: default; }
+    .btn-delete {
+      padding: 13px 20px; background: #fff; color: #C8102E;
+      border: 1.5px solid #C8102E; border-radius: 10px;
+      font-size: 14px; font-weight: 600; font-family: inherit;
+      cursor: pointer; transition: all .2s; white-space: nowrap;
+    }
+    .btn-delete:hover { background: #C8102E; color: #fff; }
+
+    /* Статус */
+    .status-wrap { margin-top: 14px; }
+    .status { font-size: 13px; min-height: 18px; }
+    .status.ok { color: #1a8c3e; font-weight: 500; }
     .status.err { color: #C8102E; }
     .status.loading { color: #888; }
+    .progress-bar-wrap { width: 100%; height: 5px; background: #f0f0f0; border-radius: 5px; margin-top: 8px; display: none; }
+    .progress-bar { height: 100%; background: #C8102E; border-radius: 5px; width: 0%; transition: width .3s; }
 
-    .progress-bar-wrap { width: 100%; height: 4px; background: #f0f0f0; border-radius: 4px; margin-top: 8px; display: none; }
-    .progress-bar { height: 100%; background: #C8102E; border-radius: 4px; width: 0%; transition: width .3s; }
+    /* Текущий файл */
+    .current-file {
+      display: flex; align-items: center; gap: 10px;
+      padding: 12px 16px; background: #f7f7f7; border-radius: 10px;
+      margin-bottom: 16px; border: 1px solid #ebebeb;
+    }
+    .current-file-icon { color: #C8102E; flex-shrink: 0; }
+    .current-file-name { font-size: 13px; font-weight: 600; color: #333; }
+    .current-file-hint { font-size: 12px; color: #aaa; }
 
     /* ── RESPONSIVE ── */
     @media (max-width: 600px) {
       .admin-header { padding: 0 16px; }
       .admin-body { padding: 24px 16px 60px; }
-      .upload-card { flex-direction: column; align-items: flex-start; }
-      .upload-controls { width: 100%; }
+      .price-card-head, .price-card-body { padding: 20px 20px; }
+      .btn-row { flex-direction: column; }
     }
   </style>
 </head>
@@ -134,7 +160,6 @@
     <div class="login-title" id="login-title">Вход в панель</div>
     <div class="login-sub" id="login-sub">Только для администраторов</div>
     <input type="password" id="pwd-input" class="login-input" placeholder="Пароль" autocomplete="current-password">
-    <!-- показывается только при первом входе -->
     <input type="password" id="token-input" class="login-input" placeholder="GitHub Token (только первый раз)" autocomplete="off" style="display:none">
     <button class="login-btn" id="login-btn" onclick="doLogin()">Войти</button>
     <button class="login-btn" id="reset-btn" onclick="doReset()" style="display:none;background:#fff;color:#C8102E;border:1.5px solid #C8102E;margin-top:8px">Сбросить и войти заново</button>
@@ -155,131 +180,53 @@
 
   <div class="admin-body">
 
-    <!-- Hero фото -->
-    <div class="section-title">Главное фото (Hero)</div>
-
-    <div class="upload-card" id="card-hero">
-      <div class="upload-info">
-        <div class="upload-label">Hero — десктоп (фон)</div>
-        <div class="upload-path">out/images/IMG_0838.PNG</div>
-        <div class="status" id="st-hero"></div>
-        <div class="progress-bar-wrap" id="pb-hero"><div class="progress-bar" id="pbr-hero"></div></div>
-      </div>
-      <div class="upload-controls">
-        <div class="file-input-wrap">
-          <button class="file-pick-btn" id="fn-hero">Выбрать файл</button>
-          <input type="file" accept="image/*" onchange="onFile(this,'hero','out/images/IMG_0838.PNG')">
+    <div class="price-card">
+      <div class="price-card-head">
+        <div class="price-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <line x1="12" y1="18" x2="12" y2="12"/>
+            <line x1="9" y1="15" x2="15" y2="15"/>
+          </svg>
         </div>
-        <button class="upload-btn" onclick="doUpload('hero')" disabled id="btn-hero">Загрузить</button>
-        <button class="delete-btn" onclick="doDelete('hero','out/images/IMG_0838.PNG')" id="del-hero">Удалить</button>
-      </div>
-    </div>
-
-    <div class="upload-card" id="card-herom">
-      <div class="upload-info">
-        <div class="upload-label">Hero — мобильное фото</div>
-        <div class="upload-path">out/images/IMG_0851.PNG</div>
-        <div class="status" id="st-herom"></div>
-        <div class="progress-bar-wrap" id="pb-herom"><div class="progress-bar" id="pbr-herom"></div></div>
-      </div>
-      <div class="upload-controls">
-        <div class="file-input-wrap">
-          <button class="file-pick-btn" id="fn-herom">Выбрать файл</button>
-          <input type="file" accept="image/*" onchange="onFile(this,'herom','out/images/IMG_0851.PNG')">
+        <div class="price-card-title">Прайс-лист</div>
+        <div class="price-card-desc">
+          Загрузите актуальный прайс-лист в формате PDF. После загрузки он появится на сайте через&nbsp;~1&nbsp;минуту — кнопка «Скачать прайс» сразу заработает.
         </div>
-        <button class="upload-btn" onclick="doUpload('herom')" disabled id="btn-herom">Загрузить</button>
-        <button class="delete-btn" onclick="doDelete('herom','out/images/IMG_0851.PNG')" id="del-herom">Удалить</button>
       </div>
-    </div>
 
-    <!-- Карточки -->
-    <div class="section-title">Карточки категорий (главная страница)</div>
-
-    <div class="upload-card">
-      <div class="upload-info">
-        <div class="upload-label">Карточка — Производство</div>
-        <div class="upload-path">out/images/IMG_0845.PNG</div>
-        <div class="status" id="st-c1"></div>
-        <div class="progress-bar-wrap" id="pb-c1"><div class="progress-bar" id="pbr-c1"></div></div>
-      </div>
-      <div class="upload-controls">
-        <div class="file-input-wrap">
-          <button class="file-pick-btn" id="fn-c1">Выбрать файл</button>
-          <input type="file" accept="image/*" onchange="onFile(this,'c1','out/images/IMG_0845.PNG')">
+      <div class="price-card-body">
+        <div class="current-file" id="current-file-row" style="display:none">
+          <svg class="current-file-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+          </svg>
+          <div>
+            <div class="current-file-name">price.pdf</div>
+            <div class="current-file-hint">Текущий прайс на сайте</div>
+          </div>
         </div>
-        <button class="upload-btn" onclick="doUpload('c1')" disabled id="btn-c1">Загрузить</button>
-        <button class="delete-btn" onclick="doDelete('c1','out/images/IMG_0845.PNG')" id="del-c1">Удалить</button>
-      </div>
-    </div>
 
-    <div class="upload-card">
-      <div class="upload-info">
-        <div class="upload-label">Карточка — Опт / Розница</div>
-        <div class="upload-path">out/images/IMG_0847.PNG</div>
-        <div class="status" id="st-c2"></div>
-        <div class="progress-bar-wrap" id="pb-c2"><div class="progress-bar" id="pbr-c2"></div></div>
-      </div>
-      <div class="upload-controls">
-        <div class="file-input-wrap">
-          <button class="file-pick-btn" id="fn-c2">Выбрать файл</button>
-          <input type="file" accept="image/*" onchange="onFile(this,'c2','out/images/IMG_0847.PNG')">
+        <div class="drop-zone" id="drop-zone">
+          <input type="file" accept=".pdf,application/pdf" onchange="onFile(this)">
+          <div class="drop-icon">📄</div>
+          <div class="drop-text" id="drop-text">Нажмите или перетащите PDF сюда</div>
+          <div class="drop-hint">Только файлы .pdf</div>
         </div>
-        <button class="upload-btn" onclick="doUpload('c2')" disabled id="btn-c2">Загрузить</button>
-        <button class="delete-btn" onclick="doDelete('c2','out/images/IMG_0847.PNG')" id="del-c2">Удалить</button>
-      </div>
-    </div>
 
-    <div class="upload-card">
-      <div class="upload-info">
-        <div class="upload-label">Карточка — Бытовая химия</div>
-        <div class="upload-path">out/images/IMG_0846.PNG</div>
-        <div class="status" id="st-c3"></div>
-        <div class="progress-bar-wrap" id="pb-c3"><div class="progress-bar" id="pbr-c3"></div></div>
-      </div>
-      <div class="upload-controls">
-        <div class="file-input-wrap">
-          <button class="file-pick-btn" id="fn-c3">Выбрать файл</button>
-          <input type="file" accept="image/*" onchange="onFile(this,'c3','out/images/IMG_0846.PNG')">
+        <div class="btn-row">
+          <button class="btn-upload" id="btn-upload" onclick="doUpload()" disabled>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 15V3m0 12l-4-4m4 4l4-4M2 17l.621 2.485A2 2 0 004.561 21h14.878a2 2 0 001.94-1.515L22 17"/></svg>
+            Загрузить на сайт
+          </button>
+          <button class="btn-delete" onclick="doDelete()">Удалить</button>
         </div>
-        <button class="upload-btn" onclick="doUpload('c3')" disabled id="btn-c3">Загрузить</button>
-        <button class="delete-btn" onclick="doDelete('c3','out/images/IMG_0846.PNG')" id="del-c3">Удалить</button>
-      </div>
-    </div>
 
-    <div class="upload-card">
-      <div class="upload-info">
-        <div class="upload-label">Карточка — Автохимия</div>
-        <div class="upload-path">out/images/IMG_0844.PNG</div>
-        <div class="status" id="st-c4"></div>
-        <div class="progress-bar-wrap" id="pb-c4"><div class="progress-bar" id="pbr-c4"></div></div>
-      </div>
-      <div class="upload-controls">
-        <div class="file-input-wrap">
-          <button class="file-pick-btn" id="fn-c4">Выбрать файл</button>
-          <input type="file" accept="image/*" onchange="onFile(this,'c4','out/images/IMG_0844.PNG')">
+        <div class="status-wrap">
+          <div class="status" id="st-pdf"></div>
+          <div class="progress-bar-wrap" id="pb-pdf"><div class="progress-bar" id="pbr-pdf"></div></div>
         </div>
-        <button class="upload-btn" onclick="doUpload('c4')" disabled id="btn-c4">Загрузить</button>
-        <button class="delete-btn" onclick="doDelete('c4','out/images/IMG_0844.PNG')" id="del-c4">Удалить</button>
-      </div>
-    </div>
-
-    <!-- PDF Прайс -->
-    <div class="section-title">PDF Прайс-лист</div>
-
-    <div class="upload-card">
-      <div class="upload-info">
-        <div class="upload-label">Прайс-лист (PDF)</div>
-        <div class="upload-path">out/price.pdf</div>
-        <div class="status" id="st-pdf"></div>
-        <div class="progress-bar-wrap" id="pb-pdf"><div class="progress-bar" id="pbr-pdf"></div></div>
-      </div>
-      <div class="upload-controls">
-        <div class="file-input-wrap">
-          <button class="file-pick-btn" id="fn-pdf">Выбрать файл</button>
-          <input type="file" accept=".pdf,application/pdf" onchange="onFile(this,'pdf','out/price.pdf')">
-        </div>
-        <button class="upload-btn" onclick="doUpload('pdf')" disabled id="btn-pdf">Загрузить</button>
-        <button class="delete-btn" onclick="doDelete('pdf','out/price.pdf')" id="del-pdf">Удалить</button>
       </div>
     </div>
 
@@ -287,25 +234,21 @@
 </div>
 
 <script>
-  // Пароль и токен хранятся в localStorage браузера — в коде нет никаких секретов
-
   const OWNER  = 'kereyevzh90-pixel';
   const REPO   = 'west-him';
   const BRANCH = 'master';
+  const PDF_PATH = 'out/price.pdf';
 
-  const pendingFiles = {};
+  let pendingFile = null;
 
-  // ── Инициализация экрана входа ──
   function initLogin() {
     const hasPassword = !!localStorage.getItem('adminPwd');
     if (hasPassword) {
-      // Повторный вход — только пароль
       document.getElementById('login-title').textContent = 'Вход в панель';
       document.getElementById('login-sub').textContent = 'Введи пароль';
       document.getElementById('token-input').style.display = 'none';
       document.getElementById('reset-btn').style.display = 'block';
     } else {
-      // Первый вход — задаём пароль и токен
       document.getElementById('login-title').textContent = 'Первый вход';
       document.getElementById('login-sub').textContent = 'Придумай пароль и введи GitHub Token';
       document.getElementById('token-input').style.display = 'block';
@@ -313,30 +256,26 @@
     }
   }
 
-  // ── Login ──
   function doLogin() {
     const pwd   = document.getElementById('pwd-input').value.trim();
     const token = document.getElementById('token-input').value.trim();
     const err   = document.getElementById('login-err');
-
     const savedPwd = localStorage.getItem('adminPwd');
 
     if (!savedPwd) {
-      // Первый вход — сохраняем пароль и токен
       if (!pwd || !token) { err.textContent = 'Заполни оба поля'; return; }
       localStorage.setItem('adminPwd', pwd);
       localStorage.setItem('ghToken', token);
     } else {
-      // Повторный вход — проверяем пароль
       if (pwd !== savedPwd) { err.textContent = 'Неверный пароль'; document.getElementById('pwd-input').value = ''; return; }
     }
 
     err.textContent = '';
     document.getElementById('login-screen').style.display = 'none';
     document.getElementById('admin-panel').style.display = 'block';
+    checkCurrentPdf();
   }
 
-  // ── Сброс (если нужно сменить пароль или токен) ──
   function doReset() {
     if (!confirm('Сбросить пароль и токен? Придётся ввести заново.')) return;
     localStorage.removeItem('adminPwd');
@@ -352,39 +291,52 @@
     document.getElementById('login-err').textContent = '';
   }
 
-  document.getElementById('pwd-input').addEventListener('keydown', e => {
-    if (e.key === 'Enter') doLogin();
-  });
-  document.getElementById('token-input').addEventListener('keydown', e => {
-    if (e.key === 'Enter') doLogin();
-  });
-
+  document.getElementById('pwd-input').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+  document.getElementById('token-input').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
   initLogin();
 
-  // ── File picker ──
-  function onFile(input, key, path) {
+  // Drag & drop
+  const dropZone = document.getElementById('drop-zone');
+  dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('drag-over'); });
+  dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
+  dropZone.addEventListener('drop', e => {
+    e.preventDefault();
+    dropZone.classList.remove('drag-over');
+    const file = e.dataTransfer.files[0];
+    if (file && file.type === 'application/pdf') setFile(file);
+    else setStatus('Только PDF файлы', 'err');
+  });
+
+  function onFile(input) {
     const file = input.files[0];
-    if (!file) return;
-    pendingFiles[key] = { file, path };
-    document.getElementById('fn-' + key).textContent =
-      file.name.length > 22 ? file.name.slice(0, 20) + '…' : file.name;
-    document.getElementById('btn-' + key).disabled = false;
-    setStatus(key, '', '');
+    if (file) setFile(file);
   }
 
-  // ── Upload → GitHub API напрямую ──
-  async function doUpload(key) {
-    const { file, path } = pendingFiles[key] || {};
-    if (!file) return;
+  function setFile(file) {
+    pendingFile = file;
+    const name = file.name.length > 30 ? file.name.slice(0, 28) + '…' : file.name;
+    document.getElementById('drop-text').textContent = '📄 ' + name;
+    dropZone.classList.add('has-file');
+    document.getElementById('btn-upload').disabled = false;
+    setStatus('', '');
+  }
 
+  async function checkCurrentPdf() {
+    try {
+      const r = await fetch('/price.pdf', { method: 'HEAD' });
+      document.getElementById('current-file-row').style.display = r.ok ? 'flex' : 'none';
+    } catch { document.getElementById('current-file-row').style.display = 'none'; }
+  }
+
+  async function doUpload() {
+    if (!pendingFile) return;
     const token = localStorage.getItem('ghToken');
     if (!token) { doLogout(); return; }
 
-    const btn = document.getElementById('btn-' + key);
+    const btn = document.getElementById('btn-upload');
     btn.disabled = true;
-    setStatus(key, 'Конвертируем файл…', 'loading');
-    showProgress(key, true);
-    animateProgress(key, 20);
+    setStatus('Подготавливаем файл…', 'loading');
+    showProgress(true); animateProgress(20);
 
     const apiBase = `https://api.github.com/repos/${OWNER}/${REPO}/contents`;
     const headers = {
@@ -394,24 +346,22 @@
     };
 
     try {
-      const content = await toBase64(file);
-      animateProgress(key, 50);
-      setStatus(key, 'Получаем данные из GitHub…', 'loading');
+      const content = await toBase64(pendingFile);
+      animateProgress(50);
+      setStatus('Отправляем на сервер…', 'loading');
 
-      // Получаем текущий SHA файла
       let sha = null;
-      const getRes = await fetch(`${apiBase}/${path}?ref=${BRANCH}`, { headers });
+      const getRes = await fetch(`${apiBase}/${PDF_PATH}?ref=${BRANCH}`, { headers });
       if (getRes.ok) sha = (await getRes.json()).sha;
 
-      animateProgress(key, 70);
-      setStatus(key, 'Загружаем файл…', 'loading');
+      animateProgress(70);
+      setStatus('Загружаем файл…', 'loading');
 
-      // Загружаем файл
-      const putRes = await fetch(`${apiBase}/${path}`, {
+      const putRes = await fetch(`${apiBase}/${PDF_PATH}`, {
         method: 'PUT',
         headers,
         body: JSON.stringify({
-          message: `Admin: обновлён ${path.split('/').pop()}`,
+          message: 'Admin: обновлён прайс-лист',
           content,
           branch: BRANCH,
           ...(sha ? { sha } : {}),
@@ -419,44 +369,38 @@
       });
 
       if (putRes.status === 401) {
-        showProgress(key, false);
-        setStatus(key, 'Токен недействителен — войдите снова', 'err');
-        btn.disabled = false;
+        showProgress(false);
+        setStatus('Токен недействителен — войдите снова', 'err');
         setTimeout(doLogout, 1500);
         return;
       }
-
       if (!putRes.ok) {
-        const err = await putRes.json().catch(() => ({}));
-        throw new Error(err.message || `HTTP ${putRes.status}`);
+        const e = await putRes.json().catch(() => ({}));
+        throw new Error(e.message || `HTTP ${putRes.status}`);
       }
 
-      animateProgress(key, 100);
+      animateProgress(100);
       await delay(300);
-      showProgress(key, false);
-      setStatus(key, 'Готово! Сайт обновится через ~1 мин.', 'ok');
-      document.getElementById('fn-' + key).textContent = 'Выбрать файл';
-      delete pendingFiles[key];
+      showProgress(false);
+      setStatus('✓ Готово! Прайс появится на сайте через ~1 минуту.', 'ok');
+      document.getElementById('drop-text').textContent = 'Нажмите или перетащите PDF сюда';
+      dropZone.classList.remove('has-file');
+      pendingFile = null;
+      document.getElementById('current-file-row').style.display = 'flex';
 
     } catch (err) {
-      showProgress(key, false);
-      setStatus(key, `Ошибка: ${err.message}`, 'err');
+      showProgress(false);
+      setStatus('Ошибка: ' + err.message, 'err');
       btn.disabled = false;
     }
   }
 
-  // ── Delete → GitHub API ──
-  async function doDelete(key, path) {
-    if (!confirm(`Удалить файл ${path.split('/').pop()} из репозитория?`)) return;
-
+  async function doDelete() {
+    if (!confirm('Удалить прайс-лист с сайта?')) return;
     const token = localStorage.getItem('ghToken');
     if (!token) { doLogout(); return; }
 
-    const delBtn = document.getElementById('del-' + key);
-    const upBtn  = document.getElementById('btn-' + key);
-    delBtn.disabled = true;
-    if (upBtn) upBtn.disabled = true;
-    setStatus(key, 'Удаляем файл…', 'loading');
+    setStatus('Удаляем…', 'loading');
 
     const apiBase = `https://api.github.com/repos/${OWNER}/${REPO}/contents`;
     const headers = {
@@ -466,62 +410,46 @@
     };
 
     try {
-      const getRes = await fetch(`${apiBase}/${path}?ref=${BRANCH}`, { headers });
+      const getRes = await fetch(`${apiBase}/${PDF_PATH}?ref=${BRANCH}`, { headers });
       if (!getRes.ok) {
-        if (getRes.status === 404) { setStatus(key, 'Файл уже удалён или не существует', 'err'); delBtn.disabled = false; return; }
+        if (getRes.status === 404) { setStatus('Прайс-лист уже удалён', 'err'); return; }
         throw new Error(`HTTP ${getRes.status}`);
       }
       const { sha } = await getRes.json();
 
-      const delRes = await fetch(`${apiBase}/${path}`, {
+      const delRes = await fetch(`${apiBase}/${PDF_PATH}`, {
         method: 'DELETE',
         headers,
-        body: JSON.stringify({
-          message: `Admin: удалён ${path.split('/').pop()}`,
-          sha,
-          branch: BRANCH,
-        }),
+        body: JSON.stringify({ message: 'Admin: удалён прайс-лист', sha, branch: BRANCH }),
       });
 
-      if (delRes.status === 401) { setStatus(key, 'Токен недействителен', 'err'); setTimeout(doLogout, 1500); return; }
+      if (delRes.status === 401) { setStatus('Токен недействителен', 'err'); setTimeout(doLogout, 1500); return; }
       if (!delRes.ok) {
-        const err = await delRes.json().catch(() => ({}));
-        throw new Error(err.message || `HTTP ${delRes.status}`);
+        const e = await delRes.json().catch(() => ({}));
+        throw new Error(e.message || `HTTP ${delRes.status}`);
       }
 
-      setStatus(key, 'Удалено! Сайт обновится через ~1 мин.', 'ok');
-      document.getElementById('fn-' + key).textContent = 'Выбрать файл';
-      delete pendingFiles[key];
-      delBtn.disabled = false;
-      if (upBtn) upBtn.disabled = true;
+      setStatus('✓ Прайс удалён. Кнопка скачать исчезнет через ~1 минуту.', 'ok');
+      document.getElementById('current-file-row').style.display = 'none';
 
     } catch (err) {
-      setStatus(key, `Ошибка: ${err.message}`, 'err');
-      delBtn.disabled = false;
-      if (upBtn) upBtn.disabled = true;
+      setStatus('Ошибка: ' + err.message, 'err');
     }
   }
 
-  // ── Helpers ──
-  function setStatus(key, text, type) {
-    const el = document.getElementById('st-' + key);
-    if (!el) return;
+  function setStatus(text, type) {
+    const el = document.getElementById('st-pdf');
     el.textContent = text;
     el.className = 'status' + (type ? ' ' + type : '');
   }
 
-  function showProgress(key, show) {
-    const el = document.getElementById('pb-' + key);
-    if (el) el.style.display = show ? 'block' : 'none';
-    if (!show) {
-      const bar = document.getElementById('pbr-' + key);
-      if (bar) bar.style.width = '0%';
-    }
+  function showProgress(show) {
+    document.getElementById('pb-pdf').style.display = show ? 'block' : 'none';
+    if (!show) document.getElementById('pbr-pdf').style.width = '0%';
   }
 
-  function animateProgress(key, pct) {
-    const bar = document.getElementById('pbr-' + key);
-    if (bar) bar.style.width = pct + '%';
+  function animateProgress(pct) {
+    document.getElementById('pbr-pdf').style.width = pct + '%';
   }
 
   function delay(ms) { return new Promise(r => setTimeout(r, ms)); }
@@ -535,6 +463,5 @@
     });
   }
 </script>
-
 </body>
 </html>
