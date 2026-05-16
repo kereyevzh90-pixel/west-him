@@ -218,7 +218,14 @@ const TEXT_SELS = [
 // ─── AUTH ───
 
 function initLogin() {
-  const has = !!localStorage.getItem('adminPwd');
+  const pwd = localStorage.getItem('adminPwd');
+  const tok = localStorage.getItem('ghToken');
+  if (pwd && tok) {
+    document.getElementById('login-screen').style.display = 'none';
+    loadPage('index.html');
+    return;
+  }
+  const has = !!pwd;
   document.getElementById('lt').textContent = has ? 'Вход в редактор' : 'Первый вход';
   document.getElementById('ld').textContent = has ? 'Введи пароль' : 'Придумай пароль и введи GitHub Token';
   document.getElementById('tok').style.display = has ? 'none' : 'block';
