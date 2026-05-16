@@ -207,10 +207,9 @@
     <button class="tab" onclick="filter('avto', this)">Автохимия</button>
   </div>
 
-  <div id="prod-empty" style="text-align:center;padding:60px 20px 40px;color:#ccc;">
+  <div id="prod-empty" style="text-align:center;padding:60px 20px 40px;">
     <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#e0e0e0" stroke-width="1.3" style="margin-bottom:14px"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-    <div style="font-size:15px;font-weight:600;color:#bbb;margin-bottom:6px">Карточки ещё не добавлены</div>
-    <div style="font-size:13px;color:#ccc">Добавить их можно в <a href="admin/products.html" style="color:#C8102E;text-decoration:none;font-weight:600">Админ-панели → Карточки каталога</a></div>
+    <div style="font-size:15px;font-weight:600;color:#bbb;">Карточки пока не добавлены</div>
   </div>
   <div class="prod-grid" id="prod-grid"></div>
 
@@ -259,11 +258,7 @@
   function renderGrid(products) {
     const grid = document.getElementById('prod-grid');
     const filtered = curFilter === 'all' ? products : products.filter(p => p.category === curFilter);
-    if (filtered.length === 0) {
-      grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1">${PLACEHOLDER_SVG}<p>Карточки пока не добавлены</p></div>`;
-    } else {
-      grid.innerHTML = filtered.map(renderCard).join('');
-    }
+    grid.innerHTML = filtered.map(renderCard).join('');
   }
 
   function filter(cat, btn) {
