@@ -39,12 +39,19 @@
 
     /* HERO */
     .hero {
+      display: flex; align-items: stretch;
       background: #f7f7f7;
       border-bottom: 1px solid #ebebeb;
     }
     .hero-left {
       display: flex; flex-direction: column; justify-content: flex-start;
-      padding: 64px 52px; max-width: 760px;
+      padding: 64px 52px; max-width: 560px; flex-shrink: 0;
+    }
+    .hero-right {
+      flex: 1; overflow: hidden; min-height: 360px;
+    }
+    .hero-right img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
     }
     .hero-badge {
       display: inline-flex; align-items: center; gap: 7px;
@@ -146,7 +153,8 @@
       .header-cta { display: none; }
       .hamburger { display: flex; }
       .hero { display: flex; flex-direction: column; }
-      .hero-left { padding: 28px 16px 24px; }
+      .hero-left { padding: 28px 16px 24px; max-width: 100%; }
+      .hero-right { display: none; }
       .hero-h1 { font-size: clamp(28px, 7vw, 38px); }
       .hero-desc { max-width: 100%; }
       .hero-actions { flex-direction: column; }
@@ -201,6 +209,9 @@
       </a>
       <a class="btn-outline" href="https://wa.me/77010706960" target="_blank">Заказать в WhatsApp</a>
     </div>
+  </div>
+  <div class="hero-right">
+    <img src="images/IMG_0942.PNG" alt="Бытовая химия West Him">
   </div>
 </section>
 
