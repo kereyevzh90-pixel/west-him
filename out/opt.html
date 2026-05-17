@@ -234,7 +234,6 @@
 
 <script>
 function toggleFaq(el) { el.parentElement.classList.toggle('open'); }
-fetch('/price.pdf',{method:'HEAD'}).then(r=>{if(!r.ok)document.querySelectorAll('.btn-dl').forEach(el=>el.style.display='none')}).catch(()=>document.querySelectorAll('.btn-dl').forEach(el=>el.style.display='none'));
 </script>
 
 </body>
