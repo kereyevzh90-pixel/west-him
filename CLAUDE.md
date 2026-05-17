@@ -28,29 +28,30 @@ git push
 out/
 ├── index.html                           ← главная страница
 ├── katalog.html                         ← каталог продукции (интернет-магазин)
-├── price.pdf                            ← прайс-лист (загружается через админ-панель)
+├── price.pdf                            ← прайс каталога (бытовая + авто + каталог)
+├── price-opt.pdf                        ← прайс для opt.html (Опт и розница)
+├── price-proizvodstvo.pdf               ← прайс для proizvodstvo.html
 ├── products.json                        ← карточки товаров для каталога (JSON массив)
 ├── bytovaya-himiya.html                 ← Бытовая химия
 ├── avtohimiya.html                      ← Автохимия
 ├── proizvodstvo.html                    ← Производство
 ├── opt.html                             ← Опт / Розница + О компании + Партнёрам
-├── novinki.html                         ← Новинки
 ├── timeline.html                        ← легаси Next.js build, не используется
 ├── 404.html                             ← легаси Next.js build, не используется
 ├── admin/
-│   ├── index.html                       ← Админ-панель (west-him.vercel.app/admin/) — только PDF прайс
+│   ├── index.html                       ← Админ-панель (west-him.vercel.app/admin/) — 3 прайса
 │   ├── products.html                    ← Управление карточками каталога
 │   └── editor.html                      ← Визуальный редактор текста страниц
 └── images/
     ├── IMG_0921.PNG                     ← логотип (текущий, синий)
     ├── IMG_0918.PNG                     ← hero главной (фон на весь экран)
     ├── IMG_0851.PNG                     ← hero главной мобиль
+    ├── IMG_0942.PNG                     ← hero фото (каталог, бытовая, опт, производство)
     ├── IMG_0922.PNG                     ← карточка "Производство"
     ├── IMG_0924.PNG                     ← карточка "Опт / Розница"
-    ├── IMG_0931.PNG                     ← карточка "Бытовая химия"
     ├── IMG_0925.PNG                     ← карточка "Автохимия"
     ├── photo_*.jpg                      ← фото продукции (добавлялись вручную)
-    ├── IMG_0xxx.PNG                     ← прочие фото (не используются в текущих страницах)
+    ├── IMG_0xxx.PNG                     ← прочие фото
     └── prod_*.jpg/png                   ← фото товаров (загружаются через admin/products.html)
 ```
 
@@ -110,7 +111,7 @@ CSS: `height: 56px; width: auto; object-fit: contain;` — **без** `border-ra
 4 карточки — **только PNG-изображения** (иконка, название, описание и стрелка уже нарисованы в самом файле):
 - 1-я (Производство) → ссылка `proizvodstvo.html`, фото `IMG_0922.PNG`
 - 2-я (Опт/Розница) → ссылка `opt.html`, фото `IMG_0924.PNG`
-- 3-я (Бытовая химия) → ссылка `bytovaya-himiya.html`, фото `IMG_0931.PNG`
+- 3-я (Бытовая химия) → ссылка `bytovaya-himiya.html`, фото `IMG_0925.PNG` (или актуальное)
 - 4-я (Автохимия) → ссылка `avtohimiya.html`, фото `IMG_0925.PNG`
 
 Структура карточки — только `.cat-photo` (background-image), без `.cat-content` и текста.
@@ -136,7 +137,7 @@ CSS: `height: 56px; width: auto; object-fit: contain;` — **без** `border-ra
 ### Структура сверху вниз
 
 1. **Header** — как везде, плюс кнопка "Корзина" с тёмным бейджем-счётчиком
-2. **Hero** — белый фон, две колонки: текст слева + 4 stat-карточки справа
+2. **Hero** — белый фон, `.hero-top` flex: текст слева (`.hero-text`) + фото справа (`.hero-img-wrap` с `IMG_0942.PNG`)
 3. **Полоса фич** `.features-strip` — 4 колонки с иконками и текстом
 4. **Shop layout** — двухколоночная сетка: сайдбар + сетка товаров
 5. **Шторка корзины** — drawer справа с overlay
@@ -144,13 +145,11 @@ CSS: `height: 56px; width: auto; object-fit: contain;` — **без** `border-ra
 ### Hero каталога
 
 - Белый фон, `padding: 48px 52px 0`
-- Левая колонка `.hero-text` — бейдж, заголовок "Каталог продукции", описание
-- Правая колонка `.hero-stats` — 4 карточки `.hero-stat` с иконками:
-  - Количество наименований (динамически из products.json, `id="count-total"`)
-  - 2 категории товаров
-  - Опт — выгодные условия
-  - 100% сертифицировано и безопасно
-- Stat числа: `color: #111` (не синий)
+- `.hero-top` — `display: flex; align-items: center; gap: 48px`
+- `.hero-text` — бейдж, заголовок "Каталог продукции", описание (`max-width: 420px`)
+- `.hero-img-wrap` — фото `IMG_0942.PNG` справа (`border-radius: 16px; max-height: 280px; object-fit: cover`)
+- На мобиле `.hero-img-wrap { display: none }`, `.hero-top { flex-direction: column }`
+- **Нет** stat-карточек (убраны)
 
 ### Полоса фич (`.features-strip`)
 
@@ -175,7 +174,8 @@ CSS: `height: 56px; width: auto; object-fit: contain;` — **без** `border-ra
 
 `.prod-card` — белый фон, рамка `1px solid #ebebeb`, `border-radius: 14px`:
 - Фото сверху (1/1, object-fit: cover), при hover масштабируется 1.05×
-- `description` товара — показывается как обычный текст под названием (`.prod-card-desc`), не поверх фото
+- `description` товара — показывается как обычный текст под названием (`.prod-card-desc`)
+- `price` товара — показывается жирным `font-size: 15px; font-weight: 700` (`.prod-card-price`)
 - Категория (синий uppercase), название, кнопка "В корзину"
 - Кнопка `.prod-card-add` — outline стиль (`background: #fff; border: 1.5px solid #1A52B3; color: #1A52B3`); если товар в корзине — тёмная "В корзине (N)"
 - Данные из `products.json`, рендер через `renderCard(p)` в JS
@@ -208,9 +208,10 @@ CSS: `height: 56px; width: auto; object-fit: contain;` — **без** `border-ra
 ### products.json
 
 Файл: `out/products.json`
-Формат: JSON-массив объектов `{ id, name, category, description, image }`
+Формат: JSON-массив объектов `{ id, name, category, description, price, image }`
 - `category`: `"bytovaya"` или `"avto"`
 - `description`: короткий текст под названием (необязательно, например `"500 мл • Концентрат"`)
+- `price`: цена (необязательно, например `"850 тг"` или `"от 500 тг"`)
 - `image`: путь вида `"images/prod_xxx.jpg"` или `""` (пустое = заглушка)
 - Загружается через `fetch('/products.json?t=timestamp')` при открытии страницы
 
@@ -218,20 +219,34 @@ CSS: `height: 56px; width: auto; object-fit: contain;` — **без** `border-ra
 
 ### Общая структура
 
-1. Header → Hero (серый фон `#f7f7f7`) → Контент → Прайс-блок
+1. Header → **Hero** (серый фон `#f7f7f7`, две колонки: текст + фото) → Контент → Прайс-блок
+
+### Hero страниц категорий
+
+Все страницы (кроме avtohimiya.html) имеют двухколоночный hero:
+- `.hero { display: flex; align-items: stretch }` — серый фон `#f7f7f7`
+- `.hero-left { max-width: 560px; flex-shrink: 0; padding: 64px 52px }` — текст
+- `.hero-right { flex: 1; overflow: hidden; min-height: 360px }` — фото `IMG_0942.PNG`, `object-fit: cover`
+- На мобиле (`< 767px`): `.hero-right { display: none }`
 
 ### Страницы
 
-| Страница | Файл | Особенности контента |
-|---|---|---|
-| Бытовая химия | `bytovaya-himiya.html` | 6 карточек товаров с тегами объёма |
-| Автохимия | `avtohimiya.html` | 6 карточек товаров с тегами |
-| Производство | `proizvodstvo.html` | 6 feat-карточек + блок сертификатов |
-| Опт / Розница | `opt.html` | 3 тир-карточки партнёрства + FAQ-аккордеон |
+| Страница | Файл | Прайс PDF | Hero фото |
+|---|---|---|---|
+| Бытовая химия | `bytovaya-himiya.html` | `price.pdf` | `IMG_0942.PNG` |
+| Автохимия | `avtohimiya.html` | `price.pdf` | нет |
+| Производство | `proizvodstvo.html` | `price-proizvodstvo.pdf` | `IMG_0942.PNG` |
+| Опт / Розница | `opt.html` | `price-opt.pdf` | `IMG_0942.PNG` |
 
-Кнопка "Скачать прайс (PDF)" ведёт на `/price.pdf`.
-Если `price.pdf` не существует — кнопка автоматически скрывается через JS (`fetch HEAD /price.pdf`).
-Скрипт добавлен в: `avtohimiya.html`, `bytovaya-himiya.html`, `novinki.html`, `opt.html`.
+### Прайс-листы по страницам
+
+| Файл | Страницы | Кнопка скрывается если PDF нет |
+|---|---|---|
+| `price.pdf` | katalog.html, bytovaya-himiya.html, avtohimiya.html | да (JS fetch HEAD) |
+| `price-opt.pdf` | opt.html | нет (кнопка всегда видна) |
+| `price-proizvodstvo.pdf` | proizvodstvo.html | да (JS fetch HEAD, класс `.btn-dl-prod`) |
+
+В `opt.html` в прайс-блоке только одна кнопка "Скачать прайс-лист" — кнопка WhatsApp убрана.
 
 Все страницы используют синюю тему `#1A52B3` — тот же шаблон header/footer что и главная.
 
@@ -255,9 +270,19 @@ CSS: `height: 56px; width: auto; object-fit: contain;` — **без** `border-ra
 **URL:** https://west-him.vercel.app/admin/
 **Файл:** `out/admin/index.html`
 
-Управляет только PDF прайс-листом:
-- Drag-and-drop загрузка `price.pdf` → GitHub API → Vercel автодеплой
+Управляет тремя PDF прайс-листами (сетка 3 колонки):
+
+| Блок | Emoji | PDF файл | Страницы |
+|---|---|---|---|
+| Каталог | 🛒 | `price.pdf` | katalog, bytovaya-himiya, avtohimiya |
+| Опт и розница | 🤝 | `price-opt.pdf` | opt.html |
+| Производство | 🏭 | `price-proizvodstvo.pdf` | proizvodstvo.html |
+
+- Каждый блок: drag-and-drop загрузка PDF → GitHub API → Vercel автодеплой
+- Индикатор "загружен ✓" (зелёный) если файл уже есть на сайте
 - Кнопка "Удалить" — удаляет файл через GitHub API
+- **Тема полностью синяя** `#1A52B3` (красного нет нигде)
+- Логотип: `height: 40px; width: auto` — без `border-radius: 50%`
 
 В шапке панели ссылки: "🗂 Карточки каталога" → `products.html`, "✏️ Редактор сайта" → `editor.html`
 
@@ -267,18 +292,26 @@ CSS: `height: 56px; width: auto; object-fit: contain;` — **без** `border-ra
 **Файл:** `out/admin/products.html`
 
 - Загружает `products.json` через GitHub Contents API (с SHA для обновления)
-- Пустое состояние: большой красный `+` с приглашением добавить первую карточку
+- **Кодировка**: декодирование через `decodeURIComponent(escape(atob(...)))` — иначе кириллица превращается в кракозябры
+- Пустое состояние: большой синий `+` с приглашением добавить первую карточку
 - Заполненное: сетка карточек с кнопками "Изменить" / удалить + маленькая карточка `+`
-- Модальное окно: поле названия, выбор категории, **поле "Текст поверх фото"** (description), загрузка фото (превью 1/1)
+- Модальное окно содержит поля:
+  - Название продукта
+  - Категория (Бытовая химия / Автохимия)
+  - **Текст поверх фото** (description) — с live-превью наложения текста на фото
+  - **Цена** (price, необязательно) — показывается в карточке каталога
+  - Фото (превью 3/4 с текстовым оверлеем в реальном времени)
 - Сохранение: фото → `out/images/prod_{id}.{ext}`, затем обновление `products.json`
 - Удаление: убирает из массива, удаляет файл изображения, пушит JSON
+- **Тема полностью синяя** `#1A52B3`
 
 ### Визуальный редактор
 
 **URL:** /admin/editor.html
 **Файл:** `out/admin/editor.html`
 
-- Выбор страницы из списка (Главная, Каталог, Бытовая химия, и т.д.)
+- Выбор страницы из списка (Главная, Каталог, Бытовая химия, Автохимия, Производство, Опт / Розница)
+- Страница "Новинки" удалена из списка
 - Загружает HTML страницы из GitHub API, рендерит в iframe-подобном контейнере
 - Режим редактирования: добавляет `contenteditable` на все текстовые элементы
 - Сохранение: DOMParser → обновляет элементы по селектору+индексу → `btoa(unescape(encodeURIComponent(html)))` → GitHub PUT
@@ -304,6 +337,16 @@ Base64 с кириллицей:
 ### Hero на главной
 1. Положить файл в `out/images/`
 2. В `index.html` изменить `url('images/...')` в CSS-правиле `.hero { background: ... }`
+3. `git add . && git commit -m "..." && git push`
+
+### Hero на страницах категорий (bytovaya, opt, proizvodstvo)
+1. Положить файл в `out/images/`
+2. В нужном HTML изменить `src="images/..."` у `<img>` внутри `.hero-right`
+3. `git add . && git commit -m "..." && git push`
+
+### Hero каталога (katalog.html)
+1. Положить файл в `out/images/`
+2. В `katalog.html` изменить `src="images/..."` у `<img>` внутри `.hero-img-wrap`
 3. `git add . && git commit -m "..." && git push`
 
 ### Карточки категорий (главная)
