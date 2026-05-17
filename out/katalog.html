@@ -195,6 +195,7 @@
     .prod-card-cat { font-size: 10px; font-weight: 700; color: #1A52B3; text-transform: uppercase; letter-spacing: 0.12em; }
     .prod-card-name { font-size: 14px; font-weight: 700; color: #111; line-height: 1.35; flex: 1; }
     .prod-card-desc { font-size: 12px; color: #888; line-height: 1.4; }
+    .prod-card-price { font-size: 15px; font-weight: 700; color: #111; margin-top: 2px; }
     .prod-card-add {
       display: flex; align-items: center; justify-content: center; gap: 6px;
       padding: 9px 14px; border-radius: 8px; margin-top: 8px;
@@ -579,6 +580,7 @@
           ${catLabel ? `<div class="prod-card-cat">${catLabel}</div>` : ''}
           <div class="prod-card-name">${p.name}</div>
           ${desc ? `<div class="prod-card-desc">${desc}</div>` : ''}
+          ${p.price ? `<div class="prod-card-price">${p.price}</div>` : ''}
           <button class="prod-card-add ${inCart ? 'in-cart' : ''}" onclick="addToCart('${p.id}')">
             ${inCart
               ? `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> В корзине (${cart[p.id].qty})`

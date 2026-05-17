@@ -149,11 +149,24 @@
     .img-zone-preview {
       width: 100%; aspect-ratio: 3/4; border-radius: 10px;
       background-size: cover; background-position: center;
-      margin-bottom: 10px; display: none; position: relative;
+      margin-bottom: 10px; display: none; position: relative; overflow: hidden;
+    }
+    .img-preview-overlay {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.72) 0%, transparent 100%);
+      padding: 28px 10px 10px;
+      color: #fff; font-size: 12px; font-weight: 600; line-height: 1.35;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.6); display: none; white-space: pre-line;
     }
     .img-zone-text { font-size: 14px; font-weight: 600; color: #aaa; }
     .img-zone-hint { font-size: 12px; color: #ccc; margin-top: 4px; }
     .img-zone.has-img .img-zone-text { color: #C8102E; }
+
+    .prod-price-badge {
+      font-size: 12px; font-weight: 700; color: #166534;
+      background: #f0fdf4; border: 1px solid #bbf7d0;
+      padding: 2px 8px; border-radius: 6px; display: inline-block; margin-top: 4px;
+    }
 
     .progress-bar-wrap { height: 4px; background: #f0f0f0; border-radius: 4px; margin-top: 10px; display: none; }
     .progress-bar { height: 100%; background: #C8102E; border-radius: 4px; width: 0; transition: width .3s; }
@@ -238,15 +251,22 @@
 
     <div class="form-group">
       <label class="form-label">Текст поверх фото <span style="font-weight:400;color:#aaa">(необязательно)</span></label>
-      <textarea id="f-desc" class="form-input" rows="2" placeholder="Например: 500 мл • Концентрат" style="resize:vertical;min-height:60px;line-height:1.4"></textarea>
-      <div style="font-size:11px;color:#bbb;margin-top:4px">Появится на фото внизу карточки в каталоге</div>
+      <textarea id="f-desc" class="form-input" rows="2" placeholder="Например: 500 мл • Концентрат" style="resize:vertical;min-height:60px;line-height:1.4" oninput="updateDescPreview()"></textarea>
+      <div style="font-size:11px;color:#bbb;margin-top:4px">Текст появится на фото внизу — введи текст и выбери фото чтобы увидеть превью</div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Цена <span style="font-weight:400;color:#aaa">(необязательно)</span></label>
+      <input type="text" id="f-price" class="form-input" placeholder="Например: 850 тг или от 500 тг">
     </div>
 
     <div class="form-group">
       <label class="form-label">Фото на карточке</label>
       <div class="img-zone" id="img-zone">
         <input type="file" accept="image/*" onchange="onImgPick(this)">
-        <div class="img-zone-preview" id="img-preview"></div>
+        <div class="img-zone-preview" id="img-preview">
+          <div class="img-preview-overlay" id="img-preview-overlay"></div>
+        </div>
         <div class="img-zone-text" id="img-zone-text">Нажмите или перетащите фото</div>
         <div class="img-zone-hint">JPG, PNG — рекомендуется формат 3:4 (портрет)</div>
       </div>
@@ -365,6 +385,7 @@ function renderGrid() {
         </div>
         <div class="prod-info">
           <div class="prod-name">${p.name}</div>
+          ${p.price ? `<div class="prod-price-badge">${p.price}</div>` : ''}
           <div class="prod-actions">
             <button class="btn-edit" onclick="openModal('${p.id}')">✏️ Изменить</button>
             <button class="btn-del" onclick="deleteCard('${p.id}')" title="Удалить">✕</button>
@@ -397,15 +418,19 @@ function openModal(id) {
   if (id) {
     const p = products.find(x => x.id === id);
     if (p) {
-      document.getElementById('f-name').value = p.name;
-      document.getElementById('f-cat').value = p.category;
+      document.getElementById('f-name').value = p.name || '';
+      document.getElementById('f-cat').value = p.category || 'bytovaya';
       document.getElementById('f-desc').value = p.description || '';
+      document.getElementById('f-price').value = p.price || '';
       if (p.image) setImgPreview('../' + p.image);
+      updateDescPreview();
     }
   } else {
     document.getElementById('f-name').value = '';
     document.getElementById('f-cat').value = 'bytovaya';
     document.getElementById('f-desc').value = '';
+    document.getElementById('f-price').value = '';
+    updateDescPreview();
   }
 
   document.getElementById('modal-overlay').style.display = 'flex';
@@ -436,6 +461,15 @@ function onImgPick(input) {
   reader.readAsDataURL(file);
 }
 
+function updateDescPreview() {
+  const text = document.getElementById('f-desc').value.trim();
+  const overlay = document.getElementById('img-preview-overlay');
+  if (overlay) {
+    overlay.textContent = text;
+    overlay.style.display = text ? 'block' : 'none';
+  }
+}
+
 function setImgPreview(src) {
   const preview = document.getElementById('img-preview');
   const zone = document.getElementById('img-zone');
@@ -444,6 +478,7 @@ function setImgPreview(src) {
   preview.style.backgroundImage = `url('${src}')`;
   txt.textContent = 'Нажмите, чтобы заменить';
   zone.classList.add('has-img');
+  updateDescPreview();
 }
 
 function clearImgPreview() {
@@ -454,6 +489,8 @@ function clearImgPreview() {
   preview.style.backgroundImage = '';
   txt.textContent = 'Нажмите или перетащите фото';
   zone.classList.remove('has-img');
+  const overlay = document.getElementById('img-preview-overlay');
+  if (overlay) overlay.style.display = 'none';
 }
 
 // ── SAVE CARD ──
@@ -462,6 +499,7 @@ async function saveCard() {
   const name = document.getElementById('f-name').value.trim();
   const cat = document.getElementById('f-cat').value;
   const desc = document.getElementById('f-desc').value.trim();
+  const price = document.getElementById('f-price').value.trim();
   if (!name) { setModalStatus('Введи название продукта', 'err'); return; }
 
   const token = localStorage.getItem('ghToken');
@@ -512,11 +550,12 @@ async function saveCard() {
       products[idx].name = name;
       products[idx].category = cat;
       products[idx].description = desc;
+      products[idx].price = price;
       if (imagePath) products[idx].image = imagePath;
     }
   } else {
     const newId = 'prod_' + Date.now();
-    products.push({ id: newId, name, category: cat, description: desc, image: imagePath });
+    products.push({ id: newId, name, category: cat, description: desc, price, image: imagePath });
   }
 
   // Save products.json
