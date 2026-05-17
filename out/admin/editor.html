@@ -135,7 +135,7 @@
 <div id="login-screen">
   <div class="lc">
     <div class="ll">
-      <img src="../logo.jpg" alt="West Him">
+      <img src="../logo.png" alt="West Him">
       <div>
         <span class="ll-name">WEST HIM</span>
         <span class="ll-sub">Редактор сайта</span>
@@ -454,7 +454,7 @@ function markDirty() {
 function imgToGithubPath(src) {
   if (!src) return null;
   if (src.includes('../images/')) return 'out/images/' + src.split('../images/')[1].split('?')[0];
-  if (src.includes('../logo.jpg')) return 'out/logo.jpg';
+  if (src.includes('../logo.png')) return 'out/logo.png';
   return null;
 }
 
