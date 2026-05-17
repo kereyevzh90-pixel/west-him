@@ -33,59 +33,76 @@
 
     /* ── HERO ── */
     .hero {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      height: 500px;
       border-bottom: 1px solid #ebebeb;
+      padding: 48px 52px 0;
+      background: #fff;
     }
-    .hero-left {
-      padding: 52px 52px 48px;
-      display: flex; flex-direction: column; justify-content: center;
+    .hero-top {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 48px;
+      align-items: start;
+      margin-bottom: 40px;
     }
+    .hero-text { max-width: 320px; }
     .hero-badge {
       display: inline-flex; align-items: center; gap: 7px;
       color: #C8102E; font-size: 11px; font-weight: 700;
       letter-spacing: 0.12em; text-transform: uppercase;
-      margin-bottom: 16px; width: fit-content;
+      margin-bottom: 16px;
     }
     .hero-h1 {
-      font-size: clamp(34px, 3.4vw, 54px);
+      font-size: clamp(34px, 3.4vw, 52px);
       font-weight: 900; line-height: 1.05;
       letter-spacing: -1.5px; color: #111;
       margin-bottom: 14px;
     }
-    .hero-desc {
-      font-size: 15px; color: #666; line-height: 1.7;
-      max-width: 360px; margin-bottom: 32px;
-    }
+    .hero-h1 .red { color: #C8102E; }
+    .hero-desc { font-size: 14px; color: #666; line-height: 1.7; }
+
     .hero-stats {
-      display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      align-self: center;
     }
     .hero-stat {
-      display: flex; align-items: center; gap: 12px;
-      background: #f7f7f7; border: 1px solid #ebebeb;
-      border-radius: 12px; padding: 14px 16px;
+      background: #fff; border: 1px solid #ebebeb;
+      border-radius: 14px; padding: 20px 20px 18px;
     }
     .hero-stat-icon {
-      flex-shrink: 0; width: 36px; height: 36px;
-      background: rgba(200,16,46,.08); border: 1px solid rgba(200,16,46,.18);
-      border-radius: 10px; display: flex; align-items: center; justify-content: center;
+      width: 40px; height: 40px; border-radius: 10px;
+      background: rgba(200,16,46,.07); border: 1px solid rgba(200,16,46,.15);
+      display: flex; align-items: center; justify-content: center;
+      color: #C8102E; margin-bottom: 14px;
+    }
+    .hero-stat-icon svg { width: 20px; height: 20px; }
+    .hero-stat-n { font-size: 26px; font-weight: 900; color: #C8102E; letter-spacing: -1px; margin-bottom: 6px; }
+    .hero-stat-l { font-size: 12px; color: #888; line-height: 1.4; }
+
+    /* ── FEATURES STRIP ── */
+    .features-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-top: 1px solid #ebebeb;
+      margin: 0 -52px;
+    }
+    .feat-item {
+      display: flex; align-items: center; gap: 12px;
+      padding: 18px 24px;
+      border-right: 1px solid #ebebeb;
+    }
+    .feat-item:last-child { border-right: none; }
+    .feat-icon {
+      flex-shrink: 0; width: 36px; height: 36px; border-radius: 9px;
+      background: rgba(200,16,46,.07); border: 1px solid rgba(200,16,46,.15);
+      display: flex; align-items: center; justify-content: center;
       color: #C8102E;
     }
-    .hero-stat-icon svg { width: 18px; height: 18px; }
-    .hero-stat-body {}
-    .hero-stat-n { font-size: 20px; font-weight: 900; color: #111; line-height: 1; margin-bottom: 2px; }
-    .hero-stat-l { font-size: 11px; color: #888; line-height: 1.3; }
-
-    .hero-right {
-      background: #f7f7f7;
-      display: flex; align-items: center; justify-content: center;
-      overflow: hidden; border-left: 1px solid #ebebeb;
-      padding: 24px 32px;
-    }
-    .hero-right img {
-      max-width: 100%; max-height: 100%; object-fit: contain;
-    }
+    .feat-icon svg { width: 18px; height: 18px; }
+    .feat-body {}
+    .feat-title { font-size: 13px; font-weight: 700; color: #111; margin-bottom: 2px; }
+    .feat-sub { font-size: 11px; color: #999; }
 
     /* ── SHOP LAYOUT ── */
     .shop-layout {
@@ -98,7 +115,7 @@
     /* ── SIDEBAR ── */
     .sidebar { position: sticky; top: 80px; }
     .sidebar-title { font-size: 11px; font-weight: 700; color: #aaa; text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 12px; }
-    .cat-list { display: flex; flex-direction: column; gap: 2px; margin-bottom: 24px; }
+    .cat-list { display: flex; flex-direction: column; gap: 2px; margin-bottom: 20px; }
     .cat-item {
       display: flex; align-items: center; gap: 10px;
       padding: 10px 14px; border-radius: 10px; cursor: pointer;
@@ -121,12 +138,12 @@
     .cat-item.active .cat-count { background: #fcd8de; color: #C8102E; }
 
     .help-block {
-      background: #f7f7f7; border: 1px solid #ebebeb;
+      background: #fff0f3; border: 1px solid rgba(200,16,46,.15);
       border-radius: 16px; padding: 20px;
     }
     .help-icon {
       width: 40px; height: 40px; border-radius: 10px;
-      background: rgba(200,16,46,.08); border: 1px solid rgba(200,16,46,.18);
+      background: rgba(200,16,46,.12); border: 1px solid rgba(200,16,46,.2);
       display: flex; align-items: center; justify-content: center;
       color: #C8102E; margin-bottom: 12px;
     }
@@ -135,90 +152,84 @@
     .help-desc { font-size: 12px; color: #888; line-height: 1.6; margin-bottom: 14px; }
     .help-btn {
       display: flex; align-items: center; justify-content: center;
-      padding: 9px 14px; border-radius: 8px;
-      background: #fff; border: 1.5px solid #C8102E;
-      color: #C8102E; font-size: 12px; font-weight: 700;
-      text-decoration: none; transition: background .2s, color .2s;
+      padding: 10px 14px; border-radius: 8px;
+      background: #C8102E; border: none;
+      color: #fff; font-size: 13px; font-weight: 700;
+      text-decoration: none; transition: background .2s; cursor: pointer;
     }
-    .help-btn:hover { background: #C8102E; color: #fff; }
+    .help-btn:hover { background: #a50d25; }
 
     /* ── PRODUCT AREA ── */
     .prod-area-header {
       display: flex; align-items: center; justify-content: space-between;
-      margin-bottom: 24px;
+      margin-bottom: 20px;
     }
-    .prod-area-title { font-size: 20px; font-weight: 800; color: #111; }
-    .prod-area-right { display: flex; align-items: center; gap: 16px; }
-    .prod-count-label { font-size: 13px; color: #aaa; font-weight: 500; }
+    .prod-area-title { font-size: 22px; font-weight: 900; color: #111; letter-spacing: -0.5px; }
     .prod-see-all {
       display: inline-flex; align-items: center; gap: 5px;
       font-size: 13px; font-weight: 700; color: #C8102E;
-      text-decoration: none; transition: gap .2s;
+      text-decoration: none; transition: gap .2s; cursor: pointer;
+      background: none; border: none; font-family: inherit;
     }
     .prod-see-all:hover { gap: 8px; }
 
-    /* ── PRODUCT GRID ── */
-    .prod-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; }
-
-    /* ── PRODUCT CARD ── */
-    .prod-card {
-      border-radius: 14px; overflow: hidden; background: #fff;
-      border: 1px solid #ebebeb; box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-      transition: transform .25s, box-shadow .25s; display: flex; flex-direction: column;
+    /* ── PRODUCT TABLE ── */
+    .prod-table { display: flex; flex-direction: column; }
+    .prod-table-head {
+      display: grid;
+      grid-template-columns: 1fr 120px 140px 60px;
+      padding: 10px 16px;
+      font-size: 12px; font-weight: 600; color: #aaa;
+      border-bottom: 1px solid #ebebeb;
     }
-    .prod-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.1); }
-
-    .prod-card-img {
-      aspect-ratio: 1/1; overflow: hidden;
-      background: linear-gradient(135deg, #f8f8f8 0%, #eeeeee 100%);
-      flex-shrink: 0; position: relative;
+    .prod-row {
+      display: grid;
+      grid-template-columns: 1fr 120px 140px 60px;
+      align-items: center;
+      padding: 14px 16px;
+      border-bottom: 1px solid #f5f5f5;
+      transition: background .15s;
     }
-    .prod-card-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .3s; }
-    .prod-card:hover .prod-card-img img { transform: scale(1.05); }
-    .prod-card-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
-    .prod-card-placeholder svg { width: 44px; height: 44px; }
-
-    .prod-card-heart {
-      position: absolute; top: 10px; right: 10px;
-      width: 30px; height: 30px; border-radius: 50%;
-      background: rgba(255,255,255,0.9); border: none; cursor: pointer;
+    .prod-row:hover { background: #fafafa; }
+    .prod-row-item { display: flex; align-items: center; gap: 14px; }
+    .prod-row-img {
+      width: 56px; height: 56px; border-radius: 10px;
+      overflow: hidden; flex-shrink: 0;
+      background: linear-gradient(135deg, #f8f8f8, #eee);
+      border: 1px solid #ebebeb;
       display: flex; align-items: center; justify-content: center;
-      color: #ccc; transition: color .2s, background .2s;
     }
-    .prod-card-heart:hover { color: #C8102E; background: #fff; }
-    .prod-card-heart svg { width: 15px; height: 15px; }
+    .prod-row-img img { width: 100%; height: 100%; object-fit: cover; }
+    .prod-row-img svg { width: 24px; height: 24px; }
+    .prod-row-name { font-size: 14px; font-weight: 700; color: #111; margin-bottom: 3px; }
+    .prod-row-desc { font-size: 12px; color: #888; }
+    .prod-row-volume {
+      font-size: 13px; font-weight: 600; color: #555;
+    }
+    .prod-row-vol-badge {
+      display: inline-block;
+      background: #f0f0f0; color: #666;
+      font-size: 12px; font-weight: 600;
+      padding: 3px 10px; border-radius: 100px;
+    }
+    .prod-row-price { font-size: 16px; font-weight: 900; color: #C8102E; }
+    .prod-row-action { display: flex; justify-content: flex-end; }
+    .prod-row-btn {
+      width: 36px; height: 36px; border-radius: 8px;
+      border: 1.5px solid #ebebeb; background: #fff;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; color: #C8102E; font-size: 16px; font-weight: 700;
+      transition: background .2s, border-color .2s;
+    }
+    .prod-row-btn:hover { background: #C8102E; border-color: #C8102E; color: #fff; }
+    .prod-row-btn svg { width: 16px; height: 16px; }
 
-    .prod-card-info { padding: 14px 14px 16px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
-    .prod-card-cat { font-size: 10px; font-weight: 700; color: #C8102E; text-transform: uppercase; letter-spacing: 0.12em; }
-    .prod-card-name { font-size: 14px; font-weight: 700; color: #111; line-height: 1.35; }
-    .prod-card-desc { font-size: 12px; color: #888; line-height: 1.4; }
-    .prod-card-meta { display: flex; align-items: center; gap: 8px; margin-top: 2px; }
-    .prod-card-volume {
-      font-size: 11px; font-weight: 600; color: #666;
-      background: #f0f0f0; padding: 2px 8px; border-radius: 100px;
-    }
-    .prod-card-price { font-size: 16px; font-weight: 900; color: #C8102E; margin-top: auto; }
-    .prod-card-add {
-      display: flex; align-items: center; justify-content: center; gap: 6px;
-      padding: 9px 14px; border-radius: 8px; margin-top: 8px;
-      background: #C8102E; color: #fff; font-size: 12px; font-weight: 700;
-      border: none; cursor: pointer; font-family: inherit;
-      transition: background .2s, transform .15s; width: 100%;
-    }
-    .prod-card-add:hover { background: #a50d25; transform: translateY(-1px); }
-    .prod-card-add.in-cart { background: #111; }
-    .prod-card-add.in-cart:hover { background: #333; }
-
-    /* ── EMPTY STATE ── */
-    .empty-state { text-align: center; padding: 80px 20px; color: #ccc; grid-column: 1/-1; }
-    .empty-state svg { width: 48px; height: 48px; margin-bottom: 16px; }
-    .empty-state p { font-size: 15px; font-weight: 600; color: #bbb; }
+    /* ── EMPTY ── */
+    #prod-empty { text-align: center; padding: 60px 20px 40px; display: block; }
 
     /* ── CART OVERLAY ── */
     .cart-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.35); z-index: 500; opacity: 0; pointer-events: none; transition: opacity .25s; }
     .cart-overlay.open { opacity: 1; pointer-events: all; }
-
-    /* ── CART DRAWER ── */
     .cart-drawer { position: fixed; top: 0; right: 0; bottom: 0; width: 400px; max-width: 100vw; background: #fff; z-index: 501; box-shadow: -4px 0 40px rgba(0,0,0,0.15); display: flex; flex-direction: column; transform: translateX(100%); transition: transform .3s cubic-bezier(.4,0,.2,1); }
     .cart-drawer.open { transform: translateX(0); }
     .cart-head { display: flex; align-items: center; justify-content: space-between; padding: 20px 24px; border-bottom: 1px solid #ebebeb; flex-shrink: 0; }
@@ -253,31 +264,42 @@
     @media (max-width: 1024px) and (min-width: 768px) {
       .header { padding: 14px 28px; gap: 20px; }
       .header-nav { gap: 18px; }
-      .hero { grid-template-columns: 1fr 1fr; height: 420px; }
-      .hero-left { padding: 36px 28px; }
+      .hero { padding: 36px 28px 0; }
+      .hero-top { gap: 28px; }
       .hero-stats { grid-template-columns: repeat(2, 1fr); }
+      .features-strip { margin: 0 -28px; grid-template-columns: repeat(2, 1fr); }
+      .feat-item:nth-child(2) { border-right: none; }
+      .feat-item:nth-child(3) { border-top: 1px solid #ebebeb; }
+      .feat-item:nth-child(4) { border-top: 1px solid #ebebeb; border-right: none; }
       .shop-layout { padding: 32px 28px 60px; grid-template-columns: 180px 1fr; gap: 28px; }
+      .prod-table-head { grid-template-columns: 1fr 100px 120px 50px; }
+      .prod-row { grid-template-columns: 1fr 100px 120px 50px; }
     }
     @media (max-width: 767px) {
       .header { padding: 12px 16px; gap: 12px; }
       .header-nav { display: none; }
       .header-cta { display: none; }
       .hamburger { display: flex; }
-      .hero { grid-template-columns: 1fr; min-height: auto; }
-      .hero-left { padding: 28px 16px 24px; }
+      .hero { padding: 24px 16px 0; }
+      .hero-top { grid-template-columns: 1fr; gap: 24px; }
+      .hero-text { max-width: 100%; }
       .hero-h1 { font-size: clamp(28px, 7vw, 40px); }
-      .hero-desc { max-width: 100%; }
-      .hero-right { display: none; }
       .hero-stats { grid-template-columns: repeat(2, 1fr); gap: 8px; }
-      .hero-stat { padding: 12px; }
-      .hero-stat-n { font-size: 17px; }
+      .features-strip { margin: 0 -16px; grid-template-columns: repeat(2, 1fr); }
+      .feat-item:nth-child(2) { border-right: none; }
+      .feat-item:nth-child(3) { border-top: 1px solid #ebebeb; }
+      .feat-item:nth-child(4) { border-top: 1px solid #ebebeb; border-right: none; }
       .shop-layout { padding: 20px 16px 60px; grid-template-columns: 1fr; gap: 0; }
       .sidebar { position: static; margin-bottom: 20px; }
       .cat-list { flex-direction: row; flex-wrap: nowrap; overflow-x: auto; gap: 6px; padding-bottom: 4px; }
       .cat-item { white-space: nowrap; flex-shrink: 0; }
       .cat-item-icon { display: none; }
       .help-block { display: none; }
-      .prod-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+      .prod-table-head { display: none; }
+      .prod-row { grid-template-columns: 1fr auto; grid-template-rows: auto auto; gap: 4px; }
+      .prod-row-volume { display: none; }
+      .prod-row-price { grid-column: 2; grid-row: 1; align-self: start; }
+      .prod-row-action { grid-column: 2; grid-row: 2; }
       .cart-drawer { width: 100vw; }
     }
   </style>
@@ -313,51 +335,81 @@
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-left">
-    <div class="hero-badge">→ Собственное производство в Актау</div>
-    <h1 class="hero-h1">Каталог<br/>продукции</h1>
-    <p class="hero-desc">Бытовая и автохимия казахстанского производства. Опт и розница по всему Казахстану.</p>
+  <div class="hero-top">
+    <div class="hero-text">
+      <div class="hero-badge">→ Собственное производство в Актау</div>
+      <h1 class="hero-h1">Каталог<br/><span class="red">продукции</span></h1>
+      <p class="hero-desc">Бытовая и автохимия казахстанского производства.<br/>Опт и розница по всему Казахстану.</p>
+    </div>
     <div class="hero-stats">
       <div class="hero-stat">
         <div class="hero-stat-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 3h6l1 7H8L9 3z"/><path d="M8 10v11h8V10"/><line x1="12" y1="3" x2="12" y2="10"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 3h6l1 7H8L9 3z"/><path d="M8 10v11h8V10"/></svg>
         </div>
-        <div class="hero-stat-body">
-          <div class="hero-stat-n" id="count-total">—</div>
-          <div class="hero-stat-l">наименований продукции</div>
-        </div>
+        <div class="hero-stat-n" id="count-total">30+</div>
+        <div class="hero-stat-l">наименований продукции</div>
       </div>
       <div class="hero-stat">
         <div class="hero-stat-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 2H7a2 2 0 00-2 2v16a2 2 0 002 2h10a2 2 0 002-2V8l-6-6z"/><polyline points="13 2 13 8 19 8"/></svg>
         </div>
-        <div class="hero-stat-body">
-          <div class="hero-stat-n">2</div>
-          <div class="hero-stat-l">категории товаров</div>
-        </div>
+        <div class="hero-stat-n">2</div>
+        <div class="hero-stat-l">категории товаров</div>
       </div>
       <div class="hero-stat">
         <div class="hero-stat-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4l3 4v4h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
         </div>
-        <div class="hero-stat-body">
-          <div class="hero-stat-n">Опт</div>
-          <div class="hero-stat-l">выгодные условия</div>
-        </div>
+        <div class="hero-stat-n">Опт</div>
+        <div class="hero-stat-l">выгодные условия</div>
       </div>
       <div class="hero-stat">
         <div class="hero-stat-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
         </div>
-        <div class="hero-stat-body">
-          <div class="hero-stat-n">100%</div>
-          <div class="hero-stat-l">сертифицировано</div>
-        </div>
+        <div class="hero-stat-n">100%</div>
+        <div class="hero-stat-l">сертифицировано и безопасно</div>
       </div>
     </div>
   </div>
-  <div class="hero-right">
-    <img src="images/IMG_0912.PNG" alt="Продукция West Him"/>
+
+  <div class="features-strip">
+    <div class="feat-item">
+      <div class="feat-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>
+      </div>
+      <div class="feat-body">
+        <div class="feat-title">Собственное производство</div>
+        <div class="feat-sub">Контроль качества на всех этапах</div>
+      </div>
+    </div>
+    <div class="feat-item">
+      <div class="feat-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M5.34 18.66l-1.41 1.41M21 12h-2M5 12H3M19.07 19.07l-1.41-1.41M5.34 5.34L3.93 3.93M12 19v2M12 3V1"/></svg>
+      </div>
+      <div class="feat-body">
+        <div class="feat-title">Современные технологии</div>
+        <div class="feat-sub">Немецкое оборудование и рецептуры</div>
+      </div>
+    </div>
+    <div class="feat-item">
+      <div class="feat-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      </div>
+      <div class="feat-body">
+        <div class="feat-title">Сертифицированная продукция</div>
+        <div class="feat-sub">Соответствие стандартам качества</div>
+      </div>
+    </div>
+    <div class="feat-item">
+      <div class="feat-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4l3 4v4h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+      </div>
+      <div class="feat-body">
+        <div class="feat-title">Доставка по всему Казахстану</div>
+        <div class="feat-sub">Быстро и в срок</div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -403,19 +455,25 @@
   <div class="prod-area">
     <div class="prod-area-header">
       <div class="prod-area-title" id="area-title">Все товары</div>
-      <div class="prod-area-right">
-        <div class="prod-count-label" id="area-count"></div>
-        <a href="#" class="prod-see-all" onclick="filterCat('all', document.querySelector('[data-filter=all]')); return false;">
-          Смотреть все →
-        </a>
-      </div>
+      <button class="prod-see-all" onclick="filterCat('all', document.querySelector('[data-filter=all]'))">
+        Смотреть все →
+      </button>
     </div>
 
     <div id="prod-empty" style="text-align:center;padding:60px 20px 40px;display:block;">
       <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#e0e0e0" stroke-width="1.3" style="margin-bottom:14px"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
       <div style="font-size:15px;font-weight:600;color:#bbb;">Карточки пока не добавлены</div>
     </div>
-    <div class="prod-grid" id="prod-grid"></div>
+
+    <div class="prod-table" id="prod-table" style="display:none;">
+      <div class="prod-table-head">
+        <span>Товар</span>
+        <span>Объём</span>
+        <span>Цена</span>
+        <span></span>
+      </div>
+      <div id="prod-rows"></div>
+    </div>
   </div>
 </div>
 
@@ -471,37 +529,24 @@
     const p = allProducts.find(x => x.id === id);
     if (!p) return;
     if (cart[id]) { cart[id].qty++; } else { cart[id] = { ...p, qty: 1 }; }
-    saveCart(); updateCartBadge(); renderCartDrawer(); updateCardButtons();
+    saveCart(); updateCartBadge(); renderCartDrawer(); renderGrid();
   }
 
   function setQty(id, delta) {
     if (!cart[id]) return;
     cart[id].qty = Math.max(0, cart[id].qty + delta);
     if (cart[id].qty === 0) delete cart[id];
-    saveCart(); updateCartBadge(); renderCartDrawer(); updateCardButtons();
+    saveCart(); updateCartBadge(); renderCartDrawer(); renderGrid();
   }
 
   function removeFromCart(id) {
     delete cart[id];
-    saveCart(); updateCartBadge(); renderCartDrawer(); updateCardButtons();
+    saveCart(); updateCartBadge(); renderCartDrawer(); renderGrid();
   }
 
   function clearCart() {
     cart = {};
-    saveCart(); updateCartBadge(); renderCartDrawer(); updateCardButtons();
-  }
-
-  function updateCardButtons() {
-    document.querySelectorAll('.prod-card').forEach(card => {
-      const id = card.dataset.id;
-      const btn = card.querySelector('.prod-card-add');
-      if (!btn) return;
-      const inCart = cart[id] && cart[id].qty > 0;
-      btn.classList.toggle('in-cart', inCart);
-      btn.innerHTML = inCart
-        ? `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> В корзине (${cart[id].qty})`
-        : `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg> В корзину`;
-    });
+    saveCart(); updateCartBadge(); renderCartDrawer(); renderGrid();
   }
 
   function renderCartDrawer() {
@@ -552,31 +597,32 @@
     document.body.style.overflow = '';
   }
 
-  function renderCard(p) {
-    const catLabel = CAT_LABELS[p.category] || '';
+  function renderRow(p) {
     const hasImg = p.image && p.image !== '';
-    const inCart = cart[p.id] && cart[p.id].qty > 0;
     const desc = p.description && p.description.trim() !== '' ? p.description.trim() : '';
-    const volume = p.volume ? `<span class="prod-card-volume">${p.volume}</span>` : '';
-    const price = p.price ? `<div class="prod-card-price">${p.price} ₸</div>` : '';
+    const volume = p.volume || '';
+    const price = p.price ? p.price.toLocaleString('ru-RU') + ' ₸' : '';
+    const inCart = cart[p.id] && cart[p.id].qty > 0;
     return `
-      <div class="prod-card" data-cat="${p.category}" data-id="${p.id}">
-        <div class="prod-card-img">
-          ${hasImg ? `<img src="${p.image}" alt="${p.name}" loading="lazy"/>` : `<div class="prod-card-placeholder">${PLACEHOLDER_SVG}</div>`}
-          <button class="prod-card-heart" title="В избранное">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
-          </button>
+      <div class="prod-row" data-id="${p.id}">
+        <div class="prod-row-item">
+          <div class="prod-row-img">
+            ${hasImg ? `<img src="${p.image}" alt="${p.name}"/>` : PLACEHOLDER_SVG}
+          </div>
+          <div>
+            <div class="prod-row-name">${p.name}</div>
+            ${desc ? `<div class="prod-row-desc">${desc}</div>` : ''}
+          </div>
         </div>
-        <div class="prod-card-info">
-          ${catLabel ? `<div class="prod-card-cat">${catLabel}</div>` : ''}
-          <div class="prod-card-name">${p.name}</div>
-          ${desc ? `<div class="prod-card-desc">${desc}</div>` : ''}
-          ${volume ? `<div class="prod-card-meta">${volume}</div>` : ''}
-          ${price}
-          <button class="prod-card-add ${inCart ? 'in-cart' : ''}" onclick="addToCart('${p.id}')">
+        <div class="prod-row-volume">
+          ${volume ? `<span class="prod-row-vol-badge">${volume}</span>` : ''}
+        </div>
+        <div class="prod-row-price">${price}</div>
+        <div class="prod-row-action">
+          <button class="prod-row-btn" onclick="addToCart('${p.id}')" title="${inCart ? 'В корзине (' + cart[p.id].qty + ')' : 'В корзину'}">
             ${inCart
-              ? `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> В корзине (${cart[p.id].qty})`
-              : `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg> В корзину`
+              ? `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>`
+              : `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>`
             }
           </button>
         </div>
@@ -584,17 +630,21 @@
   }
 
   function renderGrid() {
-    const grid = document.getElementById('prod-grid');
     const empty = document.getElementById('prod-empty');
+    const table = document.getElementById('prod-table');
+    const rows = document.getElementById('prod-rows');
     const filtered = curFilter === 'all' ? allProducts : allProducts.filter(p => p.category === curFilter);
-    document.getElementById('area-count').textContent = filtered.length > 0 ? filtered.length + ' товаров' : '';
+
     if (allProducts.length === 0) {
       empty.style.display = 'block';
-      grid.innerHTML = '';
+      table.style.display = 'none';
       return;
     }
     empty.style.display = 'none';
-    grid.innerHTML = filtered.length > 0 ? filtered.map(renderCard).join('') : '<div class="empty-state"><p>Нет товаров в этой категории</p></div>';
+    table.style.display = 'flex';
+    rows.innerHTML = filtered.length > 0
+      ? filtered.map(renderRow).join('')
+      : '<div style="padding:40px 16px;color:#bbb;font-size:14px;font-weight:600;">Нет товаров в этой категории</div>';
   }
 
   function filterCat(cat, btn) {
