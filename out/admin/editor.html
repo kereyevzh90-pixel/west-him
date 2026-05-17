@@ -202,18 +202,13 @@ let curPage = 'index.html';
 let srcHtml = '', srcSha = '';
 let editMode = false, dirty = false;
 
-// Selectors that become editable
-const TEXT_SELS = [
-  '.hero-badge', '.hero-h1', '.hero-desc',
-  '.section-label', '.section-title', '.section-sub',
-  '.prop-n', '.prop-l',
-  '.prod-name', '.prod-desc',
-  '.faq-title', '.faq-badge', '.faq-a-inner',
-  '.stat-num', '.stat-lbl',
-  '.price-block h3', '.price-block p',
-  '.feat-name', '.feat-desc', '.feat-sub',
-  '.tier-name', '.tier-desc', '.tier-price',
-];
+// Tags to never make editable
+const SKIP_TAGS = new Set(['script','style','noscript','meta','link','title','svg','path','img','input','select','textarea','br','hr','head','html']);
+
+function isEditable(el) {
+  if (SKIP_TAGS.has(el.tagName.toLowerCase())) return false;
+  return Array.from(el.childNodes).some(n => n.nodeType === 3 && n.textContent.trim());
+}
 
 // ─── AUTH ───
 
@@ -333,12 +328,14 @@ function renderPage(html) {
     }
   });
 
-  // Disable internal links (so they don't navigate away from editor)
+  // Internal links: open in new tab (relative to admin folder)
   body.querySelectorAll('a').forEach(a => {
     const href = a.getAttribute('href') || '';
     if (!href.startsWith('http') && !href.startsWith('#') && !href.startsWith('//') && href !== '') {
-      a.setAttribute('data-href', href);
-      a.removeAttribute('href');
+      a.setAttribute('data-orig-href', href);
+      const fixed = href.startsWith('../') ? href : '../' + href;
+      a.setAttribute('href', fixed);
+      a.setAttribute('target', '_blank');
     }
   });
 
@@ -373,26 +370,21 @@ function enterEditMode() {
   document.getElementById('btn-edit').textContent = '✕ Выйти';
   document.getElementById('ed-badge').style.display = 'block';
 
-  // Make text elements editable
-  TEXT_SELS.forEach(sel => {
-    frame.querySelectorAll(sel).forEach(el => {
-      if (el.closest('[data-ed]')) return;
-      el.setAttribute('data-ed', '1');
-      el.contentEditable = 'true';
-      el.addEventListener('input', markDirty);
-    });
+  // Disable link navigation while editing
+  frame.querySelectorAll('a[href]').forEach(a => {
+    a.setAttribute('data-ed-href', a.getAttribute('href'));
+    a.removeAttribute('href');
+    a.removeAttribute('target');
   });
 
-  // FAQ questions — only text node (not icon)
-  frame.querySelectorAll('.faq-q').forEach(q => {
-    const tn = Array.from(q.childNodes).find(n => n.nodeType === 3 && n.textContent.trim());
-    if (!tn) return;
-    const span = document.createElement('span');
-    span.setAttribute('data-ed', 'faqq');
-    span.contentEditable = 'true';
-    span.textContent = tn.textContent.trim();
-    tn.replaceWith(span);
-    span.addEventListener('input', markDirty);
+  // Make ALL text-containing elements editable
+  let idx = 0;
+  frame.querySelectorAll('*').forEach(el => {
+    if (!isEditable(el)) return;
+    el.setAttribute('data-ed', '1');
+    el.setAttribute('data-ed-idx', idx++);
+    el.contentEditable = 'true';
+    el.addEventListener('input', markDirty);
   });
 
   // Images — add click-to-replace
@@ -429,16 +421,19 @@ function exitEditMode() {
   document.getElementById('btn-edit').textContent = '✏️ Редактировать';
   document.getElementById('ed-badge').style.display = 'none';
 
+  // Restore link hrefs
+  frame.querySelectorAll('[data-ed-href]').forEach(a => {
+    a.setAttribute('href', a.getAttribute('data-ed-href'));
+    a.setAttribute('target', '_blank');
+    a.removeAttribute('data-ed-href');
+  });
+
   // Remove editable attrs
   frame.querySelectorAll('[data-ed]').forEach(el => {
     el.removeAttribute('data-ed');
+    el.removeAttribute('data-ed-idx');
     el.removeAttribute('contenteditable');
     el.removeEventListener('input', markDirty);
-  });
-
-  // Unwrap FAQ spans
-  frame.querySelectorAll('.faq-q span[data-ed="faqq"]').forEach(span => {
-    span.replaceWith(document.createTextNode('\n          ' + span.textContent + '\n          '));
   });
 
   // Remove image edit classes
@@ -518,21 +513,18 @@ async function saveHtml() {
     const saveDoc = parser.parseFromString(srcHtml, 'text/html');
     const frame = document.getElementById('page-frame');
 
-    // Apply text changes by selector index
-    TEXT_SELS.forEach(sel => {
-      frame.querySelectorAll(sel).forEach((el, i) => {
-        const target = saveDoc.querySelectorAll(sel)[i];
-        if (target) target.innerHTML = el.innerHTML;
-      });
+    // Build map of edited elements by idx
+    const edited = {};
+    frame.querySelectorAll('[data-ed-idx]').forEach(el => {
+      edited[el.getAttribute('data-ed-idx')] = el.innerHTML;
     });
 
-    // FAQ question text nodes
-    frame.querySelectorAll('.faq-q').forEach((q, i) => {
-      const span = q.querySelector('[data-ed="faqq"]');
-      const saveQ = saveDoc.querySelectorAll('.faq-q')[i];
-      if (!span || !saveQ) return;
-      const tn = Array.from(saveQ.childNodes).find(n => n.nodeType === 3 && n.textContent.trim());
-      if (tn) tn.textContent = '\n          ' + span.textContent.trim() + '\n          ';
+    // Walk saveDoc in same order (skipping script/style etc.), apply changes by position
+    let idx = 0;
+    saveDoc.body.querySelectorAll('*').forEach(el => {
+      if (!isEditable(el)) return;
+      if (edited[idx] !== undefined) el.innerHTML = edited[idx];
+      idx++;
     });
 
     const newHtml = '<!DOCTYPE html>\n' + saveDoc.documentElement.outerHTML;
