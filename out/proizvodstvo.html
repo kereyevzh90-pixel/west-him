@@ -130,7 +130,7 @@
     <h1 class="hero-h1">Наше<br/><span class="red">производство</span></h1>
     <p class="hero-desc">Современный завод в Актау. Полный цикл от разработки рецептуры до упаковки. Строгий контроль качества на каждом этапе.</p>
     <div class="hero-actions">
-      <a class="btn-red" href="https://wa.me/77010706960?text=Здравствуйте%2C%20хочу%20получить%20прайс" target="_blank">
+      <a class="btn-red btn-dl-prod" href="/price-proizvodstvo.pdf" download>
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 15V3m0 12l-4-4m4 4l4-4M2 17l.621 2.485A2 2 0 004.561 21h14.878a2 2 0 001.94-1.515L22 17"/></svg>
         Скачать прайс
       </a>
@@ -203,5 +203,6 @@
   </div>
 
 </main>
+<script>fetch('/price-proizvodstvo.pdf',{method:'HEAD'}).then(r=>{if(!r.ok)document.querySelectorAll('.btn-dl-prod').forEach(el=>el.style.display='none')}).catch(()=>document.querySelectorAll('.btn-dl-prod').forEach(el=>el.style.display='none'));</script>
 </body>
 </html>
