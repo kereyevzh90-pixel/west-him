@@ -173,56 +173,38 @@
     }
     .prod-see-all:hover { gap: 8px; }
 
-    /* ── PRODUCT TABLE ── */
-    .prod-table { display: flex; flex-direction: column; }
-    .prod-table-head {
-      display: grid;
-      grid-template-columns: 1fr 120px 140px 60px;
-      padding: 10px 16px;
-      font-size: 12px; font-weight: 600; color: #aaa;
-      border-bottom: 1px solid #ebebeb;
+    /* ── PRODUCT GRID ── */
+    .prod-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; }
+
+    .prod-card {
+      border-radius: 14px; overflow: hidden; background: #fff;
+      border: 1px solid #ebebeb; box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      transition: transform .25s, box-shadow .25s; display: flex; flex-direction: column;
     }
-    .prod-row {
-      display: grid;
-      grid-template-columns: 1fr 120px 140px 60px;
-      align-items: center;
-      padding: 14px 16px;
-      border-bottom: 1px solid #f5f5f5;
-      transition: background .15s;
+    .prod-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.1); }
+    .prod-card-img {
+      aspect-ratio: 1/1; overflow: hidden;
+      background: linear-gradient(135deg, #f8f8f8 0%, #eeeeee 100%);
+      flex-shrink: 0; position: relative;
     }
-    .prod-row:hover { background: #fafafa; }
-    .prod-row-item { display: flex; align-items: center; gap: 14px; }
-    .prod-row-img {
-      width: 56px; height: 56px; border-radius: 10px;
-      overflow: hidden; flex-shrink: 0;
-      background: linear-gradient(135deg, #f8f8f8, #eee);
-      border: 1px solid #ebebeb;
-      display: flex; align-items: center; justify-content: center;
+    .prod-card-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .3s; }
+    .prod-card:hover .prod-card-img img { transform: scale(1.05); }
+    .prod-card-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+    .prod-card-placeholder svg { width: 44px; height: 44px; }
+    .prod-card-info { padding: 14px 14px 16px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
+    .prod-card-cat { font-size: 10px; font-weight: 700; color: #C8102E; text-transform: uppercase; letter-spacing: 0.12em; }
+    .prod-card-name { font-size: 14px; font-weight: 700; color: #111; line-height: 1.35; flex: 1; }
+    .prod-card-desc { font-size: 12px; color: #888; line-height: 1.4; }
+    .prod-card-add {
+      display: flex; align-items: center; justify-content: center; gap: 6px;
+      padding: 9px 14px; border-radius: 8px; margin-top: 8px;
+      background: #C8102E; color: #fff; font-size: 12px; font-weight: 700;
+      border: none; cursor: pointer; font-family: inherit;
+      transition: background .2s, transform .15s; width: 100%;
     }
-    .prod-row-img img { width: 100%; height: 100%; object-fit: cover; }
-    .prod-row-img svg { width: 24px; height: 24px; }
-    .prod-row-name { font-size: 14px; font-weight: 700; color: #111; margin-bottom: 3px; }
-    .prod-row-desc { font-size: 12px; color: #888; }
-    .prod-row-volume {
-      font-size: 13px; font-weight: 600; color: #555;
-    }
-    .prod-row-vol-badge {
-      display: inline-block;
-      background: #f0f0f0; color: #666;
-      font-size: 12px; font-weight: 600;
-      padding: 3px 10px; border-radius: 100px;
-    }
-    .prod-row-price { font-size: 16px; font-weight: 900; color: #C8102E; }
-    .prod-row-action { display: flex; justify-content: flex-end; }
-    .prod-row-btn {
-      width: 36px; height: 36px; border-radius: 8px;
-      border: 1.5px solid #ebebeb; background: #fff;
-      display: flex; align-items: center; justify-content: center;
-      cursor: pointer; color: #C8102E; font-size: 16px; font-weight: 700;
-      transition: background .2s, border-color .2s;
-    }
-    .prod-row-btn:hover { background: #C8102E; border-color: #C8102E; color: #fff; }
-    .prod-row-btn svg { width: 16px; height: 16px; }
+    .prod-card-add:hover { background: #a50d25; transform: translateY(-1px); }
+    .prod-card-add.in-cart { background: #111; }
+    .prod-card-add.in-cart:hover { background: #333; }
 
     /* ── EMPTY ── */
     #prod-empty { text-align: center; padding: 60px 20px 40px; display: block; }
@@ -295,11 +277,7 @@
       .cat-item { white-space: nowrap; flex-shrink: 0; }
       .cat-item-icon { display: none; }
       .help-block { display: none; }
-      .prod-table-head { display: none; }
-      .prod-row { grid-template-columns: 1fr auto; grid-template-rows: auto auto; gap: 4px; }
-      .prod-row-volume { display: none; }
-      .prod-row-price { grid-column: 2; grid-row: 1; align-self: start; }
-      .prod-row-action { grid-column: 2; grid-row: 2; }
+      .prod-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
       .cart-drawer { width: 100vw; }
     }
   </style>
@@ -464,16 +442,7 @@
       <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#e0e0e0" stroke-width="1.3" style="margin-bottom:14px"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
       <div style="font-size:15px;font-weight:600;color:#bbb;">Карточки пока не добавлены</div>
     </div>
-
-    <div class="prod-table" id="prod-table" style="display:none;">
-      <div class="prod-table-head">
-        <span>Товар</span>
-        <span>Объём</span>
-        <span>Цена</span>
-        <span></span>
-      </div>
-      <div id="prod-rows"></div>
-    </div>
+    <div class="prod-grid" id="prod-grid"></div>
   </div>
 </div>
 
@@ -597,32 +566,24 @@
     document.body.style.overflow = '';
   }
 
-  function renderRow(p) {
+  function renderCard(p) {
+    const catLabel = CAT_LABELS[p.category] || '';
     const hasImg = p.image && p.image !== '';
-    const desc = p.description && p.description.trim() !== '' ? p.description.trim() : '';
-    const volume = p.volume || '';
-    const price = p.price ? p.price.toLocaleString('ru-RU') + ' ₸' : '';
     const inCart = cart[p.id] && cart[p.id].qty > 0;
+    const desc = p.description && p.description.trim() !== '' ? p.description.trim() : '';
     return `
-      <div class="prod-row" data-id="${p.id}">
-        <div class="prod-row-item">
-          <div class="prod-row-img">
-            ${hasImg ? `<img src="${p.image}" alt="${p.name}"/>` : PLACEHOLDER_SVG}
-          </div>
-          <div>
-            <div class="prod-row-name">${p.name}</div>
-            ${desc ? `<div class="prod-row-desc">${desc}</div>` : ''}
-          </div>
+      <div class="prod-card" data-cat="${p.category}" data-id="${p.id}">
+        <div class="prod-card-img">
+          ${hasImg ? `<img src="${p.image}" alt="${p.name}" loading="lazy"/>` : `<div class="prod-card-placeholder">${PLACEHOLDER_SVG}</div>`}
         </div>
-        <div class="prod-row-volume">
-          ${volume ? `<span class="prod-row-vol-badge">${volume}</span>` : ''}
-        </div>
-        <div class="prod-row-price">${price}</div>
-        <div class="prod-row-action">
-          <button class="prod-row-btn" onclick="addToCart('${p.id}')" title="${inCart ? 'В корзине (' + cart[p.id].qty + ')' : 'В корзину'}">
+        <div class="prod-card-info">
+          ${catLabel ? `<div class="prod-card-cat">${catLabel}</div>` : ''}
+          <div class="prod-card-name">${p.name}</div>
+          ${desc ? `<div class="prod-card-desc">${desc}</div>` : ''}
+          <button class="prod-card-add ${inCart ? 'in-cart' : ''}" onclick="addToCart('${p.id}')">
             ${inCart
-              ? `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>`
-              : `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>`
+              ? `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> В корзине (${cart[p.id].qty})`
+              : `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg> В корзину`
             }
           </button>
         </div>
@@ -630,21 +591,19 @@
   }
 
   function renderGrid() {
+    const grid = document.getElementById('prod-grid');
     const empty = document.getElementById('prod-empty');
-    const table = document.getElementById('prod-table');
-    const rows = document.getElementById('prod-rows');
     const filtered = curFilter === 'all' ? allProducts : allProducts.filter(p => p.category === curFilter);
 
     if (allProducts.length === 0) {
       empty.style.display = 'block';
-      table.style.display = 'none';
+      grid.innerHTML = '';
       return;
     }
     empty.style.display = 'none';
-    table.style.display = 'flex';
-    rows.innerHTML = filtered.length > 0
-      ? filtered.map(renderRow).join('')
-      : '<div style="padding:40px 16px;color:#bbb;font-size:14px;font-weight:600;">Нет товаров в этой категории</div>';
+    grid.innerHTML = filtered.length > 0
+      ? filtered.map(renderCard).join('')
+      : '<div style="grid-column:1/-1;padding:40px;color:#bbb;font-size:14px;font-weight:600;text-align:center;">Нет товаров в этой категории</div>';
   }
 
   function filterCat(cat, btn) {
