@@ -23,7 +23,7 @@
       border-radius: 7px; color: #ddd; font-size: 13px; font-family: inherit;
       cursor: pointer; outline: none;
     }
-    .ed-select:focus { border-color: #C8102E; }
+    .ed-select:focus { border-color: #1A52B3; }
     .ed-btn {
       padding: 8px 13px; border-radius: 8px; font-size: 13px; font-weight: 600;
       font-family: inherit; cursor: pointer; border: none; transition: all .2s;
@@ -31,7 +31,7 @@
     }
     #btn-edit { background: #1e1e1e; color: #888; border: 1px solid #2e2e2e; }
     #btn-edit:hover { color: #fff; border-color: #444; }
-    #btn-edit.on { background: #C8102E; color: #fff; border-color: #C8102E; }
+    #btn-edit.on { background: #1A52B3; color: #fff; border-color: #1A52B3; }
     #btn-save { background: #14532d; color: #86efac; }
     #btn-save:hover:not(:disabled) { background: #166534; color: #fff; }
     #btn-save:disabled { background: #1a1a1a; color: #3a3a3a; cursor: default; border: 1px solid #252525; }
@@ -55,7 +55,7 @@
       background: #f9f9f9; display: flex; flex-direction: column;
       align-items: center; justify-content: center; gap: 14px; z-index: 9998;
     }
-    .spin { width: 36px; height: 36px; border: 3px solid #e8e8e8; border-top-color: #C8102E; border-radius: 50%; animation: spin .7s linear infinite; }
+    .spin { width: 36px; height: 36px; border: 3px solid #e8e8e8; border-top-color: #1A52B3; border-radius: 50%; animation: spin .7s linear infinite; }
     @keyframes spin { to { transform: rotate(360deg); } }
     .spin-text { font-size: 13px; color: #aaa; }
 
@@ -66,11 +66,11 @@
       transition: outline .15s;
     }
     .ed-mode [data-ed]:not(:empty) {
-      outline-color: rgba(200,16,46,.35);
+      outline-color: rgba(26,82,179,.35);
       cursor: text;
     }
-    .ed-mode [data-ed]:not(:empty):hover { outline-color: rgba(200,16,46,.65); }
-    .ed-mode [data-ed]:not(:empty):focus { outline-color: #C8102E !important; background: rgba(200,16,46,.03) !important; }
+    .ed-mode [data-ed]:not(:empty):hover { outline-color: rgba(26,82,179,.65); }
+    .ed-mode [data-ed]:not(:empty):focus { outline-color: #1A52B3 !important; background: rgba(26,82,179,.03) !important; }
 
     /* Image overlay */
     .ed-mode .ed-has-img { position: relative; }
@@ -91,10 +91,10 @@
     /* ─── FLOAT BADGE ─── */
     #ed-badge {
       position: fixed; bottom: 20px; right: 20px; z-index: 9997;
-      background: #C8102E; color: #fff; padding: 9px 18px;
+      background: #1A52B3; color: #fff; padding: 9px 18px;
       border-radius: 100px; font-size: 12px; font-weight: 700;
       font-family: 'Inter', sans-serif;
-      box-shadow: 0 4px 20px rgba(200,16,46,.4); display: none;
+      box-shadow: 0 4px 20px rgba(26,82,179,.4); display: none;
       animation: pulse 2.5s ease-in-out infinite;
     }
     @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .7; } }
@@ -119,14 +119,14 @@
       width: 100%; padding: 13px 16px; border: 1.5px solid #e0e0e0; border-radius: 10px;
       font-size: 15px; font-family: inherit; outline: none; margin-bottom: 12px; transition: border .2s;
     }
-    .li:focus { border-color: #C8102E; }
+    .li:focus { border-color: #1A52B3; }
     .lb {
-      width: 100%; padding: 13px; background: #C8102E; color: #fff;
+      width: 100%; padding: 13px; background: #1A52B3; color: #fff;
       border: none; border-radius: 10px; font-size: 15px; font-weight: 600;
       font-family: inherit; cursor: pointer; transition: background .2s;
     }
-    .lb:hover { background: #a50d25; }
-    .le { color: #C8102E; font-size: 13px; margin-top: 10px; min-height: 18px; }
+    .lb:hover { background: #1340a0; }
+    .le { color: #1A52B3; font-size: 13px; margin-top: 10px; min-height: 18px; }
   </style>
 </head>
 <body>
@@ -147,7 +147,7 @@
     <input type="password" id="tok" class="li" placeholder="GitHub Token (только первый раз)" style="display:none">
     <button class="lb" onclick="doLogin()">Войти</button>
     <button class="lb" id="reset-btn" onclick="doReset()"
-      style="display:none;background:#fff;color:#C8102E;border:1.5px solid #C8102E;margin-top:8px">
+      style="display:none;background:#fff;color:#1A52B3;border:1.5px solid #1A52B3;margin-top:8px">
       Сбросить токен
     </button>
     <div class="le" id="lerr"></div>
@@ -167,7 +167,7 @@
     <option value="opt.html">Опт / Розница</option>
     <option value="novinki.html">Новинки</option>
   </select>
-  <a id="btn-products" href="./products.html" style="display:none;padding:8px 14px;border-radius:8px;background:#C8102E;color:#fff;font-size:13px;font-weight:700;text-decoration:none;font-family:inherit;white-space:nowrap;align-items:center;gap:5px;">
+  <a id="btn-products" href="./products.html" style="display:none;padding:8px 14px;border-radius:8px;background:#1A52B3;color:#fff;font-size:13px;font-weight:700;text-decoration:none;font-family:inherit;white-space:nowrap;align-items:center;gap:5px;">
     + Добавить товары
   </a>
   <div class="ed-sep"></div>
