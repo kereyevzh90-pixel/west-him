@@ -99,6 +99,26 @@
     }
     @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .7; } }
 
+    /* ─── CARD CONTROLS ─── */
+    .ed-card-del {
+      display: none; position: absolute; top: 10px; right: 10px;
+      width: 28px; height: 28px; border-radius: 50%;
+      background: rgba(255,255,255,0.95); border: 1.5px solid #ddd;
+      color: #aaa; font-size: 20px; line-height: 1;
+      align-items: center; justify-content: center;
+      cursor: pointer; z-index: 10; transition: all .15s; padding: 0; font-family: inherit;
+    }
+    .ed-mode .ed-card-del { display: flex; }
+    .ed-card-del:hover { background: #ef4444; color: #fff; border-color: #ef4444; }
+    .ed-card-add-btn {
+      display: none; width: 100%; margin-top: 12px; padding: 16px;
+      border: 2px dashed rgba(26,82,179,0.3); border-radius: 12px;
+      background: rgba(26,82,179,0.04); color: #1A52B3;
+      font-size: 14px; font-weight: 700; font-family: inherit; cursor: pointer; transition: all .2s;
+    }
+    .ed-mode .ed-card-add-btn { display: block; }
+    .ed-card-add-btn:hover { background: rgba(26,82,179,0.1); border-color: #1A52B3; }
+
     /* ─── LOGIN ─── */
     #login-screen {
       position: fixed; inset: 0; background: #f5f5f5;
@@ -199,10 +219,10 @@ const OWNER = 'kereyevzh90-pixel', REPO = 'west-him', BRANCH = 'master';
 
 let curPage = 'index.html';
 let srcHtml = '', srcSha = '';
-let editMode = false, dirty = false;
+let editMode = false, dirty = false, structuralChange = false;
 
 // Tags to never make editable
-const SKIP_TAGS = new Set(['script','style','noscript','meta','link','title','svg','path','img','input','select','textarea','br','hr','head','html']);
+const SKIP_TAGS = new Set(['script','style','noscript','meta','link','title','svg','path','img','input','select','textarea','br','hr','head','html','button']);
 
 function isEditable(el) {
   if (SKIP_TAGS.has(el.tagName.toLowerCase())) return false;
@@ -264,7 +284,7 @@ async function loadPage(file) {
   const btnP = document.getElementById('btn-products');
   btnP.style.display = file === 'katalog.html' ? 'inline-flex' : 'none';
   if (editMode) exitEditMode();
-  dirty = false;
+  dirty = false; structuralChange = false;
   document.getElementById('btn-save').disabled = true;
   document.getElementById('page-frame').innerHTML = '';
   showLoad(true, 'Загружаем ' + file + '…');
@@ -410,11 +430,15 @@ function enterEditMode() {
     });
     el._edPath = path;
   });
+
+  // Card management
+  addCardControls(frame);
 }
 
 function exitEditMode() {
   editMode = false;
   const frame = document.getElementById('page-frame');
+  removeCardControls(frame);
   frame.classList.remove('ed-mode');
   document.getElementById('btn-edit').classList.remove('on');
   document.getElementById('btn-edit').textContent = '✏️ Редактировать';
@@ -498,6 +522,62 @@ async function uploadImgFile(githubPath, file, imgEl, bgEl) {
   }
 }
 
+// ─── CARD MANAGEMENT ───
+
+function addCardControls(frame) {
+  const grid = frame.querySelector('.features');
+  if (!grid) return;
+  grid.querySelectorAll('.feat-card').forEach(card => addDeleteBtn(card));
+  const addBtn = document.createElement('button');
+  addBtn.className = 'ed-card-add-btn';
+  addBtn.textContent = '+ Добавить карточку';
+  addBtn.onclick = () => addNewCard(grid);
+  grid.insertAdjacentElement('afterend', addBtn);
+}
+
+function removeCardControls(frame) {
+  frame.querySelectorAll('.ed-card-del').forEach(el => el.remove());
+  frame.querySelectorAll('.ed-card-add-btn').forEach(el => el.remove());
+  frame.querySelectorAll('.feat-card').forEach(card => {
+    if (card.style.position === 'relative') { card.style.position = ''; if (!card.getAttribute('style')) card.removeAttribute('style'); }
+  });
+}
+
+function addDeleteBtn(card) {
+  card.style.position = 'relative';
+  const btn = document.createElement('button');
+  btn.className = 'ed-card-del';
+  btn.innerHTML = '&times;';
+  btn.title = 'Удалить карточку';
+  btn.onclick = e => { e.stopPropagation(); if (confirm('Удалить карточку?')) { card.remove(); structuralChange = true; markDirty(); } };
+  card.appendChild(btn);
+}
+
+function addNewCard(grid) {
+  const card = document.createElement('div');
+  card.className = 'feat-card';
+  card.style.position = 'relative';
+  card.innerHTML = `
+    <div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg></div>
+    <div class="feat-title">Новая карточка</div>
+    <div class="feat-text">Описание карточки</div>`;
+  addDeleteBtn(card);
+  // Make text editable
+  let maxIdx = 0;
+  document.querySelectorAll('[data-ed-idx]').forEach(el => { const v = parseInt(el.getAttribute('data-ed-idx')); if (v > maxIdx) maxIdx = v; });
+  card.querySelectorAll('.feat-title, .feat-text').forEach((el, i) => {
+    el.setAttribute('data-ed', '1');
+    el.setAttribute('data-ed-idx', 'new_' + (maxIdx + i + 1));
+    el.contentEditable = 'true';
+    el.addEventListener('input', markDirty);
+  });
+  grid.appendChild(card);
+  structuralChange = true;
+  markDirty();
+  const title = card.querySelector('.feat-title');
+  if (title) { title.focus(); const r = document.createRange(); r.selectNodeContents(title); const s = window.getSelection(); s.removeAllRanges(); s.addRange(r); }
+}
+
 // ─── SAVE HTML ───
 
 async function saveHtml() {
@@ -508,25 +588,8 @@ async function saveHtml() {
   document.getElementById('btn-save').disabled = true;
 
   try {
-    const parser = new DOMParser();
-    const saveDoc = parser.parseFromString(srcHtml, 'text/html');
     const frame = document.getElementById('page-frame');
-
-    // Build map of edited elements by idx
-    const edited = {};
-    frame.querySelectorAll('[data-ed-idx]').forEach(el => {
-      edited[el.getAttribute('data-ed-idx')] = el.innerHTML;
-    });
-
-    // Walk saveDoc in same order (skipping script/style etc.), apply changes by position
-    let idx = 0;
-    saveDoc.body.querySelectorAll('*').forEach(el => {
-      if (!isEditable(el)) return;
-      if (edited[idx] !== undefined) el.innerHTML = edited[idx];
-      idx++;
-    });
-
-    const newHtml = '<!DOCTYPE html>\n' + saveDoc.documentElement.outerHTML;
+    const newHtml = structuralChange ? buildHtmlFromDom(frame) : buildHtmlFromIdx(frame);
     const content = b64encode(newHtml);
     const headers = { Authorization: 'token ' + token, Accept: 'application/vnd.github+json', 'Content-Type': 'application/json' };
     const putRes = await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/contents/out/${curPage}`, {
@@ -540,12 +603,48 @@ async function saveHtml() {
     const result = await putRes.json();
     srcSha = result.content.sha;
     srcHtml = newHtml;
-    dirty = false;
+    dirty = false; structuralChange = false;
     setStatus('✓ Сохранено! Сайт обновится через ~1 мин.', 'ok');
   } catch(e) {
     setStatus('Ошибка: ' + e.message, 'err');
     document.getElementById('btn-save').disabled = false;
   }
+}
+
+function buildHtmlFromIdx(frame) {
+  const parser = new DOMParser();
+  const saveDoc = parser.parseFromString(srcHtml, 'text/html');
+  const edited = {};
+  frame.querySelectorAll('[data-ed-idx]').forEach(el => { edited[el.getAttribute('data-ed-idx')] = el.innerHTML; });
+  let idx = 0;
+  saveDoc.body.querySelectorAll('*').forEach(el => {
+    if (!isEditable(el)) return;
+    if (edited[idx] !== undefined) el.innerHTML = edited[idx];
+    idx++;
+  });
+  return '<!DOCTYPE html>\n' + saveDoc.documentElement.outerHTML;
+}
+
+function buildHtmlFromDom(frame) {
+  const parser = new DOMParser();
+  const saveDoc = parser.parseFromString(srcHtml, 'text/html');
+  // Collect scripts from srcHtml (removed during render)
+  const scripts = Array.from(saveDoc.body.querySelectorAll('script')).map(s => s.outerHTML);
+  // Clone and clean the live DOM
+  const clone = frame.cloneNode(true);
+  clone.querySelectorAll('.ed-card-del, .ed-card-add-btn').forEach(el => el.remove());
+  clone.querySelectorAll('[contenteditable]').forEach(el => { el.removeAttribute('contenteditable'); el.removeAttribute('data-ed'); el.removeAttribute('data-ed-idx'); });
+  clone.querySelectorAll('.ed-has-img').forEach(el => el.classList.remove('ed-has-img'));
+  clone.querySelectorAll('img').forEach(img => { const s = img.getAttribute('src') || ''; if (s.startsWith('../')) img.setAttribute('src', s.slice(3)); });
+  clone.querySelectorAll('[style]').forEach(el => { const s = el.getAttribute('style') || ''; el.setAttribute('style', s.replace(/url\('\.\.\/images\//g, "url('images/").replace(/url\("\.\.\/images\//g, 'url("images/')); if (!el.getAttribute('style')) el.removeAttribute('style'); });
+  clone.querySelectorAll('[data-orig-href]').forEach(a => { a.setAttribute('href', a.getAttribute('data-orig-href')); a.removeAttribute('data-orig-href'); a.removeAttribute('target'); });
+  clone.querySelectorAll('[data-ed-href]').forEach(a => { a.setAttribute('href', a.getAttribute('data-ed-href')); a.removeAttribute('data-ed-href'); });
+  clone.querySelectorAll('.header').forEach(h => { h.style.top = ''; if (!h.getAttribute('style')) h.removeAttribute('style'); });
+  clone.querySelectorAll('.feat-card').forEach(c => { if (c.style.position === 'relative') { c.style.position = ''; if (!c.getAttribute('style')) c.removeAttribute('style'); } });
+  // Replace body content, re-append scripts
+  saveDoc.body.innerHTML = clone.innerHTML;
+  scripts.forEach(s => { saveDoc.body.insertAdjacentHTML('beforeend', s); });
+  return '<!DOCTYPE html>\n' + saveDoc.documentElement.outerHTML;
 }
 
 // ─── HELPERS ───
