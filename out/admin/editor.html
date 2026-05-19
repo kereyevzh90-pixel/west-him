@@ -190,6 +190,7 @@
     + Добавить товары
   </a>
   <div class="ed-sep"></div>
+  <button class="ed-btn" id="btn-price" onclick="openPriceModal()" style="display:none;background:#1e1e1e;color:#fbbf24;border:1px solid #2e2e2e;">📄 Прайс</button>
   <button class="ed-btn" id="btn-edit" onclick="toggleEdit()">✏️ Редактировать</button>
   <button class="ed-btn" id="btn-save" disabled onclick="saveHtml()">💾 Сохранить</button>
   <span id="ed-status" class="ed-status"></span>
@@ -210,6 +211,27 @@
 
 <!-- Edit mode badge -->
 <div id="ed-badge">✏️ Режим редактирования — кликай на любой текст</div>
+
+<!-- Price Modal -->
+<div id="price-modal" style="display:none;position:fixed;inset:0;z-index:99998;background:rgba(0,0,0,.6);align-items:center;justify-content:center;">
+  <div style="background:#fff;border-radius:20px;padding:32px;width:100%;max-width:440px;font-family:'Inter',sans-serif;margin:16px;">
+    <div style="font-size:18px;font-weight:800;margin-bottom:4px;" id="pm-title">Прайс-лист</div>
+    <div style="font-size:13px;color:#888;margin-bottom:18px;" id="pm-sub"></div>
+    <div id="pm-cur" style="display:none;align-items:center;gap:8px;padding:9px 12px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;margin-bottom:14px;font-size:13px;font-weight:600;color:#166534;">✓ Файл уже загружен на сайт</div>
+    <div id="pm-dz" style="border:2px dashed #ddd;border-radius:12px;padding:28px 16px;text-align:center;cursor:pointer;position:relative;background:#fafafa;margin-bottom:14px;transition:all .2s;">
+      <input type="file" id="pm-file" accept=".pdf,application/pdf" style="position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;">
+      <div style="font-size:28px;margin-bottom:8px;">📄</div>
+      <div style="font-size:14px;font-weight:600;color:#555;" id="pm-fname">Нажмите или перетащите PDF</div>
+      <div style="font-size:11px;color:#bbb;">Только файлы .pdf</div>
+    </div>
+    <div style="display:flex;gap:8px;">
+      <button onclick="doPriceUpload()" id="pm-upload-btn" disabled style="flex:1;padding:11px;background:#1A52B3;color:#fff;border:none;border-radius:9px;font-size:14px;font-weight:700;font-family:inherit;cursor:pointer;transition:background .2s;">⬆ Загрузить</button>
+      <button onclick="doPriceDelete()" style="padding:11px 16px;background:#fff;color:#999;border:1.5px solid #e0e0e0;border-radius:9px;font-size:14px;font-weight:600;font-family:inherit;cursor:pointer;transition:all .2s;">Удалить</button>
+      <button onclick="closePriceModal()" style="padding:11px 16px;background:#fff;color:#666;border:1.5px solid #e0e0e0;border-radius:9px;font-size:14px;font-weight:700;font-family:inherit;cursor:pointer;">✕</button>
+    </div>
+    <div id="pm-status" style="font-size:13px;margin-top:10px;min-height:18px;"></div>
+  </div>
+</div>
 
 <!-- Hidden file inputs -->
 <input type="file" id="img-picker" accept="image/*" style="display:none">
@@ -283,6 +305,7 @@ async function loadPage(file) {
   document.getElementById('site-link').href = '../' + file;
   const btnP = document.getElementById('btn-products');
   btnP.style.display = file === 'katalog.html' ? 'inline-flex' : 'none';
+  updatePriceBtn(file);
   if (editMode) exitEditMode();
   dirty = false; structuralChange = false;
   document.getElementById('btn-save').disabled = true;
@@ -696,6 +719,95 @@ function toBase64(file) {
 }
 
 window.addEventListener('beforeunload', e => { if (dirty) { e.preventDefault(); e.returnValue = ''; } });
+
+// ─── PRICE MANAGEMENT ───
+
+const PAGE_PRICES = {
+  'katalog.html':        { label: 'Каталог',        file: 'price.pdf',              path: 'out/price.pdf',              url: '../price.pdf' },
+  'bytovaya-himiya.html':{ label: 'Бытовая химия',  file: 'price.pdf',              path: 'out/price.pdf',              url: '../price.pdf' },
+  'avtohimiya.html':     { label: 'Автохимия',       file: 'price.pdf',              path: 'out/price.pdf',              url: '../price.pdf' },
+  'opt.html':            { label: 'Опт и розница',   file: 'price-opt.pdf',          path: 'out/price-opt.pdf',          url: '../price-opt.pdf' },
+  'proizvodstvo.html':   { label: 'Производство',    file: 'price-proizvodstvo.pdf', path: 'out/price-proizvodstvo.pdf', url: '../price-proizvodstvo.pdf' },
+};
+
+let priceFile = null;
+
+function updatePriceBtn(page) {
+  const btn = document.getElementById('btn-price');
+  btn.style.display = PAGE_PRICES[page] ? 'inline-flex' : 'none';
+}
+
+function openPriceModal() {
+  const cfg = PAGE_PRICES[curPage]; if (!cfg) return;
+  document.getElementById('pm-title').textContent = 'Прайс: ' + cfg.label;
+  document.getElementById('pm-sub').textContent = 'PDF файл: ' + cfg.file;
+  priceFile = null;
+  document.getElementById('pm-fname').textContent = 'Нажмите или перетащите PDF';
+  document.getElementById('pm-upload-btn').disabled = true;
+  document.getElementById('pm-status').textContent = '';
+  document.getElementById('pm-cur').style.display = 'none';
+  document.getElementById('price-modal').style.display = 'flex';
+  fetch(cfg.url, { method: 'HEAD' }).then(r => { document.getElementById('pm-cur').style.display = r.ok ? 'flex' : 'none'; }).catch(() => {});
+}
+
+function closePriceModal() { document.getElementById('price-modal').style.display = 'none'; }
+
+document.getElementById('pm-file').addEventListener('change', function() {
+  const f = this.files[0];
+  if (f) { priceFile = f; document.getElementById('pm-fname').textContent = '📄 ' + f.name; document.getElementById('pm-upload-btn').disabled = false; }
+});
+
+document.getElementById('pm-dz').addEventListener('dragover', e => { e.preventDefault(); document.getElementById('pm-dz').style.borderColor = '#1A52B3'; });
+document.getElementById('pm-dz').addEventListener('dragleave', () => { document.getElementById('pm-dz').style.borderColor = '#ddd'; });
+document.getElementById('pm-dz').addEventListener('drop', e => {
+  e.preventDefault(); document.getElementById('pm-dz').style.borderColor = '#ddd';
+  const f = e.dataTransfer.files[0];
+  if (f && f.type === 'application/pdf') { priceFile = f; document.getElementById('pm-fname').textContent = '📄 ' + f.name; document.getElementById('pm-upload-btn').disabled = false; }
+  else setPmStatus('Только PDF файлы', 'err');
+});
+
+async function doPriceUpload() {
+  const cfg = PAGE_PRICES[curPage]; if (!priceFile || !cfg) return;
+  const token = localStorage.getItem('ghToken'); if (!token) return;
+  const btn = document.getElementById('pm-upload-btn'); btn.disabled = true;
+  setPmStatus('Загружаем…', 'loading');
+  try {
+    const content = await toBase64(priceFile);
+    const headers = { Authorization: 'token ' + token, Accept: 'application/vnd.github+json', 'Content-Type': 'application/json' };
+    const api = `https://api.github.com/repos/${OWNER}/${REPO}/contents`;
+    let sha = null;
+    const get = await fetch(`${api}/${cfg.path}?ref=${BRANCH}`, { headers });
+    if (get.ok) sha = (await get.json()).sha;
+    const put = await fetch(`${api}/${cfg.path}`, { method: 'PUT', headers, body: JSON.stringify({ message: 'Редактор: прайс ' + cfg.file, content, branch: BRANCH, ...(sha ? { sha } : {}) }) });
+    if (!put.ok) throw new Error('HTTP ' + put.status);
+    setPmStatus('✓ Загружен! Появится на сайте через ~1 мин.', 'ok');
+    document.getElementById('pm-cur').style.display = 'flex';
+    priceFile = null; document.getElementById('pm-fname').textContent = 'Нажмите или перетащите PDF';
+  } catch(e) { setPmStatus('Ошибка: ' + e.message, 'err'); btn.disabled = false; }
+}
+
+async function doPriceDelete() {
+  const cfg = PAGE_PRICES[curPage]; if (!cfg || !confirm('Удалить прайс «' + cfg.file + '»?')) return;
+  const token = localStorage.getItem('ghToken'); if (!token) return;
+  setPmStatus('Удаляем…', 'loading');
+  try {
+    const headers = { Authorization: 'token ' + token, Accept: 'application/vnd.github+json', 'Content-Type': 'application/json' };
+    const api = `https://api.github.com/repos/${OWNER}/${REPO}/contents`;
+    const get = await fetch(`${api}/${cfg.path}?ref=${BRANCH}`, { headers });
+    if (!get.ok) { setPmStatus('Файл не найден на сайте', 'err'); return; }
+    const { sha } = await get.json();
+    const del = await fetch(`${api}/${cfg.path}`, { method: 'DELETE', headers, body: JSON.stringify({ message: 'Редактор: удалён прайс ' + cfg.file, sha, branch: BRANCH }) });
+    if (!del.ok) throw new Error('HTTP ' + del.status);
+    setPmStatus('✓ Удалён.', 'ok');
+    document.getElementById('pm-cur').style.display = 'none';
+  } catch(e) { setPmStatus('Ошибка: ' + e.message, 'err'); }
+}
+
+function setPmStatus(text, type) {
+  const el = document.getElementById('pm-status');
+  el.textContent = text;
+  el.style.color = type === 'ok' ? '#166534' : type === 'err' ? '#e53935' : '#888';
+}
 </script>
 </body>
 </html>

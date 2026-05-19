@@ -17,7 +17,7 @@
     }
     .login-logo { display: flex; align-items: center; gap: 10px; justify-content: center; margin-bottom: 32px; }
     .login-logo img { height: 44px; width: auto; object-fit: contain; }
-    .login-logo span { font-size: 20px; font-weight: 800; letter-spacing: .5px; }
+    .login-logo .name { font-size: 20px; font-weight: 800; letter-spacing: .5px; }
     .login-logo .sub { font-size: 11px; color: #777; font-weight: 400; display: block; text-align: left; }
     .login-title { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
     .login-sub { font-size: 14px; color: #777; margin-bottom: 28px; }
@@ -48,99 +48,50 @@
       padding: 2px 8px; border-radius: 20px; letter-spacing: .5px; text-transform: uppercase;
     }
     .h-spacer { flex: 1; }
-    .h-link {
-      padding: 8px 18px; border: 1.5px solid #e0e0e0; background: #fff; border-radius: 8px;
-      font-size: 13px; font-weight: 600; text-decoration: none; color: #111; transition: all .2s;
-    }
-    .h-link:hover { border-color: #1A52B3; color: #1A52B3; }
     .logout-btn {
       padding: 8px 18px; border: 1.5px solid #e0e0e0; background: #fff; border-radius: 8px;
       font-size: 13px; font-weight: 500; cursor: pointer; font-family: inherit; transition: all .2s;
     }
     .logout-btn:hover { border-color: #1A52B3; color: #1A52B3; }
 
-    .admin-body { max-width: 960px; margin: 0 auto; padding: 40px 24px 80px; }
-    .admin-section-title { font-size: 22px; font-weight: 800; margin-bottom: 6px; }
-    .admin-section-sub { font-size: 14px; color: #888; margin-bottom: 28px; }
+    /* ── HERO ── */
+    .admin-hero {
+      background: linear-gradient(135deg, #1A52B3 0%, #1340a0 100%);
+      padding: 64px 48px 72px;
+      text-align: center; color: #fff;
+    }
+    .hero-badge {
+      display: inline-block; background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.25);
+      border-radius: 100px; padding: 4px 14px; font-size: 12px; font-weight: 600;
+      letter-spacing: .08em; text-transform: uppercase; margin-bottom: 20px;
+    }
+    .hero-title { font-size: clamp(28px, 4vw, 44px); font-weight: 900; line-height: 1.1; margin-bottom: 14px; }
+    .hero-sub { font-size: 15px; color: rgba(255,255,255,.75); max-width: 480px; margin: 0 auto; line-height: 1.6; }
 
-    /* ── PRICE GRID ── */
-    .price-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-
-    .price-card {
+    /* ── CARDS ── */
+    .admin-body { max-width: 900px; margin: -36px auto 0; padding: 0 24px 80px; position: relative; z-index: 1; }
+    .action-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .action-card {
       background: #fff; border-radius: 18px; border: 1.5px solid #ebebeb;
-      overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,.04);
-      display: flex; flex-direction: column;
+      padding: 28px 24px; text-decoration: none; color: inherit;
+      display: flex; flex-direction: column; gap: 12px;
+      box-shadow: 0 2px 12px rgba(0,0,0,.06);
+      transition: box-shadow .2s, transform .2s, border-color .2s;
     }
-    .price-card-head {
-      padding: 22px 24px 18px; border-bottom: 1px solid #f0f0f0;
-    }
-    .price-card-icon {
-      width: 42px; height: 42px; border-radius: 12px;
+    .action-card:hover { box-shadow: 0 8px 32px rgba(0,0,0,.12); transform: translateY(-3px); border-color: #1A52B3; }
+    .action-icon {
+      width: 52px; height: 52px; border-radius: 14px;
       background: rgba(26,82,179,.08); border: 1.5px solid rgba(26,82,179,.18);
-      display: flex; align-items: center; justify-content: center;
-      color: #1A52B3; margin-bottom: 14px; font-size: 20px;
+      display: flex; align-items: center; justify-content: center; font-size: 24px;
     }
-    .price-card-title { font-size: 16px; font-weight: 800; margin-bottom: 4px; }
-    .price-card-pages { font-size: 12px; color: #999; line-height: 1.5; }
-    .price-card-pages span {
-      display: inline-block; background: #f0f4fc; color: #1A52B3;
-      border-radius: 5px; padding: 1px 7px; font-size: 11px; font-weight: 600; margin: 2px 2px 0 0;
-    }
-
-    .price-card-body { padding: 18px 24px 20px; flex: 1; display: flex; flex-direction: column; }
-
-    /* Текущий файл */
-    .current-file {
-      display: flex; align-items: center; gap: 8px;
-      padding: 9px 12px; background: #f0fdf4; border-radius: 8px;
-      margin-bottom: 12px; border: 1px solid #bbf7d0; display: none;
-    }
-    .current-file svg { color: #166534; flex-shrink: 0; }
-    .current-file-name { font-size: 12px; font-weight: 600; color: #166534; }
-
-    /* Drop zone */
-    .drop-zone {
-      border: 2px dashed #ddd; border-radius: 12px;
-      padding: 20px 12px; text-align: center; cursor: pointer;
-      transition: all .2s; position: relative; background: #fafafa; flex: 1;
-    }
-    .drop-zone:hover, .drop-zone.drag-over { border-color: #1A52B3; background: rgba(26,82,179,.03); }
-    .drop-zone input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
-    .drop-icon { font-size: 28px; margin-bottom: 6px; }
-    .drop-text { font-size: 13px; font-weight: 600; color: #555; margin-bottom: 2px; }
-    .drop-hint { font-size: 11px; color: #bbb; }
-    .drop-zone.has-file .drop-text { color: #1A52B3; }
-
-    /* Кнопки */
-    .btn-row { display: flex; gap: 8px; margin-top: 12px; }
-    .btn-upload {
-      flex: 1; padding: 10px 14px; background: #1A52B3; color: #fff; border: none;
-      border-radius: 9px; font-size: 13px; font-weight: 700; font-family: inherit;
-      cursor: pointer; transition: background .2s; display: flex; align-items: center;
-      justify-content: center; gap: 6px;
-    }
-    .btn-upload:hover { background: #1340a0; }
-    .btn-upload:disabled { background: #ddd; color: #aaa; cursor: default; }
-    .btn-delete {
-      padding: 10px 14px; background: #fff; color: #999;
-      border: 1.5px solid #e0e0e0; border-radius: 9px;
-      font-size: 13px; font-weight: 600; font-family: inherit;
-      cursor: pointer; transition: all .2s; white-space: nowrap;
-    }
-    .btn-delete:hover { border-color: #e53935; color: #e53935; }
-
-    /* Статус */
-    .status { font-size: 12px; min-height: 16px; margin-top: 8px; }
-    .status.ok { color: #166534; font-weight: 500; }
-    .status.err { color: #e53935; }
-    .status.loading { color: #888; }
-    .progress-bar-wrap { width: 100%; height: 4px; background: #f0f0f0; border-radius: 4px; margin-top: 6px; display: none; }
-    .progress-bar { height: 100%; background: #1A52B3; border-radius: 4px; width: 0%; transition: width .3s; }
+    .action-title { font-size: 17px; font-weight: 800; color: #111; }
+    .action-desc { font-size: 13px; color: #888; line-height: 1.5; flex: 1; }
+    .action-arrow { font-size: 13px; font-weight: 700; color: #1A52B3; margin-top: 4px; }
 
     @media (max-width: 768px) {
-      .price-grid { grid-template-columns: 1fr; }
-      .admin-header { padding: 0 16px; }
-      .admin-body { padding: 24px 16px 60px; }
+      .action-grid { grid-template-columns: 1fr; }
+      .admin-hero { padding: 40px 20px 56px; }
+      .admin-body { padding: 0 16px 60px; }
     }
   </style>
 </head>
@@ -151,13 +102,13 @@
   <div class="login-card">
     <div class="login-logo">
       <img src="../images/IMG_0921.PNG" alt="West Him">
-      <div><span>WEST HIM</span><span class="sub">Химическое производство</span></div>
+      <div><span class="name">WEST HIM</span><span class="sub">Химическое производство</span></div>
     </div>
     <div class="login-title" id="login-title">Вход в панель</div>
     <div class="login-sub" id="login-sub">Только для администраторов</div>
     <input type="password" id="pwd-input" class="login-input" placeholder="Пароль" autocomplete="current-password">
     <input type="password" id="token-input" class="login-input" placeholder="GitHub Token (только первый раз)" autocomplete="off" style="display:none">
-    <button class="login-btn" id="login-btn" onclick="doLogin()">Войти</button>
+    <button class="login-btn" onclick="doLogin()">Войти</button>
     <button class="login-btn" id="reset-btn" onclick="doReset()" style="display:none;background:#fff;color:#1A52B3;border:1.5px solid #1A52B3;margin-top:8px;cursor:pointer">Сбросить и войти заново</button>
     <div class="login-err" id="login-err"></div>
   </div>
@@ -172,71 +123,50 @@
       <span class="tag">Admin</span>
     </a>
     <div class="h-spacer"></div>
-    <a class="h-link" href="./products.html">🗂 Карточки каталога</a>
-    <a class="h-link" href="./editor.html">✏️ Редактор сайта</a>
     <button class="logout-btn" onclick="doLogout()">Выйти</button>
   </header>
 
-  <div class="admin-body">
-    <div class="admin-section-title">Прайс-листы</div>
-    <div class="admin-section-sub">Загрузи отдельный PDF для каждой страницы сайта. Файл появится на сайте через ~1 минуту.</div>
+  <div class="admin-hero">
+    <div class="hero-badge">Панель управления</div>
+    <div class="hero-title">West Him Admin</div>
+    <div class="hero-sub">Редактируй тексты, загружай прайсы и управляй каталогом — всё в одном месте.</div>
+  </div>
 
-    <div class="price-grid" id="price-grid">
-      <!-- Карточки создаются через JS -->
+  <div class="admin-body">
+    <div class="action-grid">
+      <a class="action-card" href="./editor.html">
+        <div class="action-icon">✏️</div>
+        <div class="action-title">Редактор сайта</div>
+        <div class="action-desc">Редактируй тексты на всех страницах. Загружай прайс-листы PDF прямо из редактора.</div>
+        <div class="action-arrow">Открыть редактор →</div>
+      </a>
+      <a class="action-card" href="./products.html">
+        <div class="action-icon">🗂</div>
+        <div class="action-title">Карточки каталога</div>
+        <div class="action-desc">Добавляй, редактируй и удаляй товары в каталоге. Загружай фото продуктов.</div>
+        <div class="action-arrow">Управлять каталогом →</div>
+      </a>
+      <a class="action-card" href="../index.html" target="_blank">
+        <div class="action-icon">🌐</div>
+        <div class="action-title">Открыть сайт</div>
+        <div class="action-desc">Посмотреть как выглядит сайт для посетителей. Открывается в новой вкладке.</div>
+        <div class="action-arrow">На сайт →</div>
+      </a>
     </div>
   </div>
 </div>
 
 <script>
-const OWNER = 'kereyevzh90-pixel', REPO = 'west-him', BRANCH = 'master';
-
-const PRICES = [
-  {
-    id: 'katalog',
-    emoji: '🛒',
-    label: 'Каталог',
-    pages: ['katalog.html', 'bytovaya-himiya.html', 'avtohimiya.html'],
-    file: 'price.pdf',
-    path: 'out/price.pdf',
-    url: '/price.pdf',
-  },
-  {
-    id: 'opt',
-    emoji: '🤝',
-    label: 'Опт и розница',
-    pages: ['opt.html'],
-    file: 'price-opt.pdf',
-    path: 'out/price-opt.pdf',
-    url: '/price-opt.pdf',
-  },
-  {
-    id: 'proizvodstvo',
-    emoji: '🏭',
-    label: 'Производство',
-    pages: ['proizvodstvo.html'],
-    file: 'price-proizvodstvo.pdf',
-    path: 'out/price-proizvodstvo.pdf',
-    url: '/price-proizvodstvo.pdf',
-  },
-];
-
-// State per card: { pendingFile, pending }
-const state = {};
-
-// ── AUTH ──
-
 function initLogin() {
   const hasPwd = !!localStorage.getItem('adminPwd');
-  if (hasPwd) {
-    document.getElementById('login-title').textContent = 'Вход в панель';
-    document.getElementById('login-sub').textContent = 'Введи пароль';
-    document.getElementById('token-input').style.display = 'none';
-    document.getElementById('reset-btn').style.display = 'block';
-  } else {
-    document.getElementById('login-title').textContent = 'Первый вход';
-    document.getElementById('login-sub').textContent = 'Придумай пароль и введи GitHub Token';
-    document.getElementById('token-input').style.display = 'block';
-    document.getElementById('reset-btn').style.display = 'none';
+  document.getElementById('login-title').textContent = hasPwd ? 'Вход в панель' : 'Первый вход';
+  document.getElementById('login-sub').textContent = hasPwd ? 'Введи пароль' : 'Придумай пароль и введи GitHub Token';
+  document.getElementById('token-input').style.display = hasPwd ? 'none' : 'block';
+  document.getElementById('reset-btn').style.display = hasPwd ? 'block' : 'none';
+
+  if (hasPwd && localStorage.getItem('ghToken')) {
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('admin-panel').style.display = 'block';
   }
 }
 
@@ -255,16 +185,12 @@ function doLogin() {
   err.textContent = '';
   document.getElementById('login-screen').style.display = 'none';
   document.getElementById('admin-panel').style.display = 'block';
-  renderGrid();
-  PRICES.forEach(p => checkCurrent(p.id));
 }
 
 function doReset() {
   if (!confirm('Сбросить пароль и токен?')) return;
   localStorage.removeItem('adminPwd'); localStorage.removeItem('ghToken');
-  initLogin(); document.getElementById('pwd-input').value = '';
-  document.getElementById('login-screen').style.display = 'flex';
-  document.getElementById('admin-panel').style.display = 'none';
+  location.reload();
 }
 
 function doLogout() {
@@ -277,200 +203,6 @@ function doLogout() {
 document.getElementById('pwd-input').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
 document.getElementById('token-input').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
 initLogin();
-
-// ── RENDER CARDS ──
-
-function renderGrid() {
-  const grid = document.getElementById('price-grid');
-  grid.innerHTML = PRICES.map(p => `
-    <div class="price-card" id="card-${p.id}">
-      <div class="price-card-head">
-        <div class="price-card-icon">${p.emoji}</div>
-        <div class="price-card-title">${p.label}</div>
-        <div class="price-card-pages">${p.pages.map(pg => `<span>${pg}</span>`).join('')}</div>
-      </div>
-      <div class="price-card-body">
-        <div class="current-file" id="cur-${p.id}">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-          <span class="current-file-name">${p.file} — загружен ✓</span>
-        </div>
-        <div class="drop-zone" id="dz-${p.id}">
-          <input type="file" accept=".pdf,application/pdf" onchange="onFile('${p.id}', this)">
-          <div class="drop-icon">📄</div>
-          <div class="drop-text" id="dt-${p.id}">Нажмите или перетащите PDF</div>
-          <div class="drop-hint">Только файлы .pdf</div>
-        </div>
-        <div class="btn-row">
-          <button class="btn-upload" id="bu-${p.id}" onclick="doUpload('${p.id}')" disabled>
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 15V3m0 12l-4-4m4 4l4-4M2 17l.621 2.485A2 2 0 004.561 21h14.878a2 2 0 001.94-1.515L22 17"/></svg>
-            Загрузить
-          </button>
-          <button class="btn-delete" onclick="doDelete('${p.id}')">Удалить</button>
-        </div>
-        <div class="status" id="st-${p.id}"></div>
-        <div class="progress-bar-wrap" id="pb-${p.id}"><div class="progress-bar" id="pbr-${p.id}"></div></div>
-      </div>
-    </div>
-  `).join('');
-
-  // Drag & drop для каждой зоны
-  PRICES.forEach(p => {
-    state[p.id] = { pendingFile: null };
-    const dz = document.getElementById('dz-' + p.id);
-    dz.addEventListener('dragover', e => { e.preventDefault(); dz.classList.add('drag-over'); });
-    dz.addEventListener('dragleave', () => dz.classList.remove('drag-over'));
-    dz.addEventListener('drop', e => {
-      e.preventDefault(); dz.classList.remove('drag-over');
-      const file = e.dataTransfer.files[0];
-      if (file && file.type === 'application/pdf') setFile(p.id, file);
-      else setStatus(p.id, 'Только PDF файлы', 'err');
-    });
-  });
-}
-
-// ── FILE PICK ──
-
-function onFile(id, input) {
-  const file = input.files[0];
-  if (file) setFile(id, file);
-}
-
-function setFile(id, file) {
-  state[id].pendingFile = file;
-  const name = file.name.length > 28 ? file.name.slice(0, 26) + '…' : file.name;
-  document.getElementById('dt-' + id).textContent = '📄 ' + name;
-  document.getElementById('dz-' + id).classList.add('has-file');
-  document.getElementById('bu-' + id).disabled = false;
-  setStatus(id, '', '');
-}
-
-// ── CHECK CURRENT ──
-
-async function checkCurrent(id) {
-  const p = PRICES.find(x => x.id === id);
-  try {
-    const r = await fetch(p.url, { method: 'HEAD' });
-    document.getElementById('cur-' + id).style.display = r.ok ? 'flex' : 'none';
-  } catch {
-    document.getElementById('cur-' + id).style.display = 'none';
-  }
-}
-
-// ── UPLOAD ──
-
-async function doUpload(id) {
-  const p = PRICES.find(x => x.id === id);
-  const file = state[id].pendingFile;
-  if (!file) return;
-  const token = localStorage.getItem('ghToken');
-  if (!token) { doLogout(); return; }
-
-  const btn = document.getElementById('bu-' + id);
-  btn.disabled = true;
-  setStatus(id, 'Подготавливаем файл…', 'loading');
-  showPb(id, true); animatePb(id, 20);
-
-  const apiBase = `https://api.github.com/repos/${OWNER}/${REPO}/contents`;
-  const headers = { Authorization: `token ${token}`, Accept: 'application/vnd.github+json', 'Content-Type': 'application/json' };
-
-  try {
-    const content = await toBase64(file);
-    animatePb(id, 50);
-    setStatus(id, 'Отправляем…', 'loading');
-
-    let sha = null;
-    const getRes = await fetch(`${apiBase}/${p.path}?ref=${BRANCH}`, { headers });
-    if (getRes.ok) sha = (await getRes.json()).sha;
-
-    animatePb(id, 70);
-
-    const putRes = await fetch(`${apiBase}/${p.path}`, {
-      method: 'PUT', headers,
-      body: JSON.stringify({ message: `Admin: прайс «${p.label}»`, content, branch: BRANCH, ...(sha ? { sha } : {}) }),
-    });
-
-    if (!putRes.ok) {
-      if (putRes.status === 401) { showPb(id, false); setStatus(id, 'Токен недействителен', 'err'); setTimeout(doLogout, 1500); return; }
-      const e = await putRes.json().catch(() => ({}));
-      throw new Error(e.message || `HTTP ${putRes.status}`);
-    }
-
-    animatePb(id, 100);
-    await delay(300);
-    showPb(id, false);
-    setStatus(id, '✓ Готово! Появится на сайте через ~1 мин.', 'ok');
-    document.getElementById('dt-' + id).textContent = 'Нажмите или перетащите PDF';
-    document.getElementById('dz-' + id).classList.remove('has-file');
-    state[id].pendingFile = null;
-    document.getElementById('cur-' + id).style.display = 'flex';
-
-  } catch (err) {
-    showPb(id, false);
-    setStatus(id, 'Ошибка: ' + err.message, 'err');
-    btn.disabled = false;
-  }
-}
-
-// ── DELETE ──
-
-async function doDelete(id) {
-  const p = PRICES.find(x => x.id === id);
-  if (!confirm(`Удалить прайс «${p.label}» с сайта?`)) return;
-  const token = localStorage.getItem('ghToken');
-  if (!token) { doLogout(); return; }
-
-  setStatus(id, 'Удаляем…', 'loading');
-  const apiBase = `https://api.github.com/repos/${OWNER}/${REPO}/contents`;
-  const headers = { Authorization: `token ${token}`, Accept: 'application/vnd.github+json', 'Content-Type': 'application/json' };
-
-  try {
-    const getRes = await fetch(`${apiBase}/${p.path}?ref=${BRANCH}`, { headers });
-    if (!getRes.ok) {
-      if (getRes.status === 404) { setStatus(id, 'Файл уже не существует', 'err'); document.getElementById('cur-' + id).style.display = 'none'; return; }
-      throw new Error(`HTTP ${getRes.status}`);
-    }
-    const { sha } = await getRes.json();
-    const delRes = await fetch(`${apiBase}/${p.path}`, {
-      method: 'DELETE', headers,
-      body: JSON.stringify({ message: `Admin: удалён прайс «${p.label}»`, sha, branch: BRANCH }),
-    });
-    if (!delRes.ok) {
-      if (delRes.status === 401) { setStatus(id, 'Токен недействителен', 'err'); setTimeout(doLogout, 1500); return; }
-      const e = await delRes.json().catch(() => ({}));
-      throw new Error(e.message || `HTTP ${delRes.status}`);
-    }
-    setStatus(id, '✓ Удалён. Кнопка скачать исчезнет через ~1 мин.', 'ok');
-    document.getElementById('cur-' + id).style.display = 'none';
-  } catch (err) {
-    setStatus(id, 'Ошибка: ' + err.message, 'err');
-  }
-}
-
-// ── HELPERS ──
-
-function setStatus(id, text, type) {
-  const el = document.getElementById('st-' + id);
-  el.textContent = text;
-  el.className = 'status' + (type ? ' ' + type : '');
-}
-
-function showPb(id, show) {
-  document.getElementById('pb-' + id).style.display = show ? 'block' : 'none';
-  if (!show) document.getElementById('pbr-' + id).style.width = '0%';
-}
-
-function animatePb(id, pct) { document.getElementById('pbr-' + id).style.width = pct + '%'; }
-
-function delay(ms) { return new Promise(r => setTimeout(r, ms)); }
-
-function toBase64(file) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(reader.result.split(',')[1]);
-    reader.onerror = reject;
-    reader.readAsDataURL(file);
-  });
-}
 </script>
 </body>
 </html>
