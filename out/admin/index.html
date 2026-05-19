@@ -165,8 +165,7 @@ function initLogin() {
   document.getElementById('reset-btn').style.display = hasPwd ? 'block' : 'none';
 
   if (hasPwd && localStorage.getItem('ghToken')) {
-    document.getElementById('login-screen').style.display = 'none';
-    document.getElementById('admin-panel').style.display = 'block';
+    location.replace('./editor.html');
   }
 }
 
@@ -183,8 +182,7 @@ function doLogin() {
     if (pwd !== savedPwd) { err.textContent = 'Неверный пароль'; document.getElementById('pwd-input').value = ''; return; }
   }
   err.textContent = '';
-  document.getElementById('login-screen').style.display = 'none';
-  document.getElementById('admin-panel').style.display = 'block';
+  location.replace('./editor.html');
 }
 
 function doReset() {
