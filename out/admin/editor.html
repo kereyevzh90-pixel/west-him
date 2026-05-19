@@ -239,6 +239,14 @@
 <script>
 const OWNER = 'kereyevzh90-pixel', REPO = 'west-him', BRANCH = 'master';
 
+const PAGE_PRICES = {
+  'katalog.html':        { label: 'Каталог',        file: 'price.pdf',              path: 'out/price.pdf',              url: '../price.pdf' },
+  'bytovaya-himiya.html':{ label: 'Бытовая химия',  file: 'price.pdf',              path: 'out/price.pdf',              url: '../price.pdf' },
+  'avtohimiya.html':     { label: 'Автохимия',       file: 'price.pdf',              path: 'out/price.pdf',              url: '../price.pdf' },
+  'opt.html':            { label: 'Опт и розница',   file: 'price-opt.pdf',          path: 'out/price-opt.pdf',          url: '../price-opt.pdf' },
+  'proizvodstvo.html':   { label: 'Производство',    file: 'price-proizvodstvo.pdf', path: 'out/price-proizvodstvo.pdf', url: '../price-proizvodstvo.pdf' },
+};
+
 let curPage = 'index.html';
 let srcHtml = '', srcSha = '';
 let editMode = false, dirty = false, structuralChange = false;
@@ -721,14 +729,6 @@ function toBase64(file) {
 window.addEventListener('beforeunload', e => { if (dirty) { e.preventDefault(); e.returnValue = ''; } });
 
 // ─── PRICE MANAGEMENT ───
-
-const PAGE_PRICES = {
-  'katalog.html':        { label: 'Каталог',        file: 'price.pdf',              path: 'out/price.pdf',              url: '../price.pdf' },
-  'bytovaya-himiya.html':{ label: 'Бытовая химия',  file: 'price.pdf',              path: 'out/price.pdf',              url: '../price.pdf' },
-  'avtohimiya.html':     { label: 'Автохимия',       file: 'price.pdf',              path: 'out/price.pdf',              url: '../price.pdf' },
-  'opt.html':            { label: 'Опт и розница',   file: 'price-opt.pdf',          path: 'out/price-opt.pdf',          url: '../price-opt.pdf' },
-  'proizvodstvo.html':   { label: 'Производство',    file: 'price-proizvodstvo.pdf', path: 'out/price-proizvodstvo.pdf', url: '../price-proizvodstvo.pdf' },
-};
 
 let priceFile = null;
 
