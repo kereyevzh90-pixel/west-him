@@ -524,22 +524,50 @@ async function uploadImgFile(githubPath, file, imgEl, bgEl) {
 
 // ─── CARD MANAGEMENT ───
 
+const CARD_CONFIGS = [
+  {
+    gridSel: '.features', cardSel: '.feat-card',
+    editSels: ['.feat-title', '.feat-text'],
+    firstSel: '.feat-title',
+    newHtml: `<div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg></div><div class="feat-title">Новая карточка</div><div class="feat-text">Описание карточки</div>`,
+    newClass: 'feat-card'
+  },
+  {
+    gridSel: '.products-grid', cardSel: '.prod-card',
+    editSels: ['.prod-name', '.prod-desc'],
+    firstSel: '.prod-name',
+    newHtml: `<div class="prod-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg></div><div class="prod-name">Название продукта</div><div class="prod-desc">Описание продукта</div><div class="prod-tags"></div>`,
+    newClass: 'prod-card'
+  },
+  {
+    gridSel: '.tiers', cardSel: '.tier-card',
+    editSels: ['.tier-name', '.tier-vol'],
+    firstSel: '.tier-name',
+    newHtml: `<span class="tier-label lbl-retail">Уровень</span><div class="tier-name">Название</div><div class="tier-vol">условия</div><ul class="tier-perks"><li><svg class="check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg>Условие 1</li></ul>`,
+    newClass: 'tier-card'
+  }
+];
+
 function addCardControls(frame) {
-  const grid = frame.querySelector('.features');
-  if (!grid) return;
-  grid.querySelectorAll('.feat-card').forEach(card => addDeleteBtn(card));
-  const addBtn = document.createElement('button');
-  addBtn.className = 'ed-card-add-btn';
-  addBtn.textContent = '+ Добавить карточку';
-  addBtn.onclick = () => addNewCard(grid);
-  grid.insertAdjacentElement('afterend', addBtn);
+  CARD_CONFIGS.forEach(cfg => {
+    const grid = frame.querySelector(cfg.gridSel);
+    if (!grid) return;
+    grid.querySelectorAll(cfg.cardSel).forEach(card => addDeleteBtn(card));
+    const addBtn = document.createElement('button');
+    addBtn.className = 'ed-card-add-btn';
+    addBtn.textContent = '+ Добавить карточку';
+    addBtn.onclick = () => addNewCard(grid, cfg);
+    grid.insertAdjacentElement('afterend', addBtn);
+  });
 }
 
 function removeCardControls(frame) {
   frame.querySelectorAll('.ed-card-del').forEach(el => el.remove());
   frame.querySelectorAll('.ed-card-add-btn').forEach(el => el.remove());
-  frame.querySelectorAll('.feat-card').forEach(card => {
-    if (card.style.position === 'relative') { card.style.position = ''; if (!card.getAttribute('style')) card.removeAttribute('style'); }
+  CARD_CONFIGS.forEach(cfg => {
+    frame.querySelectorAll(cfg.cardSel).forEach(card => {
+      if (card.style.position === 'relative') { card.style.position = ''; if (!card.getAttribute('style')) card.removeAttribute('style'); }
+    });
   });
 }
 
@@ -553,19 +581,17 @@ function addDeleteBtn(card) {
   card.appendChild(btn);
 }
 
-function addNewCard(grid) {
+function addNewCard(grid, cfg) {
   const card = document.createElement('div');
-  card.className = 'feat-card';
+  card.className = cfg.newClass;
   card.style.position = 'relative';
-  card.innerHTML = `
-    <div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg></div>
-    <div class="feat-title">Новая карточка</div>
-    <div class="feat-text">Описание карточки</div>`;
+  card.innerHTML = cfg.newHtml;
   addDeleteBtn(card);
-  // Make text editable
   let maxIdx = 0;
   document.querySelectorAll('[data-ed-idx]').forEach(el => { const v = parseInt(el.getAttribute('data-ed-idx')); if (v > maxIdx) maxIdx = v; });
-  card.querySelectorAll('.feat-title, .feat-text').forEach((el, i) => {
+  cfg.editSels.forEach((sel, i) => {
+    const el = card.querySelector(sel);
+    if (!el) return;
     el.setAttribute('data-ed', '1');
     el.setAttribute('data-ed-idx', 'new_' + (maxIdx + i + 1));
     el.contentEditable = 'true';
@@ -574,7 +600,7 @@ function addNewCard(grid) {
   grid.appendChild(card);
   structuralChange = true;
   markDirty();
-  const title = card.querySelector('.feat-title');
+  const title = card.querySelector(cfg.firstSel);
   if (title) { title.focus(); const r = document.createRange(); r.selectNodeContents(title); const s = window.getSelection(); s.removeAllRanges(); s.addRange(r); }
 }
 
@@ -640,7 +666,7 @@ function buildHtmlFromDom(frame) {
   clone.querySelectorAll('[data-orig-href]').forEach(a => { a.setAttribute('href', a.getAttribute('data-orig-href')); a.removeAttribute('data-orig-href'); a.removeAttribute('target'); });
   clone.querySelectorAll('[data-ed-href]').forEach(a => { a.setAttribute('href', a.getAttribute('data-ed-href')); a.removeAttribute('data-ed-href'); });
   clone.querySelectorAll('.header').forEach(h => { h.style.top = ''; if (!h.getAttribute('style')) h.removeAttribute('style'); });
-  clone.querySelectorAll('.feat-card').forEach(c => { if (c.style.position === 'relative') { c.style.position = ''; if (!c.getAttribute('style')) c.removeAttribute('style'); } });
+  CARD_CONFIGS.forEach(cfg => { clone.querySelectorAll(cfg.cardSel).forEach(c => { if (c.style.position === 'relative') { c.style.position = ''; if (!c.getAttribute('style')) c.removeAttribute('style'); } }); });
   // Replace body content, re-append scripts
   saveDoc.body.innerHTML = clone.innerHTML;
   scripts.forEach(s => { saveDoc.body.insertAdjacentHTML('beforeend', s); });
