@@ -47,6 +47,7 @@ out/
     ├── IMG_0918.PNG                     ← hero главной (фон на весь экран)
     ├── IMG_0851.PNG                     ← hero главной мобиль
     ├── IMG_0942.PNG                     ← hero фото (каталог, бытовая, опт, производство)
+    ├── IMG_0960.PNG                     ← hero фото автохимия
     ├── IMG_0922.PNG                     ← карточка "Производство"
     ├── IMG_0924.PNG                     ← карточка "Опт / Розница"
     ├── IMG_0925.PNG                     ← карточка "Автохимия"
@@ -105,7 +106,7 @@ CSS: `height: 56px; width: auto; object-fit: contain;` — **без** `border-ra
 - Бейдж: `→ Собственное производство в Казахстане` (синий, uppercase)
 - Заголовок (3 строки): "Производство" / "**бытовой химии**" (синий, `.red`) / "в Казахстане" — `white-space: nowrap`
 - Описание: "Казахстанский производитель бытовой химии с собственным заводом в Актау. Производим до 30 тонн продукции ежедневно и поставляем по всему Казахстану и СНГ."
-- Кнопки: "Каталог продукции →" (`.header-cta`) → `katalog.html` + "Стать партнёром" (`.btn-outline`) → WhatsApp
+- Кнопки: "Каталог продукции →" (`.btn-red`) → `katalog.html` + "Стать партнёром" (`.btn-outline`) → WhatsApp
 - На мобиле: `.hero-right` показывает `IMG_0851.PNG` через `<img class="hero-mobile-img">`
 
 ### Карточки категорий (`.cat-grid`)
@@ -221,22 +222,22 @@ CSS: `height: 56px; width: auto; object-fit: contain;` — **без** `border-ra
 
 ### Общая структура
 
-1. Header → **Hero** (серый фон `#f7f7f7`, две колонки: текст + фото) → Контент → Прайс-блок
+1. Header → **Hero** (белый фон `#fff`, две колонки: текст + фото) → Контент → Прайс-блок
 
 ### Hero страниц категорий
 
-Все страницы (кроме avtohimiya.html) имеют двухколоночный hero:
-- `.hero { display: flex; align-items: stretch }` — серый фон `#f7f7f7`
+Все страницы имеют двухколоночный hero:
+- `.hero { display: flex; align-items: stretch }` — белый фон `#fff`
 - `.hero-left { max-width: 560px; flex-shrink: 0; padding: 64px 52px }` — текст
-- `.hero-right { flex: 1; overflow: hidden; min-height: 360px }` — фото `IMG_0942.PNG`, `object-fit: cover`
-- На мобиле (`< 767px`): `.hero-right { display: none }`
+- `.hero-right { flex: 1; overflow: hidden; min-height: 360px }` — фото, `object-fit: cover`
+- На мобиле (`< 767px`): `.hero-right { display: none }`, тексты `.hero-left` по центру (`text-align: center; align-items: center`)
 
 ### Страницы
 
 | Страница | Файл | Прайс PDF | Hero фото |
 |---|---|---|---|
 | Бытовая химия | `bytovaya-himiya.html` | `price.pdf` | `IMG_0942.PNG` |
-| Автохимия | `avtohimiya.html` | `price.pdf` | нет |
+| Автохимия | `avtohimiya.html` | `price.pdf` | `IMG_0960.PNG` |
 | Производство | `proizvodstvo.html` | `price-proizvodstvo.pdf` | `IMG_0942.PNG` |
 | Опт / Розница | `opt.html` | `price-opt.pdf` | `IMG_0942.PNG` |
 
@@ -248,7 +249,7 @@ CSS: `height: 56px; width: auto; object-fit: contain;` — **без** `border-ra
 | `price-opt.pdf` | opt.html | нет (кнопка всегда видна) |
 | `price-proizvodstvo.pdf` | proizvodstvo.html | да (JS fetch HEAD, класс `.btn-dl-prod`) |
 
-В `opt.html` в прайс-блоке только одна кнопка "Скачать прайс-лист" — кнопка WhatsApp убрана.
+В `opt.html`, `bytovaya-himiya.html` и `avtohimiya.html` в прайс-блоке только одна кнопка "Скачать прайс" — кнопка WhatsApp убрана.
 
 Все страницы используют синюю тему `#1A52B3` — тот же шаблон header/footer что и главная.
 
@@ -257,7 +258,13 @@ CSS: `height: 56px; width: auto; object-fit: contain;` — **без** `border-ra
 | Брейкпоинт | Header | Каталог — сайдбар |
 |---|---|---|
 | `≥ 768px` | лого + кнопка (без навигации) | вертикальная колонка 220px |
-| `< 768px` | лого + кнопка | горизонтальная прокрутка |
+| `< 768px` | лого по центру + кнопка (hamburger справа absolute) | горизонтальная прокрутка |
+
+### Мобил — общие правила (`< 767px`)
+- **Главная и все подстраницы:** тексты hero по центру (`text-align: center; align-items: center` на `.hero-left`)
+- **Главная:** логотип по центру — `.header { justify-content: center }`, `.hamburger { position: absolute; right: 16px }`
+- **Статистика главной:** блоки в столбик (`flex-direction: column; align-items: center; text-align: center`)
+- **FAQ главной:** заголовок по центру, вопросы по левому краю
 
 ## Контакты
 
@@ -332,7 +339,7 @@ Base64 с кириллицей:
 2. В `index.html` изменить `url('images/...')` в CSS-правиле `.hero { background: ... }`
 3. `git add . && git commit -m "..." && git push`
 
-### Hero на страницах категорий (bytovaya, opt, proizvodstvo)
+### Hero на страницах категорий (bytovaya, avto, opt, proizvodstvo)
 1. Положить файл в `out/images/`
 2. В нужном HTML изменить `src="images/..."` у `<img>` внутри `.hero-right`
 3. `git add . && git commit -m "..." && git push`
