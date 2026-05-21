@@ -250,13 +250,13 @@
       .shop-layout { padding: 20px 16px 60px; grid-template-columns: 1fr; gap: 0; }
       .sidebar { position: static; margin-bottom: 20px; }
       .cat-list { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; overflow-x: unset; padding-bottom: 0; }
-      .cat-item { white-space: normal; flex-shrink: unset; padding: 8px 6px; font-size: 12px; justify-content: center; text-align: center; }
+      .cat-item { white-space: normal; flex-shrink: unset; padding: 8px 4px; font-size: 11px; justify-content: center; text-align: center; }
       .cat-item-icon { display: none; }
       .cat-item-label { flex: unset; }
-      .cat-count { font-size: 11px; padding: 2px 5px; }
+      .cat-count { display: none; }
       .help-block { display: none; }
-      .prod-grid { display: flex; flex-wrap: nowrap; overflow-x: auto; gap: 12px; padding-bottom: 8px; scroll-snap-type: x mandatory; }
-      .prod-card { flex-shrink: 0; width: 62vw; scroll-snap-align: start; }
+      .prod-grid { display: flex; flex-wrap: nowrap; overflow-x: scroll; -webkit-overflow-scrolling: touch; gap: 12px; padding: 0 16px 8px; margin: 0 -16px; width: calc(100% + 32px); scroll-snap-type: x mandatory; }
+      .prod-card { flex-shrink: 0; width: 65vw; scroll-snap-align: start; }
       .cart-drawer { width: 100vw; }
     }
   </style>
