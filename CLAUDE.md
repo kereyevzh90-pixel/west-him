@@ -43,9 +43,9 @@ out/
 │   ├── products.html                    ← Управление карточками каталога
 │   └── editor.html                      ← Визуальный редактор текста страниц
 └── images/
-    ├── IMG_0921.PNG                     ← логотип (текущий, синий)
-    ├── IMG_0918.PNG                     ← hero главной (фон на весь экран)
-    ├── IMG_0851.PNG                     ← hero главной мобиль
+    ├── IMG_1007.PNG                     ← логотип (текущий, синий — шестиугольник + WEST HIM)
+    ├── IMG_0918.PNG                     ← hero главной десктоп (фото с бутылками, фон справа)
+    ├── IMG_1003.PNG                     ← молекула — hero мобил (главная + каталог)
     ├── IMG_0942.PNG                     ← hero фото (каталог, бытовая, опт, производство)
     ├── IMG_0960.PNG                     ← hero фото автохимия
     ├── IMG_0922.PNG                     ← карточка "Производство"
@@ -68,7 +68,7 @@ out/
   - `#fff0f3` → `#f0f4fc`
 - **Кнопки:**
   - `.btn-red` — синяя заливка `#1A52B3`, белый текст, `box-shadow: rgba(26,82,179,0.3)`
-  - `.btn-outline` — белая с серой обводкой `#ddd`, серый текст ("Стать партнёром")
+  - `.btn-outline` — белая с серой обводкой `#ddd`, серый текст ("Получить предложение" + WhatsApp иконка)
   - `.header-cta` — белая с синей обводкой `#1A52B3` и синим текстом ("Связаться"), при hover заливается синим
   - `.cart-btn` — синяя кнопка "Корзина" в шапке каталога
   - `.prod-card-add` — outline стиль: `background: #fff; border: 1.5px solid #1A52B3; color: #1A52B3`, при hover заливается синим
@@ -76,8 +76,9 @@ out/
 
 ## Логотип
 
-Файл: `out/images/IMG_0921.PNG`
+Файл: `out/images/IMG_1007.PNG`
 CSS: `height: 56px; width: auto; object-fit: contain;` — **без** `border-radius: 50%` (не обрезать кругом)
+Мобил: `height: 72px` на главной и подстраницах; `height: 80px` на каталоге
 Текстовые спаны `.logo-name` и `.logo-sub` скрыты: `display: none`
 
 ## Навигация
@@ -92,7 +93,7 @@ CSS: `height: 56px; width: auto; object-fit: contain;` — **без** `border-ra
 
 ### Структура сверху вниз
 
-1. **Header** — лого `IMG_0921.PNG`, кнопка "Связаться" справа (навигации нет)
+1. **Header** — лого `IMG_1007.PNG`, кнопка "Связаться" справа (навигации нет)
 2. **Hero** — фото `IMG_0918.PNG` на весь фон, белый градиент слева, текст поверх
 3. **Карточки категорий** — 4 карточки `.cat-card`, только фото (текст уже внутри PNG)
 4. **FAQ** — аккордеон, 5 вопросов, белый фон
@@ -100,14 +101,13 @@ CSS: `height: 56px; width: auto; object-fit: contain;` — **без** `border-ra
 
 ### Hero (index.html)
 
-- Фото `IMG_0918.PNG` — фон на **весь** блок hero (`background-size: 80% auto; background-position: right center`)
-- Белый градиент слева через `::before`: `linear-gradient(to right, #fff 38%, rgba(255,255,255,0.85) 52%, rgba(255,255,255,0) 72%)`
-- Текст `.hero-left` (z-index: 2) — без фонового цвета, читается на белом градиенте
+- **Десктоп:** фото `IMG_0918.PNG` фон справа (`background-size: 80% auto; background-position: right center`), белый градиент слева через `::before`
+- **Мобил:** фон `IMG_1003.PNG` (молекула, `right 25% / 68% auto`), градиент отключён, текст **слева**
 - Бейдж: `→ Собственное производство в Казахстане` (синий, uppercase)
-- Заголовок (3 строки): "Производство" / "**бытовой химии**" (синий, `.red`) / "в Казахстане" — `white-space: nowrap`
+- Заголовок (3 строки): "Производство" / "**бытовой химии**" (синий, `.red`) / "в Казахстане"
 - Описание: "Казахстанский производитель бытовой химии с собственным заводом в Актау. Производим до 30 тонн продукции ежедневно и поставляем по всему Казахстану и СНГ."
-- Кнопки: "Каталог продукции →" (`.btn-red`) → `katalog.html` + "Стать партнёром" (`.btn-outline`) → WhatsApp
-- На мобиле: `.hero-right` показывает `IMG_0851.PNG` через `<img class="hero-mobile-img">`
+- Кнопки: "Каталог продукции →" (`.btn-red`, иконка документа) → `katalog.html` + "Получить предложение" (`.btn-outline`, WhatsApp иконка) → WhatsApp
+- **Мобил кнопки:** в ряд (`flex-direction: row`), иконка на `.btn-outline` скрыта (`display: none`)
 
 ### Карточки категорий (`.cat-grid`)
 
@@ -168,10 +168,8 @@ CSS: `height: 56px; width: auto; object-fit: contain;` — **без** `border-ra
 - Кнопки `.cat-item` с иконками `.cat-item-icon`: "Все товары", "Бытовая химия", "Автохимия"
 - У каждой — счётчик `.cat-count` (заполняется из products.json)
 - Активная категория: фон `#f0f4fc`, цвет `#1A52B3`
-- На мобиле: горизонтальная прокрутка вместо колонки, иконки скрыты
-- **Help-блок** `.help-block` — только кнопка "Скачать прайс" (без иконки-заголовка и описания)
-  - Ссылка на `/price.pdf`, outline стиль синего цвета
-  - На мобиле `.help-block { display: none }`
+- **На мобиле:** кнопка "Все товары" скрыта (`display: none`), показываются только "Бытовая химия" и "Автохимия" в 2 колонки (`grid-template-columns: repeat(2, 1fr)`), иконки и счётчики скрыты
+- **Help-блок** `.help-block` — на мобиле скрыт (`display: none`)
 
 ### Карточки товаров
 
@@ -187,6 +185,7 @@ CSS: `height: 56px; width: auto; object-fit: contain;` — **без** `border-ra
 
 `#prod-empty` — виден по умолчанию (`display:block`), скрывается JS когда есть товары.
 Содержит только текст "Карточки пока не добавлены" — без кнопок для посетителей.
+На мобиле: `min-height: 50vh` чтобы страница не сжималась при пустой категории.
 
 ### Корзина
 
@@ -258,13 +257,27 @@ CSS: `height: 56px; width: auto; object-fit: contain;` — **без** `border-ra
 | Брейкпоинт | Header | Каталог — сайдбар |
 |---|---|---|
 | `≥ 768px` | лого + кнопка (без навигации) | вертикальная колонка 220px |
-| `< 768px` | лого по центру + кнопка (hamburger справа absolute) | горизонтальная прокрутка |
+| `< 768px` | лого слева + кнопка справа (space-between) | 2 кнопки категорий в ряд |
 
 ### Мобил — общие правила (`< 767px`)
-- **Главная и все подстраницы:** тексты hero по центру (`text-align: center; align-items: center` на `.hero-left`)
-- **Главная:** логотип по центру — `.header { justify-content: center }`, `.hamburger { position: absolute; right: 16px }`
+- **Лого:** 72px на главной и подстраницах, 80px на каталоге (крупнее кнопки корзины)
+- **Главная:** header `justify-content: space-between`, лого слева, "Связаться" справа с WhatsApp иконкой
+- **Главная hero:** фон `IMG_1003.PNG` (молекула), текст **слева** (`text-align: left; align-items: flex-start`), кнопки в ряд
+- **Подстраницы (bytovaya, avto, opt, proizvodstvo):** тексты hero по центру (`.hero-left { text-align: center; align-items: center }`), `.hero-right { display: none }`
+- **Каталог мобил:** гамбургер убран, `.features-strip` скрыта, hero с молекулой (`IMG_1003.PNG right center / contain`), товары в горизонтальном скролле (`.prod-scroll-wrap`), `body { overflow-x: hidden }` переопределяется через `overflow: hidden` на `.prod-area`
 - **Статистика главной:** блоки в столбик (`flex-direction: column; align-items: center; text-align: center`)
 - **FAQ главной:** заголовок по центру, вопросы по левому краю
+
+### Каталог — горизонтальный скролл товаров (мобил)
+
+Структура:
+```html
+<div class="prod-area">          ← overflow: hidden (создаёт контекст для скролла)
+  <div class="prod-scroll-wrap"> ← overflow-x: scroll; -webkit-overflow-scrolling: touch
+    <div class="prod-grid">      ← display: flex; flex-wrap: nowrap
+      <div class="prod-card">    ← width: 72vw; flex-shrink: 0
+```
+Это обходит `body { overflow-x: hidden }` через промежуточный overflow-контекст на `.prod-area`.
 
 ## Контакты
 
