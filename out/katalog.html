@@ -249,14 +249,15 @@
       .features-strip { display: none; }
       .shop-layout { padding: 20px 16px 60px; grid-template-columns: 1fr; gap: 0; }
       .sidebar { position: static; margin-bottom: 20px; }
+      html, body { overflow-x: visible; }
       .cat-list { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; overflow-x: unset; padding-bottom: 0; }
       .cat-item { white-space: nowrap; flex-shrink: unset; padding: 7px 2px; font-size: 10px; justify-content: center; text-align: center; border-radius: 8px; }
       .cat-item-icon { display: none; }
       .cat-item-label { flex: unset; font-size: 10px; }
       .cat-count { display: none; }
       .help-block { display: none; }
-      .prod-scroll-wrap { overflow-x: scroll; overflow-y: hidden; -webkit-overflow-scrolling: touch; touch-action: pan-x; margin: 0 -16px; padding: 0 16px 12px; width: calc(100% + 32px); display: block; }
-      .prod-grid { display: flex; flex-wrap: nowrap; gap: 12px; width: max-content; min-width: 100%; }
+      .prod-scroll-wrap { overflow-x: scroll; -webkit-overflow-scrolling: touch; margin: 0 -16px; padding: 0 16px 12px; width: calc(100% + 32px); }
+      .prod-grid { display: flex; flex-wrap: nowrap; gap: 12px; }
       .prod-card { flex-shrink: 0; width: 68vw; }
       .cart-drawer { width: 100vw; }
     }
