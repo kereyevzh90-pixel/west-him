@@ -94,23 +94,49 @@
       .hero-left { padding: 40px 28px; }
       .main { padding: 40px 28px 60px; }
     }
+    .opt-stats-strip { display: none; }
+
     @media (max-width: 767px) {
       .logo img { height: 72px; }
       .header { padding: 12px 16px; gap: 12px; }
       .header-nav { display: none; }
-      .header-cta { display: none; }
+      .header-cta { padding: 8px 14px; font-size: 12px; gap: 6px; }
       .hamburger { display: flex; }
-      .hero { display: flex; flex-direction: column; }
-      .hero-left { padding: 28px 16px 24px; max-width: 100%; text-align: center; align-items: center; }
+      .hero {
+        display: flex; flex-direction: column;
+        background: url('images/IMG_1003.PNG') right center / 58% auto no-repeat;
+        background-color: #f0f4fc;
+      }
+      .hero-left { padding: 32px 16px 28px; max-width: 100%; text-align: left; align-items: flex-start; background: transparent; }
       .hero-right { display: none; }
-      .hero-h1 { font-size: clamp(28px, 7vw, 38px); }
-      .hero-desc { max-width: 100%; }
-      .hero-actions { flex-direction: column; align-items: center; }
-      .btn-red, .btn-outline { justify-content: center; }
+      .hero-h1 { font-size: clamp(28px, 8vw, 40px); }
+      .hero-desc { max-width: 75%; }
+      .hero-actions { flex-direction: row; align-items: center; flex-wrap: wrap; gap: 10px; }
+      .btn-red { flex: 1; justify-content: center; min-width: 0; }
+      .btn-outline { flex: 1; justify-content: center; min-width: 0; }
       .main { padding: 32px 16px 60px; }
       .price-block { padding: 24px; flex-direction: column; }
       .price-actions { align-items: stretch; width: 100%; }
       .btn-dl { width: 100%; justify-content: center; }
+
+      .opt-stats-strip {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 4px;
+        padding: 20px 16px;
+        background: #fff;
+        border-bottom: 1px solid #ebebeb;
+        text-align: center;
+      }
+      .opt-stat { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 4px 2px; }
+      .opt-stat-icon {
+        width: 44px; height: 44px;
+        background: rgba(26,82,179,0.08);
+        border-radius: 12px;
+        display: flex; align-items: center; justify-content: center;
+        color: #1A52B3; flex-shrink: 0;
+      }
+      .opt-stat-text { font-size: 10px; color: #444; line-height: 1.4; font-weight: 500; }
     }
   </style>
 </head>
@@ -133,20 +159,42 @@
 <section class="hero">
   <div class="hero-left">
     <div class="hero-badge">→ Прямой договор с производителем</div>
-    <h1 class="hero-h1">Опт &amp;<br/><span class="red">Розница</span></h1>
+    <h1 class="hero-h1"><span class="red">Оптовые</span> и<br/><span class="red">розничные</span> поставки</h1>
     <p class="hero-desc">Выгодные условия для магазинов, торговых сетей, автомоек и дистрибьюторов. Без посредников.</p>
     <div class="hero-actions">
       <a class="btn-red" href="#price">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 15V3m0 12l-4-4m4 4l4-4M2 17l.621 2.485A2 2 0 004.561 21h14.878a2 2 0 001.94-1.515L22 17"/></svg>
         Скачать прайс
       </a>
-      <a class="btn-outline" href="https://wa.me/77057779487?text=Здравствуйте%2C%20хочу%20обсудить%20оптовые%20условия" target="_blank">Обсудить условия</a>
+      <a class="btn-outline" href="https://wa.me/77057779487?text=Здравствуйте%2C%20хочу%20обсудить%20оптовые%20условия" target="_blank">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
+        Получить консультацию
+      </a>
     </div>
   </div>
   <div class="hero-right">
     <img src="images/IMG_0947.PNG" alt="West Him опт и розница">
   </div>
 </section>
+
+<div class="opt-stats-strip">
+  <div class="opt-stat">
+    <div class="opt-stat-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 21h18M6 21V7l6-4 6 4v14M9 21v-4h6v4"/></svg></div>
+    <div class="opt-stat-text">Собственное производство в Казахстане</div>
+  </div>
+  <div class="opt-stat">
+    <div class="opt-stat-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 20V10M12 20V4M6 20v-6"/></svg></div>
+    <div class="opt-stat-text">До 30 тонн продукции в день</div>
+  </div>
+  <div class="opt-stat">
+    <div class="opt-stat-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg></div>
+    <div class="opt-stat-text">Поставки по СНГ</div>
+  </div>
+  <div class="opt-stat">
+    <div class="opt-stat-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></div>
+    <div class="opt-stat-text">Сертификаты качества</div>
+  </div>
+</div>
 
 <main class="main">
 
