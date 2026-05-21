@@ -106,19 +106,35 @@ CSS: `height: 56px; width: auto; object-fit: contain;` — **без** `border-ra
 - Бейдж: `→ Собственное производство в Казахстане` (синий, uppercase)
 - Заголовок (3 строки): "Производство" / "**бытовой химии**" (синий, `.red`) / "в Казахстане"
 - Описание: "Казахстанский производитель бытовой химии с собственным заводом в Актау. Производим до 30 тонн продукции ежедневно и поставляем по всему Казахстану и СНГ."
-- Кнопки: "Каталог продукции →" (`.btn-red`, иконка документа) → `katalog.html` + "Получить предложение" (`.btn-outline`, WhatsApp иконка) → WhatsApp
-- **Мобил кнопки:** в ряд (`flex-direction: row`), иконка на `.btn-outline` скрыта (`display: none`)
+- Кнопки: "Каталог продукции →" (`.btn-red`, иконка документа) → `katalog.html` (**кнопка "Получить предложение" удалена**)
+- **Мобил кнопки:** кнопка одна — "Каталог продукции →", ряд
 
 ### Карточки категорий (`.cat-grid`)
 
-4 карточки — **только PNG-изображения** (иконка, название, описание и стрелка уже нарисованы в самом файле):
+4 карточки с фото-фоном + HTML-текст оверлей снизу:
 - 1-я (Производство) → ссылка `proizvodstvo.html`, фото `IMG_0922.PNG`
 - 2-я (Опт/Розница) → ссылка `opt.html`, фото `IMG_0924.PNG`
-- 3-я (Бытовая химия) → ссылка `bytovaya-himiya.html`, фото `IMG_0925.PNG` (или актуальное)
+- 3-я (Бытовая химия) → ссылка `bytovaya-himiya.html`, фото `IMG_0942.PNG`
 - 4-я (Автохимия) → ссылка `avtohimiya.html`, фото `IMG_0925.PNG`
 
-Структура карточки — только `.cat-photo` (background-image), без `.cat-content` и текста.
-Сетка: ПК — 4 колонки, iPad/мобил — 2×2, `aspect-ratio: 3/4`.
+Структура карточки:
+```html
+<a href="..." class="cat-card">
+  <div class="cat-photo" style="background-image:url('images/...')">
+    <div class="cat-overlay">
+      <div class="cat-icon-wrap"><!-- SVG иконка --></div>
+      <div class="cat-title-text">Название</div>
+      <div class="cat-desc-text">Описание</div>
+      <div class="cat-arrow-icon">→</div>
+    </div>
+  </div>
+</a>
+```
+- `.cat-photo` — `position: relative; aspect-ratio: 3/4`
+- `.cat-overlay` — `position: absolute; bottom: 0;` с белым градиентом снизу
+- `.cat-title-text` и `.cat-desc-text` — редактируемы в admin/editor.html
+- В редакторе: клик по фону → замена фото; клик по тексту → редактирование текста (не конфликтуют)
+Сетка: ПК — 4 колонки, iPad/мобил — 2×2.
 
 ### FAQ (`.faq-section`)
 
@@ -262,8 +278,11 @@ CSS: `height: 56px; width: auto; object-fit: contain;` — **без** `border-ra
 ### Мобил — общие правила (`< 767px`)
 - **Лого:** 72px на главной и подстраницах, 80px на каталоге (крупнее кнопки корзины)
 - **Главная:** header `justify-content: space-between`, лого слева, "Связаться" справа с WhatsApp иконкой
-- **Главная hero:** фон `IMG_1003.PNG` (молекула), текст **слева** (`text-align: left; align-items: flex-start`), кнопки в ряд
-- **Подстраницы (bytovaya, avto, opt, proizvodstvo):** тексты hero по центру (`.hero-left { text-align: center; align-items: center }`), `.hero-right { display: none }`
+- **Главная hero:** фон `IMG_1003.PNG` (молекула), текст **слева**, кнопка одна — "Каталог продукции →"
+- **Подстраницы (bytovaya, avto, opt, proizvodstvo):** hero с молекулой `IMG_1003.PNG` (`center right / 70% auto`), фон `#f0f4fc`, текст **влево** (`text-align: left; align-items: flex-start`), `.hero-right { display: none }`, `.hero-left { background: transparent }`, кнопки в ряд (`flex-direction: row`)
+- **opt.html мобил:** `.opt-stats-strip` — 4 иконки с текстом под hero (на десктопе скрыта); описание hero полное; кнопка "Скачать прайс" одна
+- **proizvodstvo.html мобил:** `.props-strip { display: none }`, описание сокращено (без последнего предложения), кнопки в ряд
+- **bytovaya-himiya.html / avtohimiya.html мобил:** `.props-strip { display: none }`, кнопка "Заказать в WhatsApp" удалена (осталась только "Скачать прайс")
 - **Каталог мобил:** гамбургер убран, `.features-strip` скрыта, hero с молекулой (`IMG_1003.PNG right center / contain`), товары в горизонтальном скролле (`.prod-scroll-wrap`), `body { overflow-x: hidden }` переопределяется через `overflow: hidden` на `.prod-area`
 - **Статистика главной:** блоки в столбик (`flex-direction: column; align-items: center; text-align: center`)
 - **FAQ главной:** заголовок по центру, вопросы по левому краю
@@ -331,6 +350,7 @@ CSS: `height: 56px; width: auto; object-fit: contain;` — **без** `border-ra
 - Кнопка **"📄 Прайс"** — появляется для страниц с PDF-прайсом (katalog, bytovaya, avto, opt, proizvodstvo); drag-and-drop загрузка/удаление PDF через GitHub API
 - **`PAGE_PRICES`** объявлен в самом начале скрипта (сразу после `OWNER/REPO/BRANCH`) — иначе temporal dead zone ReferenceError
 - Карточки можно добавлять/удалять прямо в редакторе (`.feat-card`, `.prod-card`, `.tier-card`) через `CARD_CONFIGS`
+- **Карточки главной (`.cat-card`):** в режиме редактирования клик по фону → замена фото; клик по тексту (`.cat-title-text`, `.cat-desc-text`) → редактирование текста. Конфликт решён: `if (e.target.closest('[contenteditable="true"]')) return`
 
 ### Как работает авторизация
 
@@ -363,7 +383,7 @@ Base64 с кириллицей:
 3. `git add . && git commit -m "..." && git push`
 
 ### Карточки категорий (главная)
-Карточки отображают PNG целиком — текст и иконки нарисованы в самом изображении.
-1. Заменить файл в `out/images/`
-2. В `index.html` изменить `background-image` у нужного `.cat-photo`
+Карточки имеют фото-фон + HTML-текст оверлей.
+1. Через админ редактор: кликнуть по фону карточки → заменить фото; кликнуть по тексту → редактировать
+2. Вручную: изменить `background-image` у `.cat-photo` и/или текст в `.cat-title-text` / `.cat-desc-text`
 3. `git add . && git commit -m "..." && git push`
