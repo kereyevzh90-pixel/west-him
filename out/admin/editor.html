@@ -454,6 +454,7 @@ function enterEditMode() {
     el.classList.add('ed-has-img');
     el.style.cursor = 'pointer';
     el.addEventListener('click', (e) => {
+      if (e.target.closest('[contenteditable="true"]')) return;
       if (e.target !== el && !el.contains(e.target)) return;
       pickAndUploadImg(path, null, el);
     });

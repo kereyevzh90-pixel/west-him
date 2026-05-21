@@ -155,6 +155,23 @@
     .cat-photo {
       width: 100%; aspect-ratio: 3/4;
       background-size: cover; background-position: center;
+      position: relative;
+    }
+    .cat-overlay {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 18px 20px 22px;
+      background: linear-gradient(to bottom, transparent 0%, rgba(255,255,255,0.97) 32%);
+      border-radius: 0 0 14px 14px;
+    }
+    .cat-icon-wrap { color: #1A52B3; margin-bottom: 10px; }
+    .cat-title-text { font-size: 19px; font-weight: 800; color: #111; margin-bottom: 6px; line-height: 1.2; }
+    .cat-desc-text { font-size: 13px; color: #555; line-height: 1.5; margin-bottom: 12px; }
+    .cat-arrow-icon {
+      display: inline-flex; width: 28px; height: 28px;
+      background: rgba(26,82,179,0.1); border-radius: 50%;
+      align-items: center; justify-content: center;
+      color: #1A52B3; font-size: 14px; font-weight: 700;
     }
 
     /* ─── FAQ ─── */
@@ -380,19 +397,47 @@
   <div class="cat-grid">
 
     <a href="proizvodstvo.html" class="cat-card">
-      <div class="cat-photo" style="background-image:url('images/IMG_0922.PNG')"></div>
+      <div class="cat-photo" style="background-image:url('images/IMG_0922.PNG')">
+        <div class="cat-overlay">
+          <div class="cat-icon-wrap"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 21h18M6 21V7l6-4 6 4v14M9 21v-4h6v4"/></svg></div>
+          <div class="cat-title-text">Производство</div>
+          <div class="cat-desc-text">Современное оборудование и строгий контроль качества на всех этапах.</div>
+          <div class="cat-arrow-icon">→</div>
+        </div>
+      </div>
     </a>
 
     <a href="opt.html" class="cat-card">
-      <div class="cat-photo" style="background-image:url('images/IMG_0924.PNG')"></div>
+      <div class="cat-photo" style="background-image:url('images/IMG_0924.PNG')">
+        <div class="cat-overlay">
+          <div class="cat-icon-wrap"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg></div>
+          <div class="cat-title-text">Опт / Розница</div>
+          <div class="cat-desc-text">Выгодные условия для оптовых партнёров и розничных покупателей.</div>
+          <div class="cat-arrow-icon">→</div>
+        </div>
+      </div>
     </a>
 
     <a href="bytovaya-himiya.html" class="cat-card">
-      <div class="cat-photo" style="background-image:url('images/IMG_0931.PNG')"></div>
+      <div class="cat-photo" style="background-image:url('images/IMG_0942.PNG')">
+        <div class="cat-overlay">
+          <div class="cat-icon-wrap"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18"/></svg></div>
+          <div class="cat-title-text">Бытовая химия</div>
+          <div class="cat-desc-text">Средства для дома и ежедневной чистоты. Эффективность и безопасность.</div>
+          <div class="cat-arrow-icon">→</div>
+        </div>
+      </div>
     </a>
 
     <a href="avtohimiya.html" class="cat-card">
-      <div class="cat-photo" style="background-image:url('images/IMG_0925.PNG')"></div>
+      <div class="cat-photo" style="background-image:url('images/IMG_0925.PNG')">
+        <div class="cat-overlay">
+          <div class="cat-icon-wrap"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 17H3a2 2 0 01-2-2V5a2 2 0 012-2h11a2 2 0 012 2v3M9 17h6m4 0h2a2 2 0 002-2v-5a2 2 0 00-2-2h-2M9 17a2 2 0 100 4 2 2 0 000-4zm10 0a2 2 0 100 4 2 2 0 000-4z"/></svg></div>
+          <div class="cat-title-text">Автохимия</div>
+          <div class="cat-desc-text">Профессиональная химия для ухода за автомобилем на всех этапах.</div>
+          <div class="cat-arrow-icon">→</div>
+        </div>
+      </div>
     </a>
 
   </div>
