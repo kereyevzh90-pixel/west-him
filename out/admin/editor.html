@@ -46,6 +46,26 @@
     }
     .ed-link:hover { background: #1e1e1e; color: #ddd; }
 
+    /* ─── ROW2 (action buttons) ─── */
+    .ed-row2 { display: contents; }
+
+    /* ─── MOBILE TOOLBAR ─── */
+    @media (max-width: 767px) {
+      #ed-bar { height: auto; flex-wrap: wrap; padding: 7px 12px; gap: 6px; row-gap: 0; }
+      .ed-logo { font-size: 12px; }
+      .ed-select { font-size: 12px; padding: 6px 8px; }
+      .ed-spacer { flex: 1; }
+      #site-link { font-size: 12px; padding: 6px 8px; }
+      .ed-row2 {
+        display: flex; align-items: center; gap: 6px;
+        width: 100%; padding: 5px 0 2px; border-top: 1px solid #222;
+        margin-top: 2px;
+      }
+      .ed-row2 .ed-btn { font-size: 12px; padding: 7px 10px; }
+      #ed-status { font-size: 11px; flex: 1; max-width: none; }
+      #page-frame { margin-top: 100px; }
+    }
+
     /* ─── PAGE FRAME ─── */
     #page-frame { margin-top: 56px; }
 
@@ -186,16 +206,17 @@
     <option value="proizvodstvo.html">Производство</option>
     <option value="opt.html">Опт / Розница</option>
   </select>
-  <a id="btn-products" href="./products.html" style="display:none;padding:8px 14px;border-radius:8px;background:#1A52B3;color:#fff;font-size:13px;font-weight:700;text-decoration:none;font-family:inherit;white-space:nowrap;align-items:center;gap:5px;">
-    + Добавить товары
-  </a>
-  <div class="ed-sep"></div>
-  <button class="ed-btn" id="btn-price" onclick="openPriceModal()" style="display:none;background:#1e1e1e;color:#fbbf24;border:1px solid #2e2e2e;">📄 Прайс</button>
-  <button class="ed-btn" id="btn-edit" onclick="toggleEdit()">✏️ Редактировать</button>
-  <button class="ed-btn" id="btn-save" disabled onclick="saveHtml()">💾 Сохранить</button>
-  <span id="ed-status" class="ed-status"></span>
   <div class="ed-spacer"></div>
   <a class="ed-link" id="site-link" href="../index.html" target="_blank">↗ Открыть сайт</a>
+  <div class="ed-row2">
+    <a id="btn-products" href="./products.html" style="display:none;padding:8px 14px;border-radius:8px;background:#1A52B3;color:#fff;font-size:13px;font-weight:700;text-decoration:none;font-family:inherit;white-space:nowrap;align-items:center;gap:5px;">
+      + Товары
+    </a>
+    <button class="ed-btn" id="btn-price" onclick="openPriceModal()" style="display:none;background:#1e1e1e;color:#fbbf24;border:1px solid #2e2e2e;">📄 Прайс</button>
+    <button class="ed-btn" id="btn-edit" onclick="toggleEdit()">✏️ Редактировать</button>
+    <button class="ed-btn" id="btn-save" disabled onclick="saveHtml()">💾 Сохранить</button>
+    <span id="ed-status" class="ed-status"></span>
+  </div>
 </div>
 
 <!-- Loading -->
