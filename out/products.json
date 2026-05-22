@@ -6,13 +6,5 @@
     "description": "",
     "image": "images/prod_prod_1779020754856.png",
     "price": "3333"
-  },
-  {
-    "id": "prod_1779355986556",
-    "name": "средства для мытья посуды",
-    "category": "bytovaya",
-    "description": "",
-    "price": "1500тг",
-    "image": "images/prod_prod_1779355983757.png"
   }
 ]
