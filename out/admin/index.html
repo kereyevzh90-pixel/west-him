@@ -102,14 +102,13 @@
   <div class="login-card">
     <div class="login-logo">
       <img src="../images/IMG_1007.PNG" alt="West Him">
-      <div><span class="name">WEST HIM</span><span class="sub">Химическое производство</span></div>
     </div>
     <div class="login-title" id="login-title">Вход в панель</div>
-    <div class="login-sub" id="login-sub">Только для администраторов</div>
+    <div class="login-sub" id="login-sub">Введи пароль и GitHub Token</div>
     <input type="password" id="pwd-input" class="login-input" placeholder="Пароль" autocomplete="current-password">
-    <input type="password" id="token-input" class="login-input" placeholder="GitHub Token (только первый раз)" autocomplete="off" style="display:none">
+    <input type="password" id="token-input" class="login-input" placeholder="GitHub Token" autocomplete="off">
     <button class="login-btn" onclick="doLogin()">Войти</button>
-    <button class="login-btn" id="reset-btn" onclick="doReset()" style="display:none;background:#fff;color:#1A52B3;border:1.5px solid #1A52B3;margin-top:8px;cursor:pointer">Сбросить и войти заново</button>
+    <button class="login-btn" id="reset-btn" onclick="doReset()" style="background:#fff;color:#1A52B3;border:1.5px solid #1A52B3;margin-top:8px;cursor:pointer">Сбросить сохранённые данные</button>
     <div class="login-err" id="login-err"></div>
   </div>
 </div>
@@ -158,13 +157,7 @@
 
 <script>
 function initLogin() {
-  const hasPwd = !!localStorage.getItem('adminPwd');
-  document.getElementById('login-title').textContent = hasPwd ? 'Вход в панель' : 'Первый вход';
-  document.getElementById('login-sub').textContent = hasPwd ? 'Введи пароль' : 'Придумай пароль и введи GitHub Token';
-  document.getElementById('token-input').style.display = hasPwd ? 'none' : 'block';
-  document.getElementById('reset-btn').style.display = hasPwd ? 'block' : 'none';
-
-  if (hasPwd && localStorage.getItem('ghToken')) {
+  if (localStorage.getItem('adminPwd') && localStorage.getItem('ghToken')) {
     location.replace('./editor.html');
   }
 }
@@ -173,14 +166,11 @@ function doLogin() {
   const pwd = document.getElementById('pwd-input').value.trim();
   const token = document.getElementById('token-input').value.trim();
   const err = document.getElementById('login-err');
+  if (!pwd || !token) { err.textContent = 'Заполни оба поля'; return; }
   const savedPwd = localStorage.getItem('adminPwd');
-  if (!savedPwd) {
-    if (!pwd || !token) { err.textContent = 'Заполни оба поля'; return; }
-    localStorage.setItem('adminPwd', pwd);
-    localStorage.setItem('ghToken', token);
-  } else {
-    if (pwd !== savedPwd) { err.textContent = 'Неверный пароль'; document.getElementById('pwd-input').value = ''; return; }
-  }
+  if (savedPwd && pwd !== savedPwd) { err.textContent = 'Неверный пароль'; document.getElementById('pwd-input').value = ''; return; }
+  localStorage.setItem('adminPwd', pwd);
+  localStorage.setItem('ghToken', token);
   err.textContent = '';
   location.replace('./editor.html');
 }
