@@ -109,6 +109,23 @@
       color: #fff;
     }
 
+    /* Empty cat-photo placeholder */
+    .ed-mode .cat-photo.ed-cat-empty {
+      position: relative; cursor: pointer;
+      border: 2px dashed rgba(26,82,179,.35);
+      border-radius: 4px;
+    }
+    .ed-mode .cat-photo.ed-cat-empty::after {
+      content: '+';
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 40px; font-weight: 300; color: rgba(26,82,179,.45);
+      transition: color .2s;
+      pointer-events: none;
+    }
+    .ed-mode .cat-photo.ed-cat-empty:hover { border-color: #1A52B3; }
+    .ed-mode .cat-photo.ed-cat-empty:hover::after { color: #1A52B3; }
+
     /* ─── FLOAT BADGE ─── */
     #ed-badge {
       position: fixed; bottom: 20px; right: 20px; z-index: 9997;
@@ -484,6 +501,31 @@ function enterEditMode() {
     el._edPath = path;
   });
 
+  // Empty cat-photo placeholders — show "+" and allow adding a photo
+  let catIdx = 0;
+  frame.querySelectorAll('.cat-photo').forEach(el => {
+    const s = el.getAttribute('style') || '';
+    if (s.includes('background-image')) { catIdx++; return; }
+    const idx = catIdx++;
+    el.classList.add('ed-cat-empty');
+    const clickHandler = () => {
+      const picker = document.getElementById('img-picker');
+      const handler = async () => {
+        picker.removeEventListener('change', handler);
+        const file = picker.files[0];
+        if (!file) return;
+        picker.value = '';
+        const ext = (file.name.split('.').pop() || 'jpg').toLowerCase();
+        const githubPath = `out/images/cat_${idx}_${Date.now()}.${ext}`;
+        await uploadNewCatPhoto(githubPath, file, el);
+      };
+      picker.addEventListener('change', handler);
+      picker.click();
+    };
+    el._catEmptyHandler = clickHandler;
+    el.addEventListener('click', clickHandler);
+  });
+
   // Card management
   addCardControls(frame);
 }
@@ -516,6 +558,15 @@ function exitEditMode() {
   frame.querySelectorAll('.ed-has-img').forEach(el => {
     el.classList.remove('ed-has-img');
     el.style.cursor = '';
+  });
+
+  // Cleanup empty cat-photo placeholders
+  frame.querySelectorAll('.cat-photo.ed-cat-empty').forEach(el => {
+    el.classList.remove('ed-cat-empty');
+    if (el._catEmptyHandler) {
+      el.removeEventListener('click', el._catEmptyHandler);
+      delete el._catEmptyHandler;
+    }
   });
 }
 
@@ -570,6 +621,41 @@ async function uploadImgFile(githubPath, file, imgEl, bgEl) {
       bgEl.setAttribute('style', s.replace(/url\(['"][^'"]+['"]\)/, `url('${newSrc}')`));
     }
     setStatus('✓ Фото загружено! Появится на сайте через ~1 мин.', 'ok');
+  } catch(e) {
+    setStatus('Ошибка: ' + e.message, 'err');
+  }
+}
+
+async function uploadNewCatPhoto(githubPath, file, bgEl) {
+  const token = localStorage.getItem('ghToken');
+  const headers = { Authorization: 'token ' + token, Accept: 'application/vnd.github+json', 'Content-Type': 'application/json' };
+  const apiBase = `https://api.github.com/repos/${OWNER}/${REPO}/contents`;
+  setStatus('Загружаем фото…', 'loading');
+  try {
+    const content = await toBase64(file);
+    const putRes = await fetch(`${apiBase}/${githubPath}`, {
+      method: 'PUT', headers,
+      body: JSON.stringify({ message: 'Редактор: добавлено фото ' + githubPath.split('/').pop(), content, branch: BRANCH }),
+    });
+    if (!putRes.ok) { const e = await putRes.json().catch(() => ({})); throw new Error(e.message || 'HTTP ' + putRes.status); }
+    const newSrc = '../' + githubPath.replace(/^out\//, '') + '?t=' + Date.now();
+    // Set background-image
+    const cur = bgEl.getAttribute('style') || '';
+    bgEl.setAttribute('style', (cur ? cur + '; ' : '') + `background-image: url('${newSrc}')`);
+    // Switch from "empty" to normal replace handler
+    bgEl.classList.remove('ed-cat-empty');
+    bgEl.classList.add('ed-has-img');
+    bgEl.style.cursor = 'pointer';
+    if (bgEl._catEmptyHandler) { bgEl.removeEventListener('click', bgEl._catEmptyHandler); delete bgEl._catEmptyHandler; }
+    bgEl._edPath = githubPath;
+    bgEl.addEventListener('click', (e) => {
+      if (e.target.closest('[contenteditable="true"]')) return;
+      if (e.target !== bgEl && !bgEl.contains(e.target)) return;
+      pickAndUploadImg(githubPath, null, bgEl);
+    });
+    structuralChange = true;
+    markDirty();
+    setStatus('✓ Фото загружено! Нажмите «Сохранить».', 'ok');
   } catch(e) {
     setStatus('Ошибка: ' + e.message, 'err');
   }
@@ -714,6 +800,7 @@ function buildHtmlFromDom(frame) {
   clone.querySelectorAll('.ed-card-del, .ed-card-add-btn').forEach(el => el.remove());
   clone.querySelectorAll('[contenteditable]').forEach(el => { el.removeAttribute('contenteditable'); el.removeAttribute('data-ed'); el.removeAttribute('data-ed-idx'); });
   clone.querySelectorAll('.ed-has-img').forEach(el => el.classList.remove('ed-has-img'));
+  clone.querySelectorAll('.ed-cat-empty').forEach(el => el.classList.remove('ed-cat-empty'));
   clone.querySelectorAll('img').forEach(img => { const s = img.getAttribute('src') || ''; if (s.startsWith('../')) img.setAttribute('src', s.slice(3)); });
   clone.querySelectorAll('[style]').forEach(el => { const s = el.getAttribute('style') || ''; el.setAttribute('style', s.replace(/url\('\.\.\/images\//g, "url('images/").replace(/url\("\.\.\/images\//g, 'url("images/')); if (!el.getAttribute('style')) el.removeAttribute('style'); });
   clone.querySelectorAll('[data-orig-href]').forEach(a => { a.setAttribute('href', a.getAttribute('data-orig-href')); a.removeAttribute('data-orig-href'); a.removeAttribute('target'); });
