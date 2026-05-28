@@ -110,21 +110,16 @@
     }
 
     /* Empty cat-photo placeholder */
-    .ed-mode .cat-photo.ed-cat-empty {
-      position: relative; cursor: pointer;
-      border: 2px dashed rgba(26,82,179,.35);
-      border-radius: 4px;
-    }
-    .ed-mode .cat-photo.ed-cat-empty::after {
-      content: '+';
+    .ed-cat-plus-label {
       position: absolute; inset: 0;
       display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      border: 2px dashed rgba(26,82,179,.35);
+      border-radius: 4px;
       font-size: 40px; font-weight: 300; color: rgba(26,82,179,.45);
-      transition: color .2s;
-      pointer-events: none;
+      transition: color .2s, border-color .2s;
     }
-    .ed-mode .cat-photo.ed-cat-empty:hover { border-color: #1A52B3; }
-    .ed-mode .cat-photo.ed-cat-empty:hover::after { color: #1A52B3; }
+    .ed-cat-plus-label:hover { border-color: #1A52B3; color: #1A52B3; }
 
     /* ─── FLOAT BADGE ─── */
     #ed-badge {
@@ -501,29 +496,34 @@ function enterEditMode() {
     el._edPath = path;
   });
 
-  // Empty cat-photo placeholders — show "+" and allow adding a photo
+  // Empty cat-photo placeholders — inject a <label>+<input> "+" button
   let catIdx = 0;
   frame.querySelectorAll('.cat-photo').forEach(el => {
     const s = el.getAttribute('style') || '';
     if (s.includes('background-image')) { catIdx++; return; }
     const idx = catIdx++;
     el.classList.add('ed-cat-empty');
-    const clickHandler = () => {
-      const picker = document.getElementById('img-picker');
-      const handler = async () => {
-        picker.removeEventListener('change', handler);
-        const file = picker.files[0];
-        if (!file) return;
-        picker.value = '';
-        const ext = (file.name.split('.').pop() || 'jpg').toLowerCase();
-        const githubPath = `out/images/cat_${idx}_${Date.now()}.${ext}`;
-        await uploadNewCatPhoto(githubPath, file, el);
-      };
-      picker.addEventListener('change', handler);
-      picker.click();
-    };
-    el._catEmptyHandler = clickHandler;
-    el.addEventListener('click', clickHandler);
+    el.style.position = 'relative';
+    const uid = 'cat-file-' + idx;
+    const label = document.createElement('label');
+    label.className = 'ed-cat-plus-label';
+    label.htmlFor = uid;
+    label.textContent = '+';
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.id = uid;
+    input.accept = 'image/*';
+    input.style.display = 'none';
+    input.addEventListener('change', async () => {
+      const file = input.files[0];
+      if (!file) return;
+      input.value = '';
+      const ext = (file.name.split('.').pop() || 'jpg').toLowerCase();
+      const githubPath = `out/images/cat_${idx}_${Date.now()}.${ext}`;
+      await uploadNewCatPhoto(githubPath, file, el);
+    });
+    el.appendChild(label);
+    el.appendChild(input);
   });
 
   // Card management
@@ -563,10 +563,7 @@ function exitEditMode() {
   // Cleanup empty cat-photo placeholders
   frame.querySelectorAll('.cat-photo.ed-cat-empty').forEach(el => {
     el.classList.remove('ed-cat-empty');
-    if (el._catEmptyHandler) {
-      el.removeEventListener('click', el._catEmptyHandler);
-      delete el._catEmptyHandler;
-    }
+    el.querySelectorAll('.ed-cat-plus-label, input[id^="cat-file-"]').forEach(n => n.remove());
   });
 }
 
@@ -801,6 +798,7 @@ function buildHtmlFromDom(frame) {
   clone.querySelectorAll('[contenteditable]').forEach(el => { el.removeAttribute('contenteditable'); el.removeAttribute('data-ed'); el.removeAttribute('data-ed-idx'); });
   clone.querySelectorAll('.ed-has-img').forEach(el => el.classList.remove('ed-has-img'));
   clone.querySelectorAll('.ed-cat-empty').forEach(el => el.classList.remove('ed-cat-empty'));
+  clone.querySelectorAll('.ed-cat-plus-label, input[id^="cat-file-"]').forEach(el => el.remove());
   clone.querySelectorAll('img').forEach(img => { const s = img.getAttribute('src') || ''; if (s.startsWith('../')) img.setAttribute('src', s.slice(3)); });
   clone.querySelectorAll('[style]').forEach(el => { const s = el.getAttribute('style') || ''; el.setAttribute('style', s.replace(/url\('\.\.\/images\//g, "url('images/").replace(/url\("\.\.\/images\//g, 'url("images/')); if (!el.getAttribute('style')) el.removeAttribute('style'); });
   clone.querySelectorAll('[data-orig-href]').forEach(a => { a.setAttribute('href', a.getAttribute('data-orig-href')); a.removeAttribute('data-orig-href'); a.removeAttribute('target'); });
