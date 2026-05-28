@@ -112,15 +112,17 @@ CSS: `height: 56px; width: auto; object-fit: contain;` — **без** `border-ra
 ### Карточки категорий (`.cat-grid`)
 
 4 карточки: фото сверху + текстовый блок снизу на белом фоне:
-- 1-я (Производство) → ссылка `proizvodstvo.html`, фото `IMG_0922.PNG`
-- 2-я (Опт/Розница) → ссылка `opt.html`, фото `IMG_0924.PNG`
-- 3-я (Бытовая химия) → ссылка `bytovaya-himiya.html`, фото `IMG_0931.PNG`
-- 4-я (Автохимия) → ссылка `avtohimiya.html`, фото `IMG_0925.PNG`
+- 1-я (Производство) → ссылка `proizvodstvo.html`
+- 2-я (Опт/Розница) → ссылка `opt.html`
+- 3-я (Бытовая химия) → ссылка `bytovaya-himiya.html`
+- 4-я (Автохимия) → ссылка `avtohimiya.html`
+
+Фото пока не добавлены — добавляются через редактор (плюсик в зоне фото).
 
 Структура карточки:
 ```html
 <a href="..." class="cat-card">
-  <div class="cat-photo" style="background-image:url('images/...')"></div>
+  <div class="cat-photo"></div>              ← пусто пока нет фото; после добавления: style="background-image:url('images/...')"
   <div class="cat-body">
     <div class="cat-title-text">Название</div>
     <div class="cat-desc-text">Описание</div>
@@ -128,10 +130,13 @@ CSS: `height: 56px; width: auto; object-fit: contain;` — **без** `border-ra
   </div>
 </a>
 ```
-- `.cat-photo` — `aspect-ratio: 3/2`, background-image, `background-color: #f0f4fc` (плейсхолдер)
-- `.cat-body` — белый фон, `padding: 18px 20px 20px`, flex-column
+- `.cat-photo` — `aspect-ratio: 3/2`, `background-color: #fff` (белая зона на живом сайте пока нет фото)
+- `.cat-body` — `padding: 18px 20px 20px`, flex-column
 - `.cat-title-text` и `.cat-desc-text` — редактируемы в admin/editor.html
-- В редакторе: клик по `.cat-photo` → замена фото; клик по тексту → редактирование текста (не конфликтуют, т.к. `.cat-body` — сосед `.cat-photo`, не дочерний)
+- В редакторе (режим редактирования):
+  - Пустое `.cat-photo` → инжектируется `<label class="ed-cat-plus-label">+</label>` + `<input type="file">` прямо внутрь div; клик на "+" открывает file picker, фото загружается на GitHub, `structuralChange = true` → при сохранении используется `buildHtmlFromDom`
+  - Заполненное `.cat-photo` (есть `background-image`) → `ed-has-img`, клик → `pickAndUploadImg` (замена того же файла)
+  - Клик по тексту → редактирование (не конфликтует — `.cat-body` сосед `.cat-photo`)
 Сетка: ПК — 4 колонки, iPad/мобил — 2×2.
 
 ### FAQ (`.faq-section`)
@@ -352,7 +357,7 @@ CSS: `height: 56px; width: auto; object-fit: contain;` — **без** `border-ra
 - Кнопка **"📄 Прайс"** — появляется для страниц с PDF-прайсом (katalog, bytovaya, avto, opt, proizvodstvo); drag-and-drop загрузка/удаление PDF через GitHub API
 - **`PAGE_PRICES`** объявлен в самом начале скрипта (сразу после `OWNER/REPO/BRANCH`) — иначе temporal dead zone ReferenceError
 - Карточки можно добавлять/удалять прямо в редакторе (`.feat-card`, `.prod-card`, `.tier-card`) через `CARD_CONFIGS`
-- **Карточки главной (`.cat-card`):** в режиме редактирования клик по `.cat-photo` (background-image) → замена фото; клик по `.cat-title-text` / `.cat-desc-text` в `.cat-body` → редактирование текста. Конфликтов нет: `.cat-body` — сосед `.cat-photo`, поэтому click guard `if (e.target !== el && !el.contains(e.target)) return` исключает ложные срабатывания.
+- **Карточки главной (`.cat-card`):** см. секцию "Карточки категорий" выше — логика плюсика и замены фото описана там.
 
 ### Как работает авторизация
 
@@ -385,9 +390,9 @@ Base64 с кириллицей:
 3. `git add . && git commit -m "..." && git push`
 
 ### Карточки категорий (главная)
-Карточки: фото сверху (`.cat-photo`, background-image) + текст снизу (`.cat-body`).
-1. Через админ редактор: кликнуть по фото карточки → заменить фото; кликнуть по тексту → редактировать
-2. Вручную: изменить `background-image` у `.cat-photo` и/или текст в `.cat-title-text` / `.cat-desc-text`
+Карточки: фото сверху (`.cat-photo`) + текст снизу (`.cat-body`).
+1. Через админ редактор (режим ✏️): кликнуть на "+" в зоне фото → выбрать файл → фото загружается; кликнуть по тексту → редактировать; нажать 💾 Сохранить
+2. Вручную: добавить `style="background-image:url('images/FILENAME.jpg')"` к `.cat-photo`, изменить текст в `.cat-title-text` / `.cat-desc-text`
 3. `git add . && git commit -m "..." && git push`
 
 ## Резервная копия и откат
