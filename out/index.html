@@ -153,11 +153,29 @@
     }
     .cat-card:hover { transform: translateY(-5px); box-shadow: 0 8px 32px rgba(0,0,0,0.12); }
     .cat-photo {
-      width: 100%; aspect-ratio: 3/4;
+      width: 100%; aspect-ratio: 3/2;
       background-size: cover; background-position: center;
+      background-color: #f0f4fc;
       position: relative;
     }
-    .cat-overlay { display: none; }
+    .cat-body {
+      padding: 18px 20px 20px;
+      display: flex; flex-direction: column; gap: 6px;
+      flex: 1;
+      border-top: 1px solid #ebebeb;
+    }
+    .cat-title-text {
+      font-size: 16px; font-weight: 700; color: #111;
+      line-height: 1.3;
+    }
+    .cat-desc-text {
+      font-size: 13px; color: #666;
+      line-height: 1.45; flex: 1;
+    }
+    .cat-arrow {
+      color: #1A52B3; font-size: 16px; font-weight: 700;
+      margin-top: 8px;
+    }
 
     /* ─── FAQ ─── */
     .faq-section {
@@ -383,18 +401,38 @@
 
     <a href="proizvodstvo.html" class="cat-card">
       <div class="cat-photo" style="background-image:url('images/IMG_0922.PNG')"></div>
+      <div class="cat-body">
+        <div class="cat-title-text">Производство</div>
+        <div class="cat-desc-text">Собственный завод в Актау</div>
+        <div class="cat-arrow">→</div>
+      </div>
     </a>
 
     <a href="opt.html" class="cat-card">
       <div class="cat-photo" style="background-image:url('images/IMG_0924.PNG')"></div>
+      <div class="cat-body">
+        <div class="cat-title-text">Опт / Розница</div>
+        <div class="cat-desc-text">Оптовые поставки по Казахстану</div>
+        <div class="cat-arrow">→</div>
+      </div>
     </a>
 
     <a href="bytovaya-himiya.html" class="cat-card">
       <div class="cat-photo" style="background-image:url('images/IMG_0931.PNG')"></div>
+      <div class="cat-body">
+        <div class="cat-title-text">Бытовая химия</div>
+        <div class="cat-desc-text">Широкий ассортимент</div>
+        <div class="cat-arrow">→</div>
+      </div>
     </a>
 
     <a href="avtohimiya.html" class="cat-card">
       <div class="cat-photo" style="background-image:url('images/IMG_0925.PNG')"></div>
+      <div class="cat-body">
+        <div class="cat-title-text">Автохимия</div>
+        <div class="cat-desc-text">Продукция для авто</div>
+        <div class="cat-arrow">→</div>
+      </div>
     </a>
 
   </div>
