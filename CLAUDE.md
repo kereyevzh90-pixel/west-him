@@ -114,8 +114,8 @@ CSS: `height: 56px; width: auto; object-fit: contain;` — **без** `border-ra
 4 карточки: фото сверху + текстовый блок снизу на белом фоне:
 - 1-я (Производство) → ссылка `proizvodstvo.html`
 - 2-я (Опт/Розница) → ссылка `opt.html`
-- 3-я (Бытовая химия) → ссылка `bytovaya-himiya.html`
-- 4-я (Автохимия) → ссылка `avtohimiya.html`
+- 3-я (Бытовая химия) → ссылка `katalog.html?cat=bytovaya` (открывает каталог с фильтром)
+- 4-я (Автохимия) → ссылка `katalog.html?cat=avto` (открывает каталог с фильтром)
 
 Фото пока не добавлены — добавляются через редактор (плюсик в зоне фото).
 
@@ -144,6 +144,8 @@ CSS: `height: 56px; width: auto; object-fit: contain;` — **без** `border-ra
 - Белый фон, аккордеон с 5 вопросами
 - Открытый элемент: синяя граница + слабый синий `box-shadow`
 - Иконка `+`/`×` из двух `<span class="faq-icon-line">`
+- Структура вопроса: `<span class="faq-q-text">Текст вопроса</span>` внутри `.faq-q` (обёрнут для редактируемости)
+- В редакторе (режим ✏️): вопросы можно добавлять и удалять через кнопку "+ Добавить карточку" под `.faq-list` (`.faq-item` добавлен в `CARD_CONFIGS`)
 
 ### Статистика (`.stats`)
 
@@ -195,7 +197,7 @@ CSS: `height: 56px; width: auto; object-fit: contain;` — **без** `border-ra
 `.prod-card` — белый фон, рамка `1px solid #ebebeb`, `border-radius: 14px`:
 - Фото сверху (1/1, object-fit: cover), при hover масштабируется 1.05×
 - `description` товара — показывается как обычный текст под названием (`.prod-card-desc`)
-- `price` товара — показывается жирным `font-size: 15px; font-weight: 700` (`.prod-card-price`)
+- `price` товара — показывается синим бейджем (`.prod-card-price`: `color: #1A52B3; background: #d0dff7; border-radius: 20px; padding: 2px 10px`)
 - Категория (синий uppercase), название, кнопка "В корзину"
 - Кнопка `.prod-card-add` — outline стиль (`background: #fff; border: 1.5px solid #1A52B3; color: #1A52B3`); если товар в корзине — тёмная "В корзине (N)"
 - Данные из `products.json`, рендер через `renderCard(p)` в JS
@@ -235,6 +237,7 @@ CSS: `height: 56px; width: auto; object-fit: contain;` — **без** `border-ra
 - `price`: цена (необязательно, например `"850 тг"` или `"от 500 тг"`)
 - `image`: путь вида `"images/prod_xxx.jpg"` или `""` (пустое = заглушка)
 - Загружается через `fetch('/products.json?t=timestamp')` при открытии страницы
+- URL-параметр `?cat=bytovaya` или `?cat=avto` — автоматически активирует фильтр после загрузки товаров
 
 ## Страницы категорий
 
@@ -333,7 +336,7 @@ CSS: `height: 56px; width: auto; object-fit: contain;` — **без** `border-ra
   - Название продукта
   - Категория (Бытовая химия / Автохимия)
   - **Текст поверх фото** (description) — с live-превью наложения текста на фото
-  - **Цена** (price, необязательно) — показывается в карточке каталога
+  - **Цена** (price, необязательно) — показывается синим бейджем в карточке каталога и в admin/products.html
   - Фото (превью 3/4 с текстовым оверлеем в реальном времени)
 - Сохранение: фото → `out/images/prod_{id}.{ext}`, затем обновление `products.json`
 - Удаление: убирает из массива, удаляет файл изображения, пушит JSON
@@ -356,7 +359,7 @@ CSS: `height: 56px; width: auto; object-fit: contain;` — **без** `border-ra
 - Когда выбран **Каталог** — появляется кнопка **"+ Товары"** → `products.html`; товары из `products.json` автоматически загружаются через GitHub API функцией `loadCatalogProducts()` и отображаются в сетке (без интерактива корзины — только визуально)
 - Кнопка **"📄 Прайс"** — появляется для страниц с PDF-прайсом (katalog, bytovaya, avto, opt, proizvodstvo); drag-and-drop загрузка/удаление PDF через GitHub API
 - **`PAGE_PRICES`** объявлен в самом начале скрипта (сразу после `OWNER/REPO/BRANCH`) — иначе temporal dead zone ReferenceError
-- Карточки можно добавлять/удалять прямо в редакторе (`.feat-card`, `.prod-card`, `.tier-card`) через `CARD_CONFIGS`
+- Карточки можно добавлять/удалять прямо в редакторе (`.feat-card`, `.prod-card`, `.tier-card`, `.faq-item`) через `CARD_CONFIGS`
 - **Карточки главной (`.cat-card`):** см. секцию "Карточки категорий" выше — логика плюсика и замены фото описана там.
 
 ### Как работает авторизация
