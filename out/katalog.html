@@ -174,7 +174,7 @@
     .prod-card-cat { font-size: 10px; font-weight: 700; color: #1A52B3; text-transform: uppercase; letter-spacing: 0.12em; }
     .prod-card-name { font-size: 14px; font-weight: 700; color: #111; line-height: 1.35; flex: 1; }
     .prod-card-desc { font-size: 12px; color: #888; line-height: 1.4; }
-    .prod-card-price { font-size: 15px; font-weight: 700; color: #111; margin-top: 2px; }
+    .prod-card-price { font-size: 13px; font-weight: 700; color: #1A52B3; background: #d0dff7; border: 1px solid rgba(26,82,179,0.3); border-radius: 20px; padding: 2px 10px; display: inline-block; margin-top: 2px; }
     .prod-card-add {
       display: flex; align-items: center; justify-content: center; gap: 6px;
       padding: 9px 14px; border-radius: 8px; margin-top: 8px;
@@ -585,7 +585,13 @@
   loadCart();
   updateCartBadge();
   renderCartDrawer();
-  loadProducts();
+  loadProducts().then(() => {
+    const urlCat = new URLSearchParams(location.search).get('cat');
+    if (urlCat) {
+      const btn = document.querySelector(`[data-filter="${urlCat}"]`);
+      if (btn) filterCat(urlCat, btn);
+    }
+  });
 </script>
 
 
