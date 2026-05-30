@@ -14,5 +14,13 @@
     "description": "",
     "price": "Опт. 550₸",
     "image": "images/prod_prod_1780134989918.png"
+  },
+  {
+    "id": "prod_1780139168506",
+    "name": "Средство для посуды - ЛИМОН",
+    "category": "bytovaya",
+    "description": "",
+    "price": "Опт. 550₸",
+    "image": "images/prod_prod_1780139164641.png"
   }
 ]
