@@ -46,5 +46,13 @@
     "description": "",
     "price": "Опт. 550₸",
     "image": "images/prod_prod_1780139653791.png"
+  },
+  {
+    "id": "prod_1780140213285",
+    "name": "Средство для посуды - КЛУБНИКА",
+    "category": "bytovaya",
+    "description": "",
+    "price": "Опт. 550₸",
+    "image": "images/prod_prod_1780140209553.png"
   }
 ]
