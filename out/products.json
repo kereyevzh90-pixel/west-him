@@ -22,5 +22,13 @@
     "description": "",
     "price": "Опт. 550₸",
     "image": "images/prod_prod_1780139164641.png"
+  },
+  {
+    "id": "prod_1780139593038",
+    "name": "Средство для посуды - BUBBLEGUM",
+    "category": "bytovaya",
+    "description": "",
+    "price": "Опт. 550₸",
+    "image": "images/prod_prod_1780139589257.png"
   }
 ]
