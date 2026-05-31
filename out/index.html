@@ -278,7 +278,8 @@
     .footer-contacts { flex: 1; min-width: 150px; display: flex; flex-direction: column; gap: 8px; justify-content: center; }
     .footer-phone a { font-size: 17px; font-weight: 700; color: #111; text-decoration: none; transition: color .2s; }
     .footer-phone a:hover { color: #1A52B3; }
-    .footer-location { font-size: 13px; color: #888; }
+    .footer-location { font-size: 13px; color: #888; text-decoration: none; }
+    .footer-location:hover { color: #1A52B3; text-decoration: underline; }
     .footer-socials { display: flex; flex-direction: column; gap: 12px; min-width: 130px; justify-content: center; }
     .soc-link { display: inline-flex; align-items: center; gap: 10px; color: #555; text-decoration: none; font-size: 14px; font-weight: 500; transition: color .2s; }
     .soc-link:hover { color: #1A52B3; }
@@ -632,7 +633,7 @@ function toggleFaq(el) {
       <div class="footer-phone">
         <a href="tel:+77057779487">+7 705 777 9487</a>
       </div>
-      <div class="footer-location">г. Актау, Казахстан</div>
+      <a class="footer-location" href="https://2gis.kz/aktau?m=51.1733,43.6508/13" target="_blank">г. Актау, Казахстан</a>
     </div>
     <div class="footer-socials">
       <a class="soc-link" href="https://www.instagram.com/west_him" target="_blank" title="Instagram">
@@ -646,6 +647,10 @@ function toggleFaq(el) {
       <a class="soc-link" href="https://www.tiktok.com/@west_him" target="_blank" title="TikTok">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg>
         TikTok
+      </a>
+      <a class="soc-link" href="https://2gis.kz/aktau?m=51.1733,43.6508/13" target="_blank" title="2ГИС">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="10" r="3"/><path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 14 8 14s8-8.75 8-14a8 8 0 0 0-8-8z"/></svg>
+        2ГИС
       </a>
     </div>
   </div>
