@@ -211,7 +211,10 @@
     .cart-item-controls { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
     .qty-btn { width: 26px; height: 26px; border-radius: 6px; background: #fff; border: 1.5px solid #e0e0e0; font-size: 14px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; color: #333; transition: border-color .2s; }
     .qty-btn:hover { border-color: #1A52B3; color: #1A52B3; }
-    .qty-val { font-size: 14px; font-weight: 700; color: #111; min-width: 20px; text-align: center; }
+    .qty-val { font-size: 14px; font-weight: 700; color: #111; width: 44px; text-align: center; border: 1.5px solid #e0e0e0; border-radius: 6px; padding: 2px 4px; outline: none; background: #fff; }
+    .qty-val:focus { border-color: #1A52B3; }
+    .qty-val::-webkit-inner-spin-button, .qty-val::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+    .qty-val[type=number] { -moz-appearance: textfield; }
     .cart-item-del { margin-left: auto; background: none; border: none; cursor: pointer; color: #ccc; padding: 4px; border-radius: 6px; display: flex; align-items: center; transition: color .2s; }
     .cart-item-del:hover { color: #1A52B3; }
     .cart-foot { padding: 16px 24px 24px; border-top: 1px solid #ebebeb; flex-shrink: 0; }
@@ -455,6 +458,14 @@
     saveCart(); updateCartBadge(); renderCartDrawer(); renderGrid();
   }
 
+  function setQtyDirect(id, val) {
+    if (!cart[id]) return;
+    const n = parseInt(val, 10);
+    if (isNaN(n) || n <= 0) { delete cart[id]; }
+    else { cart[id].qty = n; }
+    saveCart(); updateCartBadge(); renderCartDrawer(); renderGrid();
+  }
+
   function removeFromCart(id) {
     delete cart[id];
     saveCart(); updateCartBadge(); renderCartDrawer(); renderGrid();
@@ -488,7 +499,7 @@
           <div class="cart-item-name">${item.name}</div>
           <div class="cart-item-controls">
             <button class="qty-btn" onclick="setQty('${item.id}', -1)">−</button>
-            <span class="qty-val">${item.qty}</span>
+            <input type="number" class="qty-val" value="${item.qty}" min="1" onchange="setQtyDirect('${item.id}', this.value)" onblur="setQtyDirect('${item.id}', this.value)">
             <button class="qty-btn" onclick="setQty('${item.id}', 1)">+</button>
           </div>
         </div>
