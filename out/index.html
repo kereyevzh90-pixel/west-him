@@ -270,6 +270,20 @@
     }
     .faq-a-inner .red { color: #1A52B3; font-weight: 600; }
 
+    /* ─── FOOTER ─── */
+    .site-footer { background: #111; color: #ccc; padding: 40px 52px 24px; margin-top: 0; }
+    .footer-inner { display: flex; align-items: flex-start; gap: 40px; flex-wrap: wrap; margin-bottom: 32px; }
+    .footer-brand { flex: 1; min-width: 180px; display: flex; flex-direction: column; gap: 10px; }
+    .footer-tagline { font-size: 13px; color: #888; max-width: 220px; line-height: 1.5; }
+    .footer-contacts { flex: 1; min-width: 150px; display: flex; flex-direction: column; gap: 8px; }
+    .footer-phone a { font-size: 17px; font-weight: 700; color: #fff; text-decoration: none; transition: color .2s; }
+    .footer-phone a:hover { color: #1A52B3; }
+    .footer-location { font-size: 13px; color: #888; }
+    .footer-socials { display: flex; flex-direction: column; gap: 12px; min-width: 130px; }
+    .soc-link { display: inline-flex; align-items: center; gap: 10px; color: #ccc; text-decoration: none; font-size: 14px; font-weight: 500; transition: color .2s; }
+    .soc-link:hover { color: #fff; }
+    .footer-copy { border-top: 1px solid #222; padding-top: 20px; font-size: 12px; color: #555; }
+
     /* ─── STATS ─── */
     .stats {
       display: grid;
@@ -375,6 +389,10 @@
       .stat-icon svg { width: 18px; height: 18px; }
       .stat-num { font-size: 24px; margin-bottom: 3px; }
       .stat-lbl { font-size: 12px; }
+
+      .site-footer { padding: 32px 16px 20px; }
+      .footer-inner { flex-direction: column; gap: 24px; }
+      .footer-socials { flex-direction: row; flex-wrap: wrap; gap: 16px; }
     }
   </style>
 </head>
@@ -599,6 +617,35 @@ function toggleFaq(el) {
 
 </div>
 
-
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <img src="images/IMG_1007.PNG" alt="West Him" style="height:44px;width:auto;object-fit:contain;">
+      <div class="footer-tagline">Казахстанский производитель бытовой и автохимии</div>
+    </div>
+    <div class="footer-contacts">
+      <div class="footer-phone">
+        <a href="tel:+77057779487">+7 705 777 9487</a>
+      </div>
+      <div class="footer-location">г. Актау, Казахстан</div>
+    </div>
+    <div class="footer-socials">
+      <a class="soc-link" href="https://www.instagram.com/west_him" target="_blank" title="Instagram">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        Instagram
+      </a>
+      <a class="soc-link" href="https://t.me/west_him" target="_blank" title="Telegram">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2L15 22 11 13 2 9l20-7z"/></svg>
+        Telegram
+      </a>
+      <a class="soc-link" href="https://www.tiktok.com/@west_him" target="_blank" title="TikTok">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg>
+        TikTok
+      </a>
+    </div>
+  </div>
+  <div class="footer-copy">© 2024 West Him. Все права защищены.</div>
+</footer>
 
 </body></html>
