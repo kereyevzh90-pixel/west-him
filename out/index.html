@@ -404,8 +404,8 @@
 
 <!-- HEADER -->
 <header class="header">
-  <a href="#" class="logo">
-    <img src="images/IMG_1007.PNG" alt="West Him">
+  <a class="logo" href="#">
+    <img src="images/IMG_1007.PNG" alt="West Him" class="" style="cursor: pointer;">
     <div>
       <span class="logo-name">WEST HIM</span>
       <span class="logo-sub">Химическое производство</span>
@@ -419,27 +419,19 @@
       </button>
       <div class="phone-dropdown" id="phone-dropdown">
         <div class="phone-dropdown-num">+7 705 777 9487</div>
-        <a class="phone-call-link" href="tel:+77057779487">
+        <a class="phone-call-link" href="../tel:+77057779487">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.63A2 2 0 012 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"></path></svg>
           Позвонить
         </a>
       </div>
     </div>
-    <a class="header-cta" href="https://wa.me/77057779487" target="_blank">
+    <a class="header-cta" href="https://wa.me/77057779487">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
       Связаться
     </a>
   </div>
 </header>
-<script>
-  function togglePhone(e) {
-    e.stopPropagation();
-    document.getElementById('phone-dropdown').classList.toggle('open');
-  }
-  document.addEventListener('click', function() {
-    document.getElementById('phone-dropdown').classList.remove('open');
-  });
-</script>
+
 
 <!-- HERO -->
 <section class="hero">
@@ -449,21 +441,21 @@
     </div>
     <h1 class="hero-h1">
       Производство<br>
-      <span class="red" data-ed="1" data-ed-idx="5" contenteditable="true">бытовой химии</span><br>в&nbsp;Казахстане
+      <span class="red">бытовой химии</span><br>в&nbsp;Казахстане
     </h1>
     <p class="hero-desc">
       Казахстанский производитель бытовой химии с собственным заводом в Актау.
       Производим 30 тонн продукции ежедневно и поставляем по всему Казахстану и СНГ.
     </p>
     <div class="hero-actions">
-      <a class="btn-red" href="katalog.html">
+      <a class="btn-red" href="../katalog.html">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
         Каталог продукции &nbsp;→
       </a>
     </div>
   </div>
   <div class="hero-right">
-    <img src="images/IMG_1003.PNG" alt="" class="hero-mobile-img">
+    <img src="images/IMG_1003.PNG" alt="" class="hero-mobile-img" style="cursor: pointer;">
   </div>
 </section>
 
@@ -471,8 +463,8 @@
 <section class="cat-section">
   <div class="cat-grid">
 
-    <a href="proizvodstvo.html" class="cat-card">
-      <div class="cat-photo"></div>
+    <a class="cat-card" href="../proizvodstvo.html">
+      <div class="cat-photo" style="position: relative;"></div>
       <div class="cat-body">
         <div class="cat-title-text">Производство</div>
         <div class="cat-desc-text">Собственный завод в Актау</div>
@@ -480,8 +472,8 @@
       </div>
     </a>
 
-    <a href="opt.html" class="cat-card">
-      <div class="cat-photo"></div>
+    <a class="cat-card" href="../opt.html">
+      <div class="cat-photo" style="position: relative;"></div>
       <div class="cat-body">
         <div class="cat-title-text">Опт / Розница</div>
         <div class="cat-desc-text">Оптовые поставки по Казахстану</div>
@@ -489,8 +481,8 @@
       </div>
     </a>
 
-    <a href="katalog.html?cat=bytovaya" class="cat-card">
-      <div class="cat-photo"></div>
+    <a class="cat-card" href="../katalog.html?cat=bytovaya">
+      <div class="cat-photo" style="position: relative;"></div>
       <div class="cat-body">
         <div class="cat-title-text">Бытовая химия</div>
         <div class="cat-desc-text">Широкий ассортимент</div>
@@ -498,8 +490,8 @@
       </div>
     </a>
 
-    <a href="katalog.html?cat=avto" class="cat-card">
-      <div class="cat-photo"></div>
+    <a class="cat-card" href="../katalog.html?cat=avto">
+      <div class="cat-photo" style="position: relative; background-image: url(&quot;images/cat_3_1780325377691.png?t=1780325379810&quot;); cursor: pointer;"></div>
       <div class="cat-body">
         <div class="cat-title-text">Автохимия</div>
         <div class="cat-desc-text">Продукция для авто</div>
@@ -518,49 +510,45 @@
     <div class="faq-list">
 
       <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(this)">
+        <div class="faq-q" onclick="toggleFaq(this)" style="cursor: pointer;">
           <span class="faq-q-text">Как оформить оптовый заказ?</span><span class="faq-icon"><span class="faq-icon-line"></span><span class="faq-icon-line"></span></span>
         </div>
-        <div class="faq-a"><div class="faq-a-inner">Свяжитесь с нами через <span class="red" data-ed="1" data-ed-idx="12" contenteditable="true">WhatsApp</span> — уточним объём, согласуем цену и условия доставки. Минимальный заказ — от одной 1 фуры = 20 тонн.&nbsp;</div></div>
+        <div class="faq-a"><div class="faq-a-inner">Свяжитесь с нами через <span class="red">WhatsApp</span> — уточним объём, согласуем цену и условия доставки. Минимальный заказ — от одной 1 фуры = 20 тонн.&nbsp;</div></div>
       </div>
 
       <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(this)">
+        <div class="faq-q" onclick="toggleFaq(this)" style="cursor: pointer;">
           <span class="faq-q-text">Есть ли сертификаты на продукцию?</span><span class="faq-icon"><span class="faq-icon-line"></span><span class="faq-icon-line"></span></span>
         </div>
-        <div class="faq-a"><div class="faq-a-inner">Да, вся продукция <span class="red" data-ed="1" data-ed-idx="15" contenteditable="true">West Him</span> сертифицирована согласно стандартам Республики Казахстан. Также есть сертификат халал от QMDB. Документы предоставляем по запросу.</div></div>
+        <div class="faq-a"><div class="faq-a-inner">Да, вся продукция <span class="red">West Him</span> сертифицирована согласно стандартам Республики Казахстан. Также есть сертификат халал от QMDB. Документы предоставляем по запросу.</div></div>
       </div>
 
       <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(this)">
+        <div class="faq-q" onclick="toggleFaq(this)" style="cursor: pointer;">
           <span class="faq-q-text">В каких городах доступна продукция West Him?</span><span class="faq-icon"><span class="faq-icon-line"></span><span class="faq-icon-line"></span></span>
         </div>
-        <div class="faq-a"><div class="faq-a-inner">Работаем <span class="red" data-ed="1" data-ed-idx="18" contenteditable="true">по всему Казахстану и СНГ</span>. Производство — г. Актау. Отправляем от 1 фуры в любой город.&nbsp;Заказчик самостоятельно вызывает транспорт для доставки.</div></div>
+        <div class="faq-a"><div class="faq-a-inner">Работаем <span class="red">по всему Казахстану и СНГ</span>. Производство — г. Актау. Отправляем от 1 фуры в любой город.&nbsp;Заказчик самостоятельно вызывает транспорт для доставки.</div></div>
       </div>
 
       <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(this)">
+        <div class="faq-q" onclick="toggleFaq(this)" style="cursor: pointer;">
           <span class="faq-q-text">Как получить прайс-лист?</span><span class="faq-icon"><span class="faq-icon-line"></span><span class="faq-icon-line"></span></span>
         </div>
-        <div class="faq-a"><div class="faq-a-inner">Напишите в <span class="red" data-ed="1" data-ed-idx="21" contenteditable="true">WhatsApp</span> — пришлём актуальный прайс в формате PDF. Для постоянных партнёров цены обсуждаются индивидуально.</div></div>
+        <div class="faq-a"><div class="faq-a-inner">Напишите в <span class="red">WhatsApp</span> — пришлём актуальный прайс в формате PDF. Для постоянных партнёров цены обсуждаются индивидуально.</div></div>
       </div>
 
       <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(this)">
+        <div class="faq-q" onclick="toggleFaq(this)" style="cursor: pointer;">
           <span class="faq-q-text">Можно ли заказать продукцию под своим брендом?</span><span class="faq-icon"><span class="faq-icon-line"></span><span class="faq-icon-line"></span></span>
         </div>
-        <div class="faq-a"><div class="faq-a-inner">Да, работаем по схеме <span class="red" data-ed="1" data-ed-idx="24" contenteditable="true">private label</span>. Обсудим объём, разработаем этикетку и выпустим продукцию под вашим брендом. Для того свяжитесь с нашим по WhatsApp.</div></div>
+        <div class="faq-a"><div class="faq-a-inner">Да, работаем по схеме <span class="red">private label</span>. Обсудим объём, разработаем этикетку и выпустим продукцию под вашим брендом. Для того свяжитесь с нашим по WhatsApp.</div></div>
       </div>
 
     </div>
   </div>
 </section>
 
-<script>
-function toggleFaq(el) {
-  el.parentElement.classList.toggle('open');
-}
-</script>
+
 
 <!-- FOOTER STATS -->
 <div class="stats">
@@ -625,26 +613,26 @@ function toggleFaq(el) {
 <footer class="site-footer">
   <div class="footer-inner">
     <div class="footer-brand">
-      <img src="images/IMG_1007.PNG" alt="West Him" style="height:64px;width:auto;object-fit:contain;">
+      <img src="images/IMG_1007.PNG" alt="West Him" style="height: 64px; width: auto; object-fit: contain; cursor: pointer;" class="">
       <div class="footer-tagline">Казахстанский производитель бытовой и автохимии</div>
     </div>
     <div class="footer-map-img">
-      <a href="https://2gis.kz/aktau/firm/70000001100036064" target="_blank">
-        <img src="images/IMG_1218.PNG" alt="Доставка по Казахстану">
+      <a href="https://2gis.kz/aktau/firm/70000001100036064">
+        <img src="images/IMG_1218.PNG" alt="Доставка по Казахстану" class="" style="cursor: pointer;">
       </a>
     </div>
     <div class="footer-socials">
-      <a class="soc-link" href="https://www.instagram.com/west_him" target="_blank" title="Instagram">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+      <a class="soc-link" title="Instagram" href="https://www.instagram.com/west_him">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
         Instagram
       </a>
-      <a class="soc-link" href="https://wa.me/77057779487" target="_blank" title="WhatsApp">
-        <svg width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M16 0C7.163 0 0 7.163 0 16c0 2.833.738 5.493 2.031 7.807L0 32l8.418-2.007A15.93 15.93 0 0 0 16 32c8.837 0 16-7.163 16-16S24.837 0 16 0zm0 29.333a13.27 13.27 0 0 1-6.771-1.854l-.486-.289-5.002 1.194 1.27-4.866-.317-.5A13.267 13.267 0 0 1 2.667 16C2.667 8.636 8.636 2.667 16 2.667S29.333 8.636 29.333 16 23.364 29.333 16 29.333zm7.27-9.778c-.398-.199-2.354-1.161-2.719-1.294-.365-.133-.631-.199-.897.199-.266.398-1.03 1.294-1.263 1.56-.232.266-.465.299-.863.1-.398-.199-1.681-.619-3.202-1.977-1.183-1.056-1.981-2.361-2.213-2.759-.232-.398-.025-.613.175-.811.179-.179.398-.465.597-.698.199-.232.266-.398.398-.664.133-.266.066-.498-.033-.697-.1-.199-.897-2.162-1.229-2.96-.324-.778-.653-.672-.897-.684l-.764-.013c-.266 0-.698.1-1.063.498-.365.398-1.395 1.362-1.395 3.324s1.428 3.854 1.627 4.12c.199.266 2.808 4.286 6.805 6.012.951.41 1.692.655 2.271.839.954.303 1.823.26 2.51.158.766-.114 2.354-.963 2.686-1.893.332-.93.332-1.727.232-1.893-.099-.166-.365-.266-.763-.465z"/></svg>
+      <a class="soc-link" title="WhatsApp" href="https://wa.me/77057779487">
+        <svg width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M16 0C7.163 0 0 7.163 0 16c0 2.833.738 5.493 2.031 7.807L0 32l8.418-2.007A15.93 15.93 0 0 0 16 32c8.837 0 16-7.163 16-16S24.837 0 16 0zm0 29.333a13.27 13.27 0 0 1-6.771-1.854l-.486-.289-5.002 1.194 1.27-4.866-.317-.5A13.267 13.267 0 0 1 2.667 16C2.667 8.636 8.636 2.667 16 2.667S29.333 8.636 29.333 16 23.364 29.333 16 29.333zm7.27-9.778c-.398-.199-2.354-1.161-2.719-1.294-.365-.133-.631-.199-.897.199-.266.398-1.03 1.294-1.263 1.56-.232.266-.465.299-.863.1-.398-.199-1.681-.619-3.202-1.977-1.183-1.056-1.981-2.361-2.213-2.759-.232-.398-.025-.613.175-.811.179-.179.398-.465.597-.698.199-.232.266-.398.398-.664.133-.266.066-.498-.033-.697-.1-.199-.897-2.162-1.229-2.96-.324-.778-.653-.672-.897-.684l-.764-.013c-.266 0-.698.1-1.063.498-.365.398-1.395 1.362-1.395 3.324s1.428 3.854 1.627 4.12c.199.266 2.808 4.286 6.805 6.012.951.41 1.692.655 2.271.839.954.303 1.823.26 2.51.158.766-.114 2.354-.963 2.686-1.893.332-.93.332-1.727.232-1.893-.099-.166-.365-.266-.763-.465z"></path></svg>
         WhatsApp
       </a>
 
-      <a class="soc-link" href="https://2gis.kz/aktau/firm/70000001100036064" target="_blank" title="2ГИС">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="10" r="3"/><path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 14 8 14s8-8.75 8-14a8 8 0 0 0-8-8z"/></svg>
+      <a class="soc-link" title="2ГИС" href="https://2gis.kz/aktau/firm/70000001100036064">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="10" r="3"></circle><path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 14 8 14s8-8.75 8-14a8 8 0 0 0-8-8z"></path></svg>
         2ГИС
       </a>
     </div>
@@ -652,4 +640,16 @@ function toggleFaq(el) {
   <div class="footer-copy">© 2024 West Him. Все права защищены.</div>
 </footer>
 
-</body></html>
+<script>
+  function togglePhone(e) {
+    e.stopPropagation();
+    document.getElementById('phone-dropdown').classList.toggle('open');
+  }
+  document.addEventListener('click', function() {
+    document.getElementById('phone-dropdown').classList.remove('open');
+  });
+</script><script>
+function toggleFaq(el) {
+  el.parentElement.classList.toggle('open');
+}
+</script></body></html>
