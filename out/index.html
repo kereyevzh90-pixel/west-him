@@ -186,7 +186,7 @@
     }
     .cat-card:hover .cat-photo { transform: scale(1.05); }
     .cat-body {
-      position: absolute; inset: 0;
+      position: absolute; top: 65%; left: 0; right: 0; bottom: 0;
       display: flex; flex-direction: column; justify-content: flex-end;
       padding: 0 16px 14px;
       background: none;
@@ -198,6 +198,7 @@
     .cat-desc-text {
       font-size: 13px; color: #444;
       line-height: 1.45; margin-top: 3px;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
     .cat-arrow {
       color: #1A52B3; font-size: 16px; font-weight: 700;
