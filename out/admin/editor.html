@@ -406,8 +406,12 @@ function renderPage(html) {
   // Fix inline background-image paths
   body.querySelectorAll('[style]').forEach(el => {
     const s = el.getAttribute('style');
-    if (s && s.includes("url('images/")) {
-      el.setAttribute('style', s.replace(/url\('images\//g, "url('../images/"));
+    if (s && /url\(['"]?images\//.test(s)) {
+      el.setAttribute('style', s
+        .replace(/url\('images\//g, "url('../images/")
+        .replace(/url\("images\//g, 'url("../images/')
+        .replace(/url\(images\//g, 'url(../images/')
+      );
     }
   });
 
@@ -483,7 +487,7 @@ function enterEditMode() {
   // Background images (cat-photo etc.)
   frame.querySelectorAll('[style*="background-image"]').forEach(el => {
     const s = el.getAttribute('style') || '';
-    const m = s.match(/url\(['"]?\.\.\/(images\/[\w.\-]+)['"]?\)/);
+    const m = s.match(/url\(['"]?\.\.\/(images\/[\w.\-]+)[^'")\s]*['"]?\)/);
     if (!m) return;
     const path = 'out/' + m[1];
     el.classList.add('ed-has-img');
