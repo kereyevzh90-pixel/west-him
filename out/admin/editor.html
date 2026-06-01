@@ -93,8 +93,8 @@
     .ed-mode [data-ed]:not(:empty):hover { outline-color: rgba(26,82,179,.65); }
     .ed-mode [data-ed]:not(:empty):focus { outline-color: #1A52B3 !important; background: rgba(26,82,179,.03) !important; }
 
-    /* Image overlay */
-    .ed-mode .ed-has-img { position: relative; }
+    /* Image overlay — no position override, absolute already works as containing block */
+    .ed-mode .ed-has-img { }
     .ed-mode .ed-has-img::after {
       content: '📷 Заменить фото';
       position: absolute; inset: 0;
@@ -492,9 +492,10 @@ function enterEditMode() {
     const path = 'out/' + m[1];
     el.classList.add('ed-has-img');
     el.style.cursor = 'pointer';
-    el.addEventListener('click', (e) => {
+    const clickTarget = el.closest('.cat-card') || el;
+    clickTarget.style.cursor = 'pointer';
+    clickTarget.addEventListener('click', (e) => {
       if (e.target.closest('[contenteditable="true"]')) return;
-      if (e.target !== el && !el.contains(e.target)) return;
       pickAndUploadImg(path, null, el);
     });
     el._edPath = path;
