@@ -167,34 +167,37 @@
       gap: 20px;
     }
     .cat-card {
-      background: #fff;
       border-radius: 16px;
       overflow: hidden;
-      text-decoration: none; color: #111;
+      text-decoration: none; color: #fff;
       border: 1px solid #ebebeb;
       box-shadow: 0 2px 12px rgba(0,0,0,0.06);
       transition: transform .25s, box-shadow .25s;
-      display: flex; flex-direction: column;
-    }
-    .cat-card:hover { transform: translateY(-5px); box-shadow: 0 8px 32px rgba(0,0,0,0.12); }
-    .cat-photo {
-      width: 100%; aspect-ratio: 3/2;
-      background-size: cover; background-position: center;
-      background-color: #fff;
       position: relative;
+      aspect-ratio: 3/4;
+      background: #1a1a2e;
+      display: block;
     }
+    .cat-card:hover { transform: translateY(-5px); box-shadow: 0 8px 32px rgba(0,0,0,0.22); }
+    .cat-photo {
+      position: absolute; inset: 0;
+      background-size: cover; background-position: center; background-repeat: no-repeat;
+      transition: transform .35s;
+    }
+    .cat-card:hover .cat-photo { transform: scale(1.05); }
     .cat-body {
-      padding: 18px 20px 20px;
-      display: flex; flex-direction: column; gap: 6px;
-      flex: 1;
+      position: absolute; left: 0; right: 0; bottom: 0;
+      display: flex; flex-direction: column;
+      padding: 14px 16px 18px;
+      background: rgba(255,255,255,0.93);
     }
     .cat-title-text {
-      font-size: 16px; font-weight: 700; color: #111;
+      font-size: 17px; font-weight: 700; color: #111;
       line-height: 1.3;
     }
     .cat-desc-text {
-      font-size: 13px; color: #666;
-      line-height: 1.45; flex: 1;
+      font-size: 13px; color: #444;
+      line-height: 1.45; margin-top: 3px;
     }
     .cat-arrow {
       color: #1A52B3; font-size: 16px; font-weight: 700;
