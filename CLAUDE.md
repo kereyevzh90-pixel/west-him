@@ -97,7 +97,7 @@ CSS: `height: 56px; width: auto; object-fit: contain;` — **без** `border-ra
 
 1. **Header** — лого `IMG_1007.PNG`, кнопка номера телефона, кнопка "Связаться" справа (навигации нет)
 2. **Hero** — фото `IMG_1216.PNG` на весь фон, белый градиент слева, текст поверх
-3. **Карточки категорий** — 4 карточки `.cat-card`: фото сверху (`aspect-ratio: 3/2`), текст снизу на белом фоне (`.cat-body`)
+3. **Карточки категорий** — 4 карточки `.cat-card`: фото на всю карточку (`aspect-ratio: 3/4`, `position: relative`), текст поверх снизу (`.cat-body` — `position: absolute; bottom: 0`, полупрозрачный белый фон)
 4. **FAQ** — аккордеон, 5 вопросов, белый фон
 5. **Статистика** — 4 блока, белый фон, синие иконки, тёмные цифры
 6. **Footer** — белый фон, лого + тег слева, карта Казахстана по центру, соцсети справа
@@ -121,7 +121,7 @@ CSS: `height: 56px; width: auto; object-fit: contain;` — **без** `border-ra
 
 ### Карточки категорий (`.cat-grid`)
 
-4 карточки: фото сверху + текстовый блок снизу на белом фоне:
+4 карточки — оверлей: фото на всю карточку, текст поверх снизу:
 - 1-я (Производство) → ссылка `proizvodstvo.html`
 - 2-я (Опт/Розница) → ссылка `opt.html`
 - 3-я (Бытовая химия) → ссылка `katalog.html?cat=bytovaya` (открывает каталог с фильтром)
@@ -140,13 +140,16 @@ CSS: `height: 56px; width: auto; object-fit: contain;` — **без** `border-ra
   </div>
 </a>
 ```
-- `.cat-photo` — `aspect-ratio: 3/2`, `background-color: #fff` (белая зона на живом сайте пока нет фото)
-- `.cat-body` — `padding: 18px 20px 20px`, flex-column
+- `.cat-card` — `position: relative; aspect-ratio: 3/4; background: #1a1a2e; display: block`
+- `.cat-photo` — `position: absolute; inset: 0; background-size: cover; background-position: center` (фото на всю карточку); при hover: `scale(1.05)`
+- `.cat-body` — `position: absolute; left: 0; right: 0; bottom: 0; background: rgba(255,255,255,0.93); padding: 14px 16px 18px`
+- `.cat-title-text` — `color: #111`, `.cat-desc-text` — `color: #444`, `.cat-arrow` — `color: #1A52B3`
+- Фото задаётся инлайн-стилем: `style="background-image: url('images/cat_N_TIMESTAMP.png');"` (без `position: relative` и `cursor: pointer` — это артефакты старых версий редактора)
 - `.cat-title-text` и `.cat-desc-text` — редактируемы в admin/editor.html
 - В редакторе (режим редактирования):
   - Пустое `.cat-photo` → инжектируется `<label class="ed-cat-plus-label">+</label>` + `<input type="file">` прямо внутрь div; клик на "+" открывает file picker, фото загружается на GitHub, `structuralChange = true` → при сохранении используется `buildHtmlFromDom`
-  - Заполненное `.cat-photo` (есть `background-image`) → `ed-has-img`, клик → `pickAndUploadImg` (замена того же файла)
-  - Клик по тексту → редактирование (не конфликтует — `.cat-body` сосед `.cat-photo`)
+  - Заполненное `.cat-photo` (есть `background-image`) → `ed-has-img`; клик на `.cat-card` (не на текст) → `pickAndUploadImg` (замена фото)
+  - Клик по тексту → редактирование
 Сетка: ПК — 4 колонки, iPad/мобил — 2×2.
 
 ### FAQ (`.faq-section`)
@@ -418,8 +421,8 @@ Base64 с кириллицей:
 3. `git add . && git commit -m "..." && git push`
 
 ### Карточки категорий (главная)
-Карточки: фото сверху (`.cat-photo`) + текст снизу (`.cat-body`).
-1. Через админ редактор (режим ✏️): кликнуть на "+" в зоне фото → выбрать файл → фото загружается; кликнуть по тексту → редактировать; нажать 💾 Сохранить
+Карточки: фото на всю карточку (`.cat-photo` — `position: absolute; inset: 0`), текст поверх снизу (`.cat-body` — белый полупрозрачный фон).
+1. Через админ редактор (режим ✏️): кликнуть на "+" в пустой карточке → выбрать файл → фото загружается; кликнуть по тексту → редактировать; нажать 💾 Сохранить; для замены фото — кликнуть по карточке (не на текст)
 2. Вручную: добавить `style="background-image:url('images/FILENAME.jpg')"` к `.cat-photo`, изменить текст в `.cat-title-text` / `.cat-desc-text`
 3. `git add . && git commit -m "..." && git push`
 
