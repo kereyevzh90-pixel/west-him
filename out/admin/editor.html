@@ -634,9 +634,12 @@ async function uploadNewCatPhoto(githubPath, file, bgEl) {
   setStatus('Загружаем фото…', 'loading');
   try {
     const content = await toBase64(file);
+    const checkRes = await fetch(`${apiBase}/${githubPath}`, { headers: { Authorization: 'token ' + token, Accept: 'application/vnd.github+json' } });
+    const bodyObj = { message: 'Редактор: добавлено фото ' + githubPath.split('/').pop(), content, branch: BRANCH };
+    if (checkRes.ok) { bodyObj.sha = (await checkRes.json()).sha; }
     const putRes = await fetch(`${apiBase}/${githubPath}`, {
       method: 'PUT', headers,
-      body: JSON.stringify({ message: 'Редактор: добавлено фото ' + githubPath.split('/').pop(), content, branch: BRANCH }),
+      body: JSON.stringify(bodyObj),
     });
     if (!putRes.ok) { const e = await putRes.json().catch(() => ({})); throw new Error(e.message || 'HTTP ' + putRes.status); }
     const newSrc = '../' + githubPath.replace(/^out\//, '') + '?t=' + Date.now();
