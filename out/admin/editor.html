@@ -647,6 +647,7 @@ async function uploadNewCatPhoto(githubPath, file, bgEl) {
     const cur = bgEl.getAttribute('style') || '';
     bgEl.setAttribute('style', (cur ? cur + '; ' : '') + `background-image: url('${newSrc}')`);
     // Switch from "empty" to normal replace handler
+    bgEl.querySelectorAll('.ed-cat-plus-label, input[id^="cat-file-"]').forEach(n => n.remove());
     bgEl.classList.remove('ed-cat-empty');
     bgEl.classList.add('ed-has-img');
     bgEl.style.cursor = 'pointer';
