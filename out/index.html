@@ -167,37 +167,40 @@
       gap: 20px;
     }
     .cat-card {
-      background: #fff;
       border-radius: 16px;
       overflow: hidden;
-      text-decoration: none; color: #111;
+      text-decoration: none; color: #fff;
       border: 1px solid #ebebeb;
       box-shadow: 0 2px 12px rgba(0,0,0,0.06);
       transition: transform .25s, box-shadow .25s;
-      display: flex; flex-direction: column;
-    }
-    .cat-card:hover { transform: translateY(-5px); box-shadow: 0 8px 32px rgba(0,0,0,0.12); }
-    .cat-photo {
-      width: 100%; aspect-ratio: 3/2;
-      background-size: contain; background-position: center; background-repeat: no-repeat;
-      background-color: #fff;
       position: relative;
+      aspect-ratio: 3/2;
+      background: #1a1a2e;
+      display: block;
     }
+    .cat-card:hover { transform: translateY(-5px); box-shadow: 0 8px 32px rgba(0,0,0,0.22); }
+    .cat-photo {
+      position: absolute; inset: 0;
+      background-size: cover; background-position: center; background-repeat: no-repeat;
+      transition: transform .35s;
+    }
+    .cat-card:hover .cat-photo { transform: scale(1.05); }
     .cat-body {
-      padding: 18px 20px 20px;
-      display: flex; flex-direction: column; gap: 6px;
-      flex: 1;
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 20px;
+      background: linear-gradient(to top, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.18) 55%, transparent 100%);
     }
     .cat-title-text {
-      font-size: 16px; font-weight: 700; color: #111;
+      font-size: 17px; font-weight: 700; color: #fff;
       line-height: 1.3;
     }
     .cat-desc-text {
-      font-size: 13px; color: #666;
-      line-height: 1.45; flex: 1;
+      font-size: 13px; color: rgba(255,255,255,0.8);
+      line-height: 1.45; margin-top: 3px;
     }
     .cat-arrow {
-      color: #1A52B3; font-size: 16px; font-weight: 700;
+      color: #fff; font-size: 16px; font-weight: 700;
       margin-top: 8px;
     }
 
@@ -464,7 +467,7 @@
   <div class="cat-grid">
 
     <a class="cat-card" href="../proizvodstvo.html">
-      <div class="cat-photo" style="position: relative; background-image: url(&quot;images/cat_0_1780325430842.png?t=1780325433004&quot;); cursor: pointer;"></div>
+      <div class="cat-photo" style="background-image: url('images/cat_0_1780325430842.png');"></div>
       <div class="cat-body">
         <div class="cat-title-text">Производство</div>
         <div class="cat-desc-text">Собственный завод в Актау</div>
@@ -473,7 +476,7 @@
     </a>
 
     <a class="cat-card" href="../opt.html">
-      <div class="cat-photo" style="position: relative; background-image: url(&quot;images/cat_1_1780325414296.png?t=1780325416376&quot;); cursor: pointer;"></div>
+      <div class="cat-photo" style="background-image: url('images/cat_1_1780325414296.png');"></div>
       <div class="cat-body">
         <div class="cat-title-text">Опт / Розница</div>
         <div class="cat-desc-text">Оптовые поставки по Казахстану</div>
@@ -482,7 +485,7 @@
     </a>
 
     <a class="cat-card" href="../katalog.html?cat=bytovaya">
-      <div class="cat-photo" style="position: relative; background-image: url(&quot;images/cat_2_1780325399689.png?t=1780325401604&quot;); cursor: pointer;"></div>
+      <div class="cat-photo" style="background-image: url('images/cat_2_1780325399689.png');"></div>
       <div class="cat-body">
         <div class="cat-title-text">Бытовая химия</div>
         <div class="cat-desc-text">Широкий ассортимент</div>
@@ -491,7 +494,7 @@
     </a>
 
     <a class="cat-card" href="../katalog.html?cat=avto">
-      <div class="cat-photo" style="position: relative; background-image: url(&quot;images/cat_3_1780325377691.png?t=1780325379810&quot;); cursor: pointer;"></div>
+      <div class="cat-photo" style="background-image: url('images/cat_3_1780325377691.png');"></div>
       <div class="cat-body">
         <div class="cat-title-text">Автохимия</div>
         <div class="cat-desc-text">Продукция для авто</div>
