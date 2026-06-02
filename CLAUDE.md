@@ -97,7 +97,7 @@ CSS: `height: 56px; width: auto; object-fit: contain;` — **без** `border-ra
 
 1. **Header** — лого `IMG_1007.PNG`, кнопка номера телефона, кнопка "Связаться" справа (навигации нет)
 2. **Hero** — фото `IMG_1216.PNG` на весь фон, белый градиент слева, текст поверх
-3. **Карточки категорий** — 4 карточки `.cat-card`: фото на всю карточку (`aspect-ratio: 3/4`, `position: relative`), текст поверх снизу (`.cat-body` — `position: absolute; bottom: 0`, полупрозрачный белый фон)
+3. **Карточки категорий** — 4 карточки `.cat-card`: фото на всю карточку (`aspect-ratio: 3/4`, `position: relative`), текст поверх снизу (`.cat-body` — `position: absolute; bottom: 0`, **без фона** — текст прямо на фото)
 4. **FAQ** — аккордеон, 5 вопросов, белый фон
 5. **Статистика** — 4 блока, белый фон, синие иконки, тёмные цифры
 6. **Footer** — белый фон, лого + тег слева, карта Казахстана по центру, соцсети справа
@@ -142,8 +142,8 @@ CSS: `height: 56px; width: auto; object-fit: contain;` — **без** `border-ra
 ```
 - `.cat-card` — `position: relative; aspect-ratio: 3/4; background: #1a1a2e; display: block`
 - `.cat-photo` — `position: absolute; inset: 0; background-size: cover; background-position: center` (фото на всю карточку); при hover: `scale(1.05)`
-- `.cat-body` — `position: absolute; left: 0; right: 0; bottom: 0; background: rgba(255,255,255,0.93); padding: 14px 16px 18px`
-- `.cat-title-text` — `color: #111`, `.cat-desc-text` — `color: #444`, `.cat-arrow` — `color: #1A52B3`
+- `.cat-body` — `position: absolute; left: 0; right: 0; bottom: 0; background: none; padding: 8px 18px 22px`
+- `.cat-title-text` — `color: #111`, `.cat-desc-text` — `color: #444; white-space: nowrap; overflow: hidden; text-overflow: ellipsis` (одна строка), `.cat-arrow` — `color: #1A52B3`
 - Фото задаётся инлайн-стилем: `style="background-image: url('images/cat_N_TIMESTAMP.png');"` (без `position: relative` и `cursor: pointer` — это артефакты старых версий редактора)
 - `.cat-title-text` и `.cat-desc-text` — редактируемы в admin/editor.html
 - В редакторе (режим редактирования):
@@ -316,20 +316,18 @@ CSS: `height: 56px; width: auto; object-fit: contain;` — **без** `border-ra
 - **opt.html мобил:** `.opt-stats-strip` — 4 иконки с текстом под hero (на десктопе скрыта); описание hero полное; кнопка "Скачать прайс" одна
 - **proizvodstvo.html мобил:** `.props-strip { display: none }`, описание сокращено (без последнего предложения), кнопки в ряд
 - **bytovaya-himiya.html / avtohimiya.html мобил:** `.props-strip { display: none }`, кнопка "Заказать в WhatsApp" удалена (осталась только "Скачать прайс")
-- **Каталог мобил:** гамбургер убран, `.features-strip` скрыта, hero с молекулой (`IMG_1003.PNG right center / contain`), товары в горизонтальном скролле (`.prod-scroll-wrap`), `body { overflow-x: hidden }` переопределяется через `overflow: hidden` на `.prod-area`
+- **Каталог мобил:** гамбургер убран, `.features-strip` скрыта, hero с молекулой (`IMG_1003.PNG right center / contain`), товары в **вертикальной сетке 2 колонки** (`grid-template-columns: repeat(2, 1fr)`)
 - **Статистика главной:** блоки в столбик (`flex-direction: column; align-items: center; text-align: center`)
 - **FAQ главной:** заголовок по центру, вопросы по левому краю
 
-### Каталог — горизонтальный скролл товаров (мобил)
+### Каталог — сетка товаров (мобил)
 
-Структура:
-```html
-<div class="prod-area">          ← overflow: hidden (создаёт контекст для скролла)
-  <div class="prod-scroll-wrap"> ← overflow-x: scroll; -webkit-overflow-scrolling: touch
-    <div class="prod-grid">      ← display: flex; flex-wrap: nowrap
-      <div class="prod-card">    ← width: 72vw; flex-shrink: 0
+На мобиле товары отображаются вертикально в 2 колонки:
+```css
+.prod-scroll-wrap { overflow-x: unset; overflow-y: unset; }
+.prod-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+.prod-card { flex-shrink: unset; width: unset; }
 ```
-Это обходит `body { overflow-x: hidden }` через промежуточный overflow-контекст на `.prod-area`.
 
 ## Контакты
 
@@ -421,7 +419,7 @@ Base64 с кириллицей:
 3. `git add . && git commit -m "..." && git push`
 
 ### Карточки категорий (главная)
-Карточки: фото на всю карточку (`.cat-photo` — `position: absolute; inset: 0`), текст поверх снизу (`.cat-body` — белый полупрозрачный фон).
+Карточки: фото на всю карточку (`.cat-photo` — `position: absolute; inset: 0`), текст поверх снизу (`.cat-body` — без фона, чёрный текст прямо на фото).
 1. Через админ редактор (режим ✏️): кликнуть на "+" в пустой карточке → выбрать файл → фото загружается; кликнуть по тексту → редактировать; нажать 💾 Сохранить; для замены фото — кликнуть по карточке (не на текст)
 2. Вручную: добавить `style="background-image:url('images/FILENAME.jpg')"` к `.cat-photo`, изменить текст в `.cat-title-text` / `.cat-desc-text`
 3. `git add . && git commit -m "..." && git push`
