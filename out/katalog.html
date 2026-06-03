@@ -173,7 +173,6 @@
     .prod-card-info { padding: 14px 14px 16px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
     .prod-card-cat { font-size: 10px; font-weight: 700; color: #1A52B3; text-transform: uppercase; letter-spacing: 0.12em; }
     .prod-card-name { font-size: 14px; font-weight: 700; color: #111; line-height: 1.35; flex: 1; }
-    .prod-card-desc { display: none; }
     .prod-card-price { font-size: 13px; font-weight: 700; color: #1A52B3; background: #d0dff7; border: 1px solid rgba(26,82,179,0.3); border-radius: 20px; padding: 2px 10px; display: inline-block; margin-top: 2px; }
     .prod-card-add {
       display: flex; align-items: center; justify-content: center; gap: 6px;
@@ -529,7 +528,6 @@
     const catLabel = CAT_LABELS[p.category] || '';
     const hasImg = p.image && p.image !== '';
     const inCart = cart[p.id] && cart[p.id].qty > 0;
-    const desc = p.description && p.description.trim() !== '' ? p.description.trim() : '';
     return `
       <div class="prod-card" data-cat="${p.category}" data-id="${p.id}">
         <div class="prod-card-img">
@@ -538,7 +536,6 @@
         <div class="prod-card-info">
           ${catLabel ? `<div class="prod-card-cat">${catLabel}</div>` : ''}
           <div class="prod-card-name">${p.name}</div>
-          ${desc ? `<div class="prod-card-desc">${desc}</div>` : ''}
           ${p.price ? `<div class="prod-card-price">${p.price}</div>` : ''}
           <button class="prod-card-add ${inCart ? 'in-cart' : ''}" onclick="addToCart('${p.id}')">
             ${inCart

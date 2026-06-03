@@ -249,11 +249,6 @@
       </select>
     </div>
 
-    <div class="form-group">
-      <label class="form-label">Описание <span style="font-weight:400;color:#aaa">(необязательно)</span></label>
-      <textarea id="f-desc" class="form-input" rows="2" placeholder="Например: 500 мл • Концентрат для стирки" style="resize:vertical;min-height:60px;line-height:1.4" oninput="updateDescPreview()"></textarea>
-      <div style="font-size:11px;color:#bbb;margin-top:4px">Появится во всплывающем окне при нажатии на карточку товара</div>
-    </div>
 
     <div class="form-group">
       <label class="form-label">Цена <span style="font-weight:400;color:#aaa">(необязательно)</span></label>
@@ -381,7 +376,6 @@ function renderGrid() {
         <div class="prod-thumb" style="${bgStyle}">
           ${!hasPic ? `<div class="prod-thumb-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div>` : ''}
           <span class="prod-cat-badge cat-${p.category}">${CAT[p.category] || ''}</span>
-          ${p.description ? `<div class="prod-thumb-overlay"><div class="prod-thumb-overlay-text">${p.description}</div></div>` : ''}
         </div>
         <div class="prod-info">
           <div class="prod-name">${p.name}</div>
@@ -420,17 +414,13 @@ function openModal(id) {
     if (p) {
       document.getElementById('f-name').value = p.name || '';
       document.getElementById('f-cat').value = p.category || 'bytovaya';
-      document.getElementById('f-desc').value = p.description || '';
       document.getElementById('f-price').value = p.price || '';
       if (p.image) setImgPreview('../' + p.image);
-      updateDescPreview();
     }
   } else {
     document.getElementById('f-name').value = '';
     document.getElementById('f-cat').value = 'bytovaya';
-    document.getElementById('f-desc').value = '';
     document.getElementById('f-price').value = '';
-    updateDescPreview();
   }
 
   document.getElementById('modal-overlay').style.display = 'flex';
@@ -461,14 +451,6 @@ function onImgPick(input) {
   reader.readAsDataURL(file);
 }
 
-function updateDescPreview() {
-  const text = document.getElementById('f-desc').value.trim();
-  const overlay = document.getElementById('img-preview-overlay');
-  if (overlay) {
-    overlay.textContent = text;
-    overlay.style.display = text ? 'block' : 'none';
-  }
-}
 
 function setImgPreview(src) {
   const preview = document.getElementById('img-preview');
@@ -498,7 +480,6 @@ function clearImgPreview() {
 async function saveCard() {
   const name = document.getElementById('f-name').value.trim();
   const cat = document.getElementById('f-cat').value;
-  const desc = document.getElementById('f-desc').value.trim();
   const price = document.getElementById('f-price').value.trim();
   if (!name) { setModalStatus('Введи название продукта', 'err'); return; }
 
@@ -549,13 +530,12 @@ async function saveCard() {
     if (idx !== -1) {
       products[idx].name = name;
       products[idx].category = cat;
-      products[idx].description = desc;
       products[idx].price = price;
       if (imagePath) products[idx].image = imagePath;
     }
   } else {
     const newId = 'prod_' + Date.now();
-    products.push({ id: newId, name, category: cat, description: desc, price, image: imagePath });
+    products.push({ id: newId, name, category: cat, price, image: imagePath });
   }
 
   // Save products.json
