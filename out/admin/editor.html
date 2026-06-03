@@ -214,8 +214,8 @@
   <select class="ed-select" id="pg" onchange="loadPage(this.value)">
     <option value="index.html">Главная</option>
     <option value="katalog.html">Каталог</option>
-    <option value="bytovaya-himiya.html">Бытовая химия</option>
-    <option value="avtohimiya.html">Автохимия</option>
+    <option value="katalog.html?filter=bytovaya">Бытовая химия</option>
+    <option value="katalog.html?filter=avto">Автохимия</option>
     <option value="proizvodstvo.html">Производство</option>
     <option value="opt.html">Опт / Розница</option>
   </select>
@@ -340,28 +340,40 @@ async function loadPage(file) {
   if (dirty && !confirm('Есть несохранённые изменения. Продолжить без сохранения?')) {
     document.getElementById('pg').value = curPage; return;
   }
-  curPage = file;
+
+  // Parse optional filter (e.g. "katalog.html?filter=bytovaya")
+  const [pageFile, qs] = file.split('?');
+  const catFilter = qs ? new URLSearchParams(qs).get('filter') : null;
+  const isKatalog = pageFile === 'katalog.html';
+
+  curPage = pageFile;
   document.getElementById('pg').value = file;
-  document.getElementById('site-link').href = '../' + file;
+  document.getElementById('site-link').href = '../' + pageFile;
   const btnP = document.getElementById('btn-products');
-  btnP.style.display = file === 'katalog.html' ? 'inline-flex' : 'none';
-  updatePriceBtn(file);
+  btnP.style.display = isKatalog ? 'inline-flex' : 'none';
+  updatePriceBtn(pageFile);
   if (editMode) exitEditMode();
   dirty = false; structuralChange = false;
   document.getElementById('btn-save').disabled = true;
   document.getElementById('page-frame').innerHTML = '';
-  showLoad(true, 'Загружаем ' + file + '…');
+  showLoad(true, 'Загружаем ' + pageFile + '…');
 
   const token = localStorage.getItem('ghToken');
   const headers = { Authorization: 'token ' + token, Accept: 'application/vnd.github+json' };
   try {
-    const res = await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/contents/out/${file}?ref=${BRANCH}&t=${Date.now()}`, { headers });
+    const res = await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/contents/out/${pageFile}?ref=${BRANCH}&t=${Date.now()}`, { headers });
     if (!res.ok) throw new Error('HTTP ' + res.status);
     const data = await res.json();
     srcSha = data.sha;
     srcHtml = b64decode(data.content);
     renderPage(srcHtml);
-    if (file === 'katalog.html') loadCatalogProducts();
+    if (isKatalog) {
+      await loadCatalogProducts();
+      if (catFilter) {
+        const btn = document.querySelector(`#page-frame .cat-item[data-filter="${catFilter}"]`);
+        if (btn) btn.click();
+      }
+    }
     showLoad(false);
     setStatus('');
   } catch(e) {
@@ -418,7 +430,7 @@ function renderPage(html) {
   // Internal links: open in new tab (relative to admin folder)
   // cat-cards: navigate inside editor instead of new tab
   const EDITOR_PAGES = ['index.html','katalog.html','bytovaya-himiya.html','avtohimiya.html','proizvodstvo.html','opt.html'];
-  const CAT_QUERY_MAP = { 'katalog.html?cat=bytovaya': 'bytovaya-himiya.html', 'katalog.html?cat=avto': 'avtohimiya.html' };
+  const CAT_QUERY_MAP = { 'katalog.html?cat=bytovaya': 'katalog.html?filter=bytovaya', 'katalog.html?cat=avto': 'katalog.html?filter=avto' };
   body.querySelectorAll('a').forEach(a => {
     const href = a.getAttribute('href') || '';
     if (!href.startsWith('http') && !href.startsWith('#') && !href.startsWith('//') && href !== '') {
