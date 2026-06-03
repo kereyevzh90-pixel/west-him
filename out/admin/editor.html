@@ -439,6 +439,21 @@ function renderPage(html) {
     });
   });
 
+  // Re-init catalog category filter
+  document.querySelectorAll('.cat-item').forEach(btn => {
+    btn.removeAttribute('onclick');
+    btn.style.cursor = 'pointer';
+    btn.addEventListener('click', function() {
+      if (editMode) return;
+      document.querySelectorAll('.cat-item').forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+      const filter = this.dataset.filter || 'all';
+      document.querySelectorAll('#page-frame .prod-card').forEach(card => {
+        card.style.display = (filter === 'all' || card.dataset.cat === filter) ? '' : 'none';
+      });
+    });
+  });
+
   // Fix sticky header offset
   document.querySelectorAll('.header').forEach(h => { h.style.top = '56px'; });
 }
