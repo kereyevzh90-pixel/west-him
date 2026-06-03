@@ -174,15 +174,6 @@
     .prod-card-cat { font-size: 10px; font-weight: 700; color: #1A52B3; text-transform: uppercase; letter-spacing: 0.12em; }
     .prod-card-name { font-size: 14px; font-weight: 700; color: #111; line-height: 1.35; flex: 1; }
     .prod-card-desc { display: none; }
-    .desc-overlay { display: none; position: fixed; inset: 0; z-index: 2000; background: rgba(0,0,0,0.25); align-items: center; justify-content: center; }
-    .desc-overlay.open { display: flex; }
-    .desc-popup { background: #fff; border-radius: 16px; padding: 24px 28px 20px; max-width: 320px; width: 90%; box-shadow: 0 8px 32px rgba(0,0,0,0.18); position: relative; }
-    .desc-popup-title { font-size: 15px; font-weight: 700; color: #111; margin-bottom: 8px; }
-    .desc-popup-row { display: flex; align-items: baseline; gap: 8px; }
-    .desc-popup-label { font-size: 11px; font-weight: 700; color: #1A52B3; text-transform: uppercase; letter-spacing: 0.08em; white-space: nowrap; flex-shrink: 0; }
-    .desc-popup-text { font-size: 14px; color: #555; line-height: 1.7; }
-    .desc-popup-close { position: absolute; top: 12px; right: 14px; background: none; border: none; cursor: pointer; font-size: 22px; color: #aaa; line-height: 1; padding: 0; }
-    .desc-popup-close:hover { color: #333; }
     .prod-card-price { font-size: 13px; font-weight: 700; color: #1A52B3; background: #d0dff7; border: 1px solid rgba(26,82,179,0.3); border-radius: 20px; padding: 2px 10px; display: inline-block; margin-top: 2px; }
     .prod-card-add {
       display: flex; align-items: center; justify-content: center; gap: 6px;
@@ -411,14 +402,6 @@
 <!-- CART OVERLAY -->
 <div class="cart-overlay" id="cart-overlay" onclick="closeCart()"></div>
 
-<!-- DESC POPUP -->
-<div class="desc-overlay" id="desc-overlay" onclick="if(event.target===this)closeDesc()">
-  <div class="desc-popup">
-    <button class="desc-popup-close" onclick="closeDesc()">×</button>
-    <div class="desc-popup-title" id="desc-popup-title"></div>
-    <div class="desc-popup-text" id="desc-popup-text"></div>
-  </div>
-</div>
 
 <!-- CART DRAWER -->
 <div class="cart-drawer" id="cart-drawer">
@@ -548,7 +531,7 @@
     const inCart = cart[p.id] && cart[p.id].qty > 0;
     const desc = p.description && p.description.trim() !== '' ? p.description.trim() : '';
     return `
-      <div class="prod-card" data-cat="${p.category}" data-id="${p.id}" onclick="showDesc(event,'${p.id}')" style="cursor:pointer">
+      <div class="prod-card" data-cat="${p.category}" data-id="${p.id}">
         <div class="prod-card-img">
           ${hasImg ? `<img src="${p.image}" alt="${p.name}" loading="lazy"/>` : `<div class="prod-card-placeholder">${PLACEHOLDER_SVG}</div>`}
         </div>
@@ -611,18 +594,6 @@
     }
   }
 
-  function showDesc(e, id) {
-    if (e.target.closest('.prod-card-add')) return;
-    const p = allProducts.find(x => x.id === id);
-    if (!p || !p.description || !p.description.trim()) return;
-    document.getElementById('desc-popup-title').textContent = p.name;
-    document.getElementById('desc-popup-text').textContent = p.description;
-    document.getElementById('desc-overlay').classList.add('open');
-  }
-  function closeDesc() {
-    document.getElementById('desc-overlay').classList.remove('open');
-  }
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDesc(); });
 
   loadCart();
   updateCartBadge();
