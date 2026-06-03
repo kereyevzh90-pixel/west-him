@@ -422,7 +422,7 @@ function renderPage(html) {
     const href = a.getAttribute('href') || '';
     if (!href.startsWith('http') && !href.startsWith('#') && !href.startsWith('//') && href !== '') {
       a.setAttribute('data-orig-href', href);
-      const pageFile = href.split('?')[0];
+      const pageFile = href.replace(/^\.\.\//, '').split('?')[0];
       if (EDITOR_PAGES.includes(pageFile)) {
         a.setAttribute('data-ed-page', pageFile);
         a.removeAttribute('href');
