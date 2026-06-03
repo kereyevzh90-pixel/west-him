@@ -437,9 +437,9 @@ function renderPage(html) {
       a.setAttribute('data-orig-href', href);
       const hrefClean = href.replace(/^\.\.\//, '');
       const mapped = CAT_QUERY_MAP[hrefClean];
-      const pageFile = mapped || hrefClean.split('?')[0];
-      if (EDITOR_PAGES.includes(pageFile)) {
-        a.setAttribute('data-ed-page', pageFile);
+      const pageFile = hrefClean.split('?')[0];
+      if (mapped || EDITOR_PAGES.includes(pageFile)) {
+        a.setAttribute('data-ed-page', mapped || pageFile);
         a.removeAttribute('href');
         a.style.cursor = 'pointer';
       } else {
