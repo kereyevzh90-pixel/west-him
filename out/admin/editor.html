@@ -355,7 +355,7 @@ async function loadPage(file) {
   const token = localStorage.getItem('ghToken');
   const headers = { Authorization: 'token ' + token, Accept: 'application/vnd.github+json' };
   try {
-    const res = await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/contents/out/${file}?ref=${BRANCH}`, { headers });
+    const res = await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/contents/out/${file}?ref=${BRANCH}&t=${Date.now()}`, { headers });
     if (!res.ok) throw new Error('HTTP ' + res.status);
     const data = await res.json();
     srcSha = data.sha;
@@ -416,13 +416,22 @@ function renderPage(html) {
   });
 
   // Internal links: open in new tab (relative to admin folder)
+  // cat-cards: navigate inside editor instead of new tab
+  const EDITOR_PAGES = ['index.html','katalog.html','bytovaya-himiya.html','avtohimiya.html','proizvodstvo.html','opt.html'];
   body.querySelectorAll('a').forEach(a => {
     const href = a.getAttribute('href') || '';
     if (!href.startsWith('http') && !href.startsWith('#') && !href.startsWith('//') && href !== '') {
       a.setAttribute('data-orig-href', href);
-      const fixed = href.startsWith('../') ? href : '../' + href;
-      a.setAttribute('href', fixed);
-      a.setAttribute('target', '_blank');
+      const pageFile = href.split('?')[0];
+      if (EDITOR_PAGES.includes(pageFile)) {
+        a.setAttribute('data-ed-page', pageFile);
+        a.removeAttribute('href');
+        a.style.cursor = 'pointer';
+      } else {
+        const fixed = href.startsWith('../') ? href : '../' + href;
+        a.setAttribute('href', fixed);
+        a.setAttribute('target', '_blank');
+      }
     }
   });
 
@@ -451,6 +460,15 @@ function renderPage(html) {
       document.querySelectorAll('#page-frame .prod-card').forEach(card => {
         card.style.display = (filter === 'all' || card.dataset.cat === filter) ? '' : 'none';
       });
+    });
+  });
+
+  // Cat-cards: navigate inside editor on click (view mode only)
+  document.querySelectorAll('#page-frame [data-ed-page]').forEach(el => {
+    el.addEventListener('click', function(e) {
+      if (editMode) return;
+      e.preventDefault();
+      loadPage(this.dataset.edPage);
     });
   });
 
