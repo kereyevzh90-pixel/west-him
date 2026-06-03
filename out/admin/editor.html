@@ -418,11 +418,14 @@ function renderPage(html) {
   // Internal links: open in new tab (relative to admin folder)
   // cat-cards: navigate inside editor instead of new tab
   const EDITOR_PAGES = ['index.html','katalog.html','bytovaya-himiya.html','avtohimiya.html','proizvodstvo.html','opt.html'];
+  const CAT_QUERY_MAP = { 'katalog.html?cat=bytovaya': 'bytovaya-himiya.html', 'katalog.html?cat=avto': 'avtohimiya.html' };
   body.querySelectorAll('a').forEach(a => {
     const href = a.getAttribute('href') || '';
     if (!href.startsWith('http') && !href.startsWith('#') && !href.startsWith('//') && href !== '') {
       a.setAttribute('data-orig-href', href);
-      const pageFile = href.replace(/^\.\.\//, '').split('?')[0];
+      const hrefClean = href.replace(/^\.\.\//, '');
+      const mapped = CAT_QUERY_MAP[hrefClean];
+      const pageFile = mapped || hrefClean.split('?')[0];
       if (EDITOR_PAGES.includes(pageFile)) {
         a.setAttribute('data-ed-page', pageFile);
         a.removeAttribute('href');
