@@ -449,6 +449,7 @@ function renderPage(html) {
   });
 
   // Re-init catalog category filter
+  const CAT_TITLES_ED = { all: 'Все товары', bytovaya: 'Бытовая химия', avto: 'Автохимия' };
   document.querySelectorAll('.cat-item').forEach(btn => {
     btn.removeAttribute('onclick');
     btn.style.cursor = 'pointer';
@@ -460,6 +461,8 @@ function renderPage(html) {
       document.querySelectorAll('#page-frame .prod-card').forEach(card => {
         card.style.display = (filter === 'all' || card.dataset.cat === filter) ? '' : 'none';
       });
+      const titleEl = document.querySelector('#page-frame #area-title');
+      if (titleEl) titleEl.textContent = CAT_TITLES_ED[filter] || 'Все товары';
     });
   });
 
@@ -885,7 +888,6 @@ async function loadCatalogProducts() {
       const hasImg = p.image && p.image !== '';
       const imgSrc = hasImg ? ('../' + p.image) : '';
       const cat = CAT_LABELS_ED[p.category] || '';
-      const desc = p.description && p.description.trim() ? p.description.trim() : '';
       return `<div class="prod-card" data-cat="${p.category}" data-id="${p.id}">
         <div class="prod-card-img">
           ${hasImg ? `<img src="${imgSrc}" alt="${p.name}" loading="lazy"/>` : `<div class="prod-card-placeholder">${PLACEHOLDER_SVG_ED}</div>`}
@@ -893,7 +895,6 @@ async function loadCatalogProducts() {
         <div class="prod-card-info">
           ${cat ? `<div class="prod-card-cat">${cat}</div>` : ''}
           <div class="prod-card-name">${p.name}</div>
-          ${desc ? `<div class="prod-card-desc">${desc}</div>` : ''}
           ${p.price ? `<div class="prod-card-price">${p.price}</div>` : ''}
           <button class="prod-card-add">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
@@ -902,6 +903,14 @@ async function loadCatalogProducts() {
         </div>
       </div>`;
     }).join('');
+
+    // Update category counts
+    const cntAll = document.querySelector('#page-frame #cnt-all');
+    const cntByt = document.querySelector('#page-frame #cnt-bytovaya');
+    const cntAvto = document.querySelector('#page-frame #cnt-avto');
+    if (cntAll) cntAll.textContent = products.length;
+    if (cntByt) cntByt.textContent = products.filter(p => p.category === 'bytovaya').length;
+    if (cntAvto) cntAvto.textContent = products.filter(p => p.category === 'avto').length;
   } catch(e) {
     console.warn('loadCatalogProducts:', e);
   }
