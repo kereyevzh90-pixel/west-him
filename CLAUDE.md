@@ -424,16 +424,16 @@ Base64 с кириллицей:
 
 ## Резервная копия и откат
 
-**Git тег:** `stable-backup-2026-05-22` — снимок всего сайта на 22 мая 2026 (каталог пустой, без тестовых товаров, все страницы в финальном виде).
+**Git тег:** `stable-backup-2026-06-03` — снимок всего сайта на 22 мая 2026 (каталог пустой, без тестовых товаров, все страницы в финальном виде).
 
 ### Команда "бежать"
 
 Если пользователь пишет **"бежать"** — немедленно откатить папку `out/` к тегу и задеплоить:
 
 ```bash
-git checkout stable-backup-2026-05-22 -- out/
+git checkout stable-backup-2026-06-03 -- out/
 git add out/
-git commit -m "Откат: восстановление из stable-backup-2026-05-22"
+git commit -m "Откат: восстановление из stable-backup-2026-06-03"
 git push
 ```
 
@@ -443,7 +443,7 @@ Vercel задеплоит автоматически через ~1 минуту.
 
 Когда сайт в хорошем состоянии и пользователь хочет обновить бэкап:
 ```bash
-git tag -d stable-backup-2026-05-22 && git push origin :refs/tags/stable-backup-2026-05-22
-git tag stable-backup-2026-05-22 && git push origin stable-backup-2026-05-22
+git tag -d stable-backup-2026-06-03 && git push origin :refs/tags/stable-backup-2026-06-03
+git tag stable-backup-2026-06-03 && git push origin stable-backup-2026-06-03
 ```
 И обновить дату в этой секции.
