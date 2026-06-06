@@ -20,6 +20,25 @@ git commit -m "описание"
 git push
 ```
 
+## Заголовки безопасности (vercel.json)
+
+В `vercel.json` настроен блок `headers` для всех путей (`/(.*)`):
+
+- `X-Frame-Options: SAMEORIGIN` — запрет встраивания в iframe
+- `X-Content-Type-Options: nosniff` — запрет угадывания типа контента
+- `Referrer-Policy: strict-origin-when-cross-origin`
+- `Permissions-Policy: geolocation=(), microphone=(), camera=()`
+- `X-XSS-Protection: 0` — современная рекомендация (отключает устаревший фильтр браузера, который сам может быть уязвим)
+- `Content-Security-Policy` — разрешает:
+  - `script-src`/`style-src`: `'self' 'unsafe-inline'` (сайт и админ-редактор используют инлайн-скрипты/стили — `editor.html`, `products.html`)
+  - `style-src`/`font-src`: Google Fonts (`fonts.googleapis.com`, `fonts.gstatic.com`)
+  - `img-src`: `'self' data: https:` (свои картинки + превью через `FileReader.readAsDataURL` в админке)
+  - `connect-src`: `api.github.com`, `raw.githubusercontent.com` (загрузка/сохранение страниц и фото через GitHub API в редакторе)
+
+**Важно:** строгий CSP (без `'unsafe-inline'`) сломает админ-панель и визуальный редактор — они построены на инлайн-скриптах и contenteditable. При изменении CSP обязательно проверять `/admin/`, `/admin/editor.html`, `/admin/products.html` в браузере на ошибки `Refused to load`/`Content Security Policy`.
+
+HSTS добавляется автоматически платформой Vercel — отдельно настраивать не нужно.
+
 ## Структура проекта
 
 Сайт — статические HTML файлы в папке `out/`. Next.js проект в `src/` не используется для деплоя.
