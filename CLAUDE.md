@@ -9,10 +9,18 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Деплой
 
-- **Живой сайт:** https://west-him.vercel.app
+- **Живой сайт:** https://westhim.kz (основной домен) и https://west-him.vercel.app
 - **GitHub:** https://github.com/kereyevzh90-pixel/west-him
 - Vercel автоматически деплоит при `git push` в `master`
 - **Всегда пушить сразу после правок**, не спрашивая пользователя
+
+## Домен (westhim.kz)
+
+- Регистратор: PS.kz (аккаунт Рахат Бектембаев, ID 704017)
+- Nameservers делегированы на Vercel: `ns1.vercel-dns.com`, `ns2.vercel-dns.com`
+- Домен добавлен в Vercel проект west-him (Settings → Domains)
+- DNS управляется Vercel — отдельно ничего в PS.kz менять не нужно
+- На PS.kz есть оплаченный хостинг (тариф XS, до 2027) — не используется, сайт на Vercel
 
 ```bash
 git add .
