@@ -20,6 +20,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - Nameservers делегированы на Vercel: `ns1.vercel-dns.com`, `ns2.vercel-dns.com`
 - Домен добавлен в Vercel проект west-him (Settings → Domains)
 - DNS управляется Vercel — отдельно ничего в PS.kz менять не нужно
+- Домен работает, статус **Valid Configuration** на обоих `westhim.kz` и `www.westhim.kz`
 - На PS.kz есть оплаченный хостинг (тариф XS, до 2027) — не используется, сайт на Vercel
 
 ```bash
@@ -80,6 +81,7 @@ out/
     ├── IMG_0922.PNG                     ← карточка "Производство"
     ├── IMG_0924.PNG                     ← карточка "Опт / Розница"
     ├── IMG_0925.PNG                     ← карточка "Автохимия"
+    ├── favicon.png                      ← favicon сайта (синяя молекула, на всех страницах включая админку)
     ├── photo_*.jpg                      ← фото продукции (добавлялись вручную)
     ├── IMG_0xxx.PNG                     ← прочие фото
     └── prod_*.jpg/png                   ← фото товаров (загружаются через admin/products.html)
