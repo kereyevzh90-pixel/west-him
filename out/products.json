@@ -70,5 +70,12 @@
     "description": "",
     "price": "Опт. 1350₸",
     "image": "images/prod_prod_1780141524674.png"
+  },
+  {
+    "id": "prod_1786271468441",
+    "name": "Кислородный отбеливатель 1кг",
+    "category": "bytovaya",
+    "price": "",
+    "image": "images/prod_prod_1786271461672.png"
   }
 ]
