@@ -519,6 +519,7 @@ function enterEditMode() {
   // Make ALL text-containing elements editable
   let idx = 0;
   frame.querySelectorAll('*').forEach(el => {
+    if (el.closest('#prod-grid')) return;
     if (!isEditable(el)) return;
     el.setAttribute('data-ed', '1');
     el.setAttribute('data-ed-idx', idx++);
