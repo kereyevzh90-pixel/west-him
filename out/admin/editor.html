@@ -529,6 +529,7 @@ function enterEditMode() {
 
   // Images — add click-to-replace
   frame.querySelectorAll('img').forEach(img => {
+    if (img.closest('#prod-grid')) return;
     const path = imgToGithubPath(img.getAttribute('src'));
     if (!path) return;
     img.classList.add('ed-has-img');
